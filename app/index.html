@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="mobilizeApp">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Mobilize</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link rel="stylesheet" href="assets/css/app.css">
+
+  <script src="components/jquery/dist/jquery.js"></script>
+  <script src="components/angular/angular.js"></script>
+  <!--script src="components/angular-animate/angular-animate.js"></script-->
+  <!--script src="components/angular-route/angular-route.js"></script-->
+  <script src="components/angular-ui-router/release/angular-ui-router.js"></script>
+  <script src="components/angular-resource/angular-resource.js"></script>
+  <script src="components/bluebird/js/browser/bluebird.min.js"></script>
+
+  <script src="app.js"></script>
+  <script src="layout/menuController.js"></script>
+  <script src="movement/movementController.js"></script>
+  <script src="search/searchController.js"></script>
+  <script src="actions/actionController.js"></script>
+  <script src="data/movementService.js"></script>
+  <script src="data/actionService.js"></script>
+
+</head>
+<body>
+
+
+<div ng-controller="searchController">
+  <ul class="menu">
+    <li><a ui-sref="root">Mobilize</a></li>
+    <li><form novalidate class="simple-form"><input ng-model="query"><input type="submit" ng-click="search(query)" value="search"></form>{{qry}}</li>
+    <li><a ui-sref="newMovement">Start a Movement</a></li>
+    <li>Sign In</li>
+  </ul>
+</div>
+
+<div ui-view></div>
+
+
+<!--div ng-controller="menuController">
+  <ul class="menu">
+    <li><a href="#/">Mobilize</a></li>
+    <li><a href="#/movement/acta">Find a Cause</a></li>
+    <li><input ng-model="query"></li>
+    <li>Start a Movement</li>
+    <li>Sign In</li>
+  </ul>
+</div>
+
+<div class="view-container">
+  <div ng-view class="view-frame"></div>
+</div-->
+
+</body>
+</html>
