@@ -1,6 +1,29 @@
-<div>Featured Movements</div>
-<ul>
-    <li ng-repeat="movement in movements">
-        <span><a ui-sref="movement({movementId: movement.id})">{{movement.name}}</a></span>
-    </li>
-</ul>
+<div class="jumbotron" style="background-image: url('assets/img/splash.jpg')">
+    <div class="container-fluid"><h3>Because it matters.</h3></div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-6 col-xs-12">
+            <h4>Be heard.  Make a difference.</h4>
+            <p class="muted breathe">
+                <button class="btn btn-emphasis"><i class="fa fa-lg fa-twitter"></i> Sign in with twitter</button> &nbsp; or &nbsp;
+                <i class="fa fa-lg fa-facebook-official"></i> &nbsp;
+                <i class="icon glyphicon glyphicon-envelope"></i>
+            </p>
+
+            <p>Tell your congressmen, candidates, city officials, companies, and media what you think with just one click.
+               Being active in issues that matter to you has never been easier.  Sign up for free today.</p>
+            <p>Letter and phone campaigns, petitions, rallies, and more.  All made easy to act on,
+               organize, and share with others.</p>
+        </div>
+        <div class="col-sm-6 col-xs-12">
+            <h4>Featured Movements</h4>
+            <ul>
+                <li ng-repeat="movement in movements">
+                    <span><a ui-sref="movement({movementId: movement.id})">{{movement.name}}</a></span>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
