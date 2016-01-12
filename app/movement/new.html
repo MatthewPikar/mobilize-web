@@ -1,11 +1,121 @@
+<div class="container">
 <form class="simple-form">
-    <h1>step 1: what is your movement about</h1>
-    Name: <input type="text" ng-model="movement.name"/><br/>
-    Description: <input type="text" ng-model="movement.description"/><br/>
-    <input type="submit" id='addMovement' ng-click="addMovement()" value="save"/>
-    <div id="movementStatus">{{movementStatus}}</div>
-    <h1>step 2: tell your members what they can do by adding actions</h1>
-    <h1>step 3: invite members</h1>
-    Organizers: <br/>
-    Invite Members:<br/>
+    <div class="well" uib-collapse="topicCollapsed" ng-animate="'animate'">
+        <h3>What's the movement about?<br>
+            <small>Type or select the issue.  Try to keep your movement focused and state the position it represents.</small>
+        </h3>
+        <div class="input-group">
+            <input type="text" class="form-control" ng-model="movement.topic" placeholder="Example: Protect Free Speech">
+            <div class="input-group-addon">
+                <i class="glyphicon glyphicon-remove" ng-click="movement.topic=''"></i>
+            </div>
+        </div>
+        <div class="form-group">
+            <h4>Examples:</h4>
+            <ul class="list-inline text-center">
+                <li ng-repeat="verb in topicVerbs">
+                    <button class="btn btn-default" ng-click="addTopic(verb.name)">{{verb.name}}</button>
+                </li>
+            </ul>
+        </div>
+        <div class="form-group">
+            <ul class="list-inline text-center">
+                <li ng-repeat="topic in exampleTopics">
+                    <button class="btn btn-default" ng-click="addTopic(topic.name)">{{topic.name}}</button>
+                </li>
+            </ul>
+        </div>
+        <button class="btn btn-emphasis" ng-show="movement.topic"
+                ng-click="topicCollapsed=true; topicSummaryCollapsed=false; typeCollapsed=false">
+            Next
+        </button>
+    </div>
+    <div uib-collapse="topicSummaryCollapsed" ng-animate="'animate'">
+        <p class="lead">
+            Movement to
+            <span class="context-menu" ng-click="topicCollapsed=false; topicSummaryCollapsed=true">
+                <strong>{{movement.topic}}</strong> <i class="icon fa fa-edit" ></i>
+            </span>
+        </p>
+    </div>
+
+    <div class="well" uib-collapse="typeCollapsed" ng-animate="'animate'">
+        <h3>Is the movement: </h3>
+        <div class="form-group">
+            <span class="radio"><label>
+                    <input type="radio" ng-model="type" value="national" ng-init="type.value='national'" ng-click="movement.type='U.S.'">National
+                    <input type="text" ng-model="movement.type" placeholder="What country?" class="form-control"
+                       uib-typeahead="country for country in countries | filter:$viewValue | limitTo:8" ng-show="type=='national'" ng-init="movement.type='U.S.'">
+            </label></span>
+            <span class="radio"><label>
+                <input type="radio" ng-model="type" value="state" ng-click="movement.type=''">Statewide
+                <input type="text" ng-model="movement.type" placeholder="Which state?" class="form-control"
+                       uib-typeahead="state for state in states | filter:$viewValue | limitTo:8" ng-show="type=='state'">
+            </label></span>
+            <span class="radio"><label>
+                <input type="radio" ng-model="type" value="local" ng-click="movement.type=''">Local
+                <input type="text" ng-model="movement.type" placeholder="What town / municipality?" class="form-control"
+                       uib-typeahead="town for town in towns | filter:$viewValue | limitTo:8" ng-show="type=='local'">
+            </label></span>
+            <span class="radio"><label>
+                <input type="radio" ng-model="type" value="corporate" ng-click="movement.type=''">Corporate
+                <input type="text" ng-model="movement.type" placeholder="What company?" class="form-control"
+                       uib-typeahead="company for company in companys | filter:$viewValue | limitTo:8" ng-show="type=='corporate'">
+            </label></span>
+        </div>
+        <button class="btn btn-emphasis" ng-show="getTypeTruthy()"
+                ng-click="setName(); typeCollapsed = true; typeSummaryCollapsed=false; nameCollapsed=false">
+            Next
+        </button>
+    </div>
+    <div uib-collapse="typeSummaryCollapsed" ng-animate="'animate'">
+        <p class="lead">
+            <span class="invisible">Movement</span> in
+            <span class="context-menu" ng-click="typeCollapsed = false; typeSummaryCollapsed=true">
+                <strong>{{movement.type}}</strong> <i class="icon fa fa-edit"></i>
+            </span>
+        </p>
+    </div>
+
+    <div class="well" uib-collapse="nameCollapsed" ng-animate="'animate'">
+        <h3>Give the movement a name: </h3>
+        <div class="input-group">
+            <input type="text" class="form-control" ng-model="movement.name">
+            <div class="input-group-addon">
+                <i class="fa fa-remove" ng-click="movement.name=''"></i>
+            </div>
+        </div>
+        <br>
+        <div class="input-group">
+            <button class="btn btn-emphasis" ng-show="movement.name"
+                    ng-click="nameCollapsed = true; nameSummaryCollapsed=false; descriptionCollapsed = false">
+                Next
+            </button>
+        </div>
+    </div>
+    <div uib-collapse="nameSummaryCollapsed" ng-animate="'animate'">
+        <p class="lead">
+            <span class="invisible">Movement</span> called
+            <span class="context-menu" ng-click="nameCollapsed = false; nameSummaryCollapsed=true">
+                "<strong>{{movement.name}}</strong>". <i class="icon fa fa-edit"></i>
+            </span>
+        </p>
+    </div>
+
+    <div class="well" uib-collapse="descriptionCollapsed" ng-animate="'animate'">
+        <h3>Provide a call to action that gets people energised!<br>
+            <small>Tell people what the movement is about and why they should care.</small></h3>
+        <div class="form-group">
+            <textarea class="form-control" rows="4" ng-model="movement.description" placeholder="... Remember, you can always change this later."></textarea>
+        </div>
+        <div class="input-group">
+            <button class="btn btn-emphasis"
+                    ng-click="addMovement()">
+                Save
+            </button>
+        </div>
+    </div>
+
+    {{error}}
 </form>
+</div>
