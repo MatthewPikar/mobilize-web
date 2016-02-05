@@ -1,8 +1,8 @@
 'use strict';
 
-var actionService = angular.module('actionService', ['ngResource']);
+var actionsService = angular.module('actionsService', ['ngResource']);
 
-actionService.factory('Action', ['$resource',
+actionsService.factory('Action', ['$resource',
     function($resource){
 
         return $resource('data/actions/:id.json', {}, {

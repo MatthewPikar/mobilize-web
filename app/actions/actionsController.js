@@ -1,8 +1,8 @@
 'use strict';
 
-var actionController = angular.module('actionController', []);
+var actionsController = angular.module('actionsController', []);
 
-actionController.controller('actionController', ['$scope','$state', 'Action', '$stateParams','$q',
+actionsController.controller('actionsController', ['$scope','$state', 'Action', '$stateParams','$q',
     function($scope, $state, Action, $stateParams, $q){
         $scope.actionTemplates = [
             {name: 'mail', url:'actions/mail.html'},
