@@ -7,13 +7,16 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
+<!-------------------- Styles -------------------->
     <link rel="stylesheet" href="components/bootstrap/dist/css/bootstrap.min.css" type='text/css'>
     <link rel="stylesheet" href="assets/css/app.min.css" type='text/css'>
 
+<!-------------------- External Styles -------------------->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css"  type='text/css'>
     <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Lora:400' type='text/css'>
     <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Lato' type='text/css'>
 
+<!-------------------- Libraries -------------------->
     <script src="components/jquery/dist/jquery.min.js"></script>
     <script src="components/angular/angular.min.js"></script>
     <script src="components/angular-animate/angular-animate.min.js"></script>
@@ -24,7 +27,8 @@
     <script src="components/showdown/compressed/Showdown.min.js"></script>
     <script src="components/angular-markdown-directive/markdown.js"></script>
 
-    <script src="app.js"></script>
+<!-------------------- Application Sources -------------------->
+    <script src="app.min.js"></script>
     <script src="layout/moreDirective.min.js"></script>
     <script src="layout/menuController.min.js"></script>
     <script src="search/searchController.min.js"></script>
@@ -39,6 +43,7 @@
     <script src="events/eventsController.min.js"></script>
 </head>
 <body>
+<!-------------------- Top Navigation -------------------->
 <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
     <div class="container-fluid" ng-controller="menuController">
         <div class="navbar-header">
@@ -64,8 +69,10 @@
     </div>
 </nav>
 
+<!-------------------- Content -------------------->
 <div ui-view id="wrap"></div>
 
+<!-------------------- Footer -------------------->
 <footer class="footer">
     <div class="container muted">
         <ul class="list-inline">
