@@ -58,22 +58,22 @@ mobilizeApp.config(['$stateProvider','$urlRouterProvider',
               controller: "movementController"
           })
           .state('movement.members', {
-              url: "/members",
+              url: "/u",
               templateUrl: "movements/members.html",
               controller: "movementController"
           })
           .state('movement.actions', {
-              url: "/action/{actionId}",
+              url: "/a/{actionId}",
               templateUrl: "movements/actions.html",
               controller: "actionController"
           })
           .state('movement.newEvent', {
-              url:"/event/new",
+              url:"/e/new",
               templateUrl: "events/new.html",
               controller: "eventsController"
           })
           .state('movement.event', {
-              url:"/event/{eventId}",
+              url:"/e/{eventId}",
               templateUrl: "events/event.html",
               controller: "eventsController"
           });
