@@ -1,0 +1,22 @@
+<div class="modal-header">
+    <h3 class="modal-title">Add or modify a video</h3>
+</div>
+<div class="modal-body">
+    <p>Enter the YouTube video url:</p>
+    " https://www.youtube.com/embed/<input type="text" ng-model="videoId" placeholder="dQw4w9WgXcQ"> "<br><br>
+    <p class="small muted">
+        If the video doesn't show up below, make sure the url is correct and that the video owner allows embedding.
+        If you don't want ads displaying, the monitization option needs to be
+        <a href="https://support.google.com/youtube/answer/6332943?hl=en">turned off</a>
+        in the video owner's YouTybe account.
+    </p>
+    <div ng-if="videoId">
+        <iframe ng-attr-src="{{videoResource}}" width="250" height="188" frameborder="0" allowfullscreen></iframe>
+    </div>
+    {{ error }}
+</div>
+<div class="modal-footer">
+    <button class="btn btn-emphasis" type="button" ng-show="videoResource" ng-click="ok(url)">Use video</button>
+    <button class="btn btn-understate" type="button" ng-show="videoResource" ng-click="ok('')">Remove video</button>
+    <button class="btn btn-understate" type="button" ng-click="cancel()">Cancel</button>
+</div>

@@ -81,7 +81,7 @@ movementController.controller('newMovementController', ['$scope', '$stateParams'
             mov.$add()
                 .then(function(response){
                     $scope.error = JSON.stringify(response)
-                    $state.go('movement',{movementId:response.resources[0].id})
+                    $state.go('movement.overview',{movementId:response.id})
                 })
                 .catch(function(error){
                     $scope.error = "Ooops!  Something went wrong"

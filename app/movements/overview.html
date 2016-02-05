@@ -1,0 +1,31 @@
+<br>
+<h3 ng-show="$parent.state.active()">
+    <small class="selectable field-control" ng-click="$parent.state.set('description')">
+        <i class="icon fa fa-edit"></i> &nbsp;Modify decription
+    </small>
+</h3>
+<more ng-show="!$parent.state.get('description')" content="{{ movement.description }}" length="400">
+    <p btf-markdown="$parent.text"></p>
+    <a ng-view="$parent.toggleText" class="pull-right" ng-click="$parent.toggle($parent.content,$parent.length)">{{$parent.toggleText}}</a>
+</more>
+<div ng-show="$parent.state.get('description')">
+    <textarea class="form-control" rows="10" ng-model="movement.description"></textarea>
+</div>
+
+
+<h3>Important Dates &nbsp; &nbsp; &nbsp;
+    <small class="selectable field-control" ng-click="go('movement.newEvent')">
+        <i class="icon fa fa-calendar-plus-o"></i> &nbsp;Add Event
+    </small>
+</h3>
+<ul class="breathe">
+    <li ng-repeat="event in events">
+        <span>{{ event.date }}: {{ event.description }}</span>
+    </li>
+</ul>
+<h3>News</h3>
+<ul class="breathe">
+    <li ng-repeat="newsItem in movement.news">
+        <span>{{ newsItem.date }}: {{ newsItem.description }}</span>
+    </li>
+</ul>

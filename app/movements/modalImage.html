@@ -1,0 +1,17 @@
+<div class="modal-header">
+    <h3 class="modal-title">Add or modify the banner image</h3>
+</div>
+<div class="modal-body">
+    <p>Select from available images or <button class="btn-emphasis">Add</button> your own.</p>
+    <div class="row-fluid image-picker row-centered">
+        <div class="col-sm-5  col-xs-12 tile col-centered {{slide.active}}"
+             ng-repeat="slide in slides" ng-click="setActive(slide.id)">
+            <img class="img-responsive" ng-src="assets/img/movements/splash/{{slide.image}}">
+        </div>
+    </div>
+    {{error}}
+</div>
+<div class="modal-footer">
+    <button class="btn btn-emphasis" type="button" ng-click="ok()">Use image</button>
+    <button class="btn btn-understate" type="button" ng-click="cancel()">Cancel</button>
+</div>

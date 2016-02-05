@@ -1,0 +1,93 @@
+<!-------------------- Header -------------------->
+<!--div class="jumbotron tight" ng-style="{'background-image':
+                        'url(&quot;assets/img/movementSplash/' +
+                        $scope.movement.id +
+                        '.jpg)&quot; cover'}"-->
+    <div class="jumbotron tight short" style="background-image:url(assets/img/movements/splash/{{movement.image}})">
+        <div class="container col-sm-6">
+            <div class="" ng-show="state.active()" ng-click="state.set('image')">
+                <span class="selectable"><i class="icon fa fa-image"></i> &nbsp; Modify background</span>
+            </div>
+        </div>
+        <div class=" col-sm-6 pull-right pull-center">
+            <div class="container">
+                <div class="selectable pull-right" ng-show="state.active()" ng-click="state.set('video')">
+                    <i class="icon fa fa-video-camera"></i> &nbsp; Modify video
+                </div>
+            </div>
+            <div class="video-box pull-right" ng-if="videoResource&&!state.get('video')">
+                <iframe ng-attr-src="{{videoResource}}" width="250" height="188" frameborder="0" allowfullscreen></iframe>
+            </div>
+            <div class="video-box pull-right empty" ng-if="!videoResource&&state.active()">
+                <div class="pull-center">No video added.</div>
+            </div>
+        </div>
+
+        <div class="container pull-down col-sm-12">
+            <span ng-show="state.active()" class="selectable" ng-click="state.set('name')">
+                <i class="icon fa fa-edit"></i> &nbsp;Modify title
+            </span>
+            <h2>
+                <div ng-show="!state.get('name')">{{movement.name}}</div>
+                <div ng-show="state.get('name')"><input type="text" ng-model="movement.name"></div>
+            </h2>
+        </div>
+</div>
+
+<div class="container-fluid tight">
+    <div class="row stretch-container">
+        <div class="col-sm-4 col-md-3 sidebar stretch-column">
+<!-------------------- Actions Menu -------------------->
+            <span id="join" class="muted">
+                <button class="btn-emphasis">Join</button> &nbsp;
+                 <span class="small"> others who have taken action!</span>
+            </span>
+            <h5 class="breathe">One click is all it takes:</h5>
+            <ul class="list-unstyled">
+                <li>
+                    <div class="topic"><i class="fa fa-envelope"></i>&nbsp; Mail your representative
+                    <div class="sub-topic">Your click will sign the letter.  We'll do the rest.</div></div>
+                </li>
+                <li>
+                    <div class="topic"><i class="fa fa-phone"></i>&nbsp; Call your representative
+                    <div class="sub-topic">We''l give you the number, talking points, and coach you.</div></div>
+                </li>
+                <li>
+                    <div class="topic"><i class="fa fa-bullhorn"></i>&nbsp; Share with your friends
+                    <div class="sub-topic">Your click wil post to
+                        <i class="fa fa-facebook-official"></i> and <i class="fa fa-twitter"></i></div></div>
+                </li>
+                <li ng-repeat="act in actions">
+                    <span><a ui-sref="movement.actions({actionId: act.id})" ui-sref-opts="{reload: true}">{{act.type}}</a></span>
+                </li>
+            </ul>
+            <button class="btn-emphasis center-block breathe"><i class="fa fa-hand-rock-o"></i> Take action!</button>
+
+        </div>
+        <div class="col-sm-8 col-md-9 content stretch-column">
+<!-------------------- Movement Menu -------------------->
+            <div class="horizontal-menu container-fluid btn-group" ng-init="movementMenuSelection='overview'">
+                <label class="btn" ng-model="movementMenuSelection"
+                       uib-btn-radio="'overview'"
+                       ng-click="go('movement.overview')">
+                    About</label>
+                <label class="btn" ng-model="movementMenuSelection"
+                       uib-btn-radio="'members'"
+                       ng-click="go('movement.members')">
+                    Members</label>
+
+            </div>
+            <label class="btn pull-right menu-toggle" ng-model="movementModify"
+                   uib-btn-checkbox ng-if="!state.active()"
+                   ng-click="state.setActive(true)">
+                <i class="fa fa-gear"></i> Modify movement</label>
+            <label class="btn btn-emphasis pull-right" ng-model="movementModify"
+                   uib-btn-checkbox ng-if="state.active()"
+                   ng-click="state.setActive(false)">
+                <i class="fa fa-gear"></i> Save changes</label>
+
+<!-------------------- Content Template -------------------->
+            <div ui-view class="container-fluid"></div>
+        </div>
+    </div>
+</div>
