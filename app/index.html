@@ -7,50 +7,75 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link rel="stylesheet" href="components/bootstrap/dist/css/bootstrap.css">
-    <link rel="stylesheet" href="assets/css/app.css">
+    <link rel="stylesheet" href="components/bootstrap/dist/css/bootstrap.min.css" type='text/css'>
+    <link rel="stylesheet" href="assets/css/app.css" type='text/css'>
 
-    <script src="components/jquery/dist/jquery.js"></script>
-    <script src="components/angular/angular.js"></script>
-    <script src="components/angular-animate/angular-animate.js"></script>
-    <script src="components/angular-ui-router/release/angular-ui-router.js"></script>
-    <script src="components/angular-resource/angular-resource.js"></script>
-    <script src="components/angular-ui-bootstrap/ui-bootstrap-tpls.js"></script>
-    <script src="components/bluebird/js/browser/bluebird.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css"  type='text/css'>
+    <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Lora:400' type='text/css'>
+    <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Lato' type='text/css'>
+
+    <script src="components/jquery/dist/jquery.min.js"></script>
+    <script src="components/angular/angular.min.js"></script>
+    <script src="components/angular-animate/angular-animate.min.js"></script>
+    <script src="components/angular-ui-router/release/angular-ui-router.min.js"></script>
+    <script src="components/angular-resource/angular-resource.min.js"></script>
+    <script src="components/angular-ui-bootstrap/dist/ui-bootstrap-tpls.js"></script>
+    <script src="components/angular-sanitize/angular-sanitize.min.js"></script>
+    <script src="components/showdown/compressed/Showdown.min.js"></script>
+    <script src="components/angular-markdown-directive/markdown.js"></script>
 
     <script src="app.js"></script>
-    <script src="data/movementService.js"></script>
-    <script src="data/actionService.js"></script>
-    <script src="search/searchController.js"></script>
+    <script src="layout/moreDirective.js"></script>
     <script src="layout/menuController.js"></script>
-    <script src="movement/movementController.js"></script>
-    <script src="actions/actionController.js"></script>
+    <script src="search/searchController.js"></script>
+    <script src="movements/movementService.js"></script>
+    <script src="movements/movementController.js"></script>
+    <script src="movements/modalVideoController.js"></script>
+    <script src="movements/modalImageController.js"></script>
+    <script src="movements/newMovementController.js"></script>
+    <script src="actions/actionsService.js"></script>
+    <script src="actions/actionsController.js"></script>
+    <script src="events/eventsService.js"></script>
+    <script src="events/eventsController.js"></script>
 </head>
 <body>
-<nav class="navbar navbar-fixed-top">
+<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
     <div class="container-fluid" ng-controller="menuController">
         <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" ng-click="isCollapsed=!isCollapsed" aria-expanded="false" aria-controls="navbar">
-                foo
-                <span class="sr-only">Toggle navigation</span>
+            <button type="button" class="navbar-toggle" ng-init="navCollapsed = true" ng-click="navbarCollapsed=!navbarCollapsed">
+                <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" ui-sref="root">Mobilize</a>
+            <a class="navbar-brand" ui-sref="root">MOBILIZE</a>
         </div>
-        <div id="navbar" uib-collapse="isCollapsed">
+        <div class="navbar-collapse" uib-collapse="navbarCollapsed">
             <ul class="nav navbar-nav navbar-right">
                 <li><a ui-sref="newMovement">Start a Movement</a></li>
-                <li><a ui-sref="signIn">Sign In</a></li>
+                <li><a ui-sref="signIn">Sign In &nbsp;|&nbsp; Sign Up</a></li>
             </ul>
             <form class="navbar-form navbar-right" ng-submit="search(query)">
-                <input type="text" class="form-control" ng-model="query" placeholder="Find your cause...">
+                <div class="inner-addon right-addon">
+                    <i class="glyphicon glyphicon-search"></i>
+                    <input type="text" class="form-control search-control" ng-model="query" placeholder="Find your cause...">
+                </div>
             </form>
         </div>
     </div>
 </nav>
 
-<div class="container-fluid" ui-view></div>
+<div ui-view id="wrap"></div>
+
+<footer class="footer">
+    <div class="container muted">
+        <ul class="list-inline">
+            <li>Help</li>
+            <li>Privacy</li>
+            <li>Terms</li>
+            <li>About</li>
+            <li class="pull-right">Copyright &copy; Mobilize 2015</li>
+        </ul>
+    </div>
+</footer>
 </body>
 </html>
-<!--form><input ng-model="query"><input type="submit" ng-click="search(query)" value="search"></form></li-->

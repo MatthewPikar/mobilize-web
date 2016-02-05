@@ -1,19 +1,30 @@
 'use strict';
 
+var API_PATH = "http://localhost:8080/api/0.1/"
+
+
 var mobilizeApp = angular
     .module('mobilizeApp', [
-        //'ngRoute',
+        'ngAnimate',
         'ui.router',
+        'ui.bootstrap',
+        'btford.markdown',
         'menuController',
-        'movementController',
         'searchController',
-        'actionController',
         'movementService',
-        'actionService'
+        'movementController',
+        'modalVideoController',
+        'modalImageController',
+        'newMovementController',
+        'actionsController',
+        'actionsService',
+        'eventsService',
+        'eventsController',
+        'more'
 ]);
 
 // to make bluebird play nicely with angular
-trackDigests(mobilizeApp);
+//trackDigests(mobilizeApp);
 
 mobilizeApp.config(['$stateProvider','$urlRouterProvider',
   function($stateProvider, $urlRouterProvider) {
@@ -31,31 +42,54 @@ mobilizeApp.config(['$stateProvider','$urlRouterProvider',
               controller:"searchController"
           })
           .state('newMovement', {
-              url: "/movement/new",
-              templateUrl: "movement/new.html",
-              controller: "movementController"
+              url: "/m/new",
+              templateUrl: "movements/new.html",
+              controller: "newMovementController"
           })
           .state('movement', {
-              url: "/movement/{movementId}",
-              templateUrl: "movement/movement.html",
+              url: "/m/{movementId}",
+              abstract: true,
+              templateUrl: "movements/movement.html",
               controller: "movementController"
           })
           .state('movement.overview', {
-              url: "/overview",
-              templateUrl: "movement/overview.html",
+              url: "",
+              templateUrl: "movements/overview.html",
               controller: "movementController"
           })
           .state('movement.members', {
               url: "/members",
-              templateUrl: "movement/members.html",
+              templateUrl: "movements/members.html",
               controller: "movementController"
           })
           .state('movement.actions', {
               url: "/action/{actionId}",
-              templateUrl: "movement/actions.html",
+              templateUrl: "movements/actions.html",
               controller: "actionController"
+          })
+          .state('movement.newEvent', {
+              url:"/event/new",
+              templateUrl: "events/new.html",
+              controller: "eventsController"
+          })
+          .state('movement.event', {
+              url:"/event/{eventId}",
+              templateUrl: "events/event.html",
+              controller: "eventsController"
           });
 }]);
+/*
+mobilizeApp.config(
+    ['$animateProvider',
+        function ($animateProvider) {
+            $animateProvider.classNameFilter(/carousel/);
+        }]);
+
+/*
+mobilizeApp.config(['$httpProvider', function($httpProvider){
+    $httpProvider.interceptors.push('resourceInterceptor')
+}])
+
 
 function trackDigests(app) {
     app.run(["$rootScope",function ($rootScope) {
@@ -63,4 +97,4 @@ function trackDigests(app) {
             $rootScope.$evalAsync(cb);
         });
     }]);
-}
+}*/

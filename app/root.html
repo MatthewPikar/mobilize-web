@@ -21,7 +21,7 @@
             <h4>Featured Movements</h4>
             <ul>
                 <li ng-repeat="movement in movements">
-                    <span><a ui-sref="movement({movementId: movement.id})">{{movement.name}}</a></span>
+                    <span><a ui-sref="movement.overview({movementId: movement.id})">{{movement.name}}</a></span>
                 </li>
             </ul>
         </div>
