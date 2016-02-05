@@ -10,14 +10,14 @@ searchController.controller('searchController', ['$scope', '$stateParams', 'Move
         if($stateParams.query) {
             Movement.query({query: $scope.query}).$promise
                 .then(function(response){
-                    $scope.movements = response.resources;
+                    $scope.movements = response;
                     $scope.movementStatus = 'success';
                 }).catch(function(error){ $scope.movementStatus = 'error'; });
         }
         else {
             Movement.query().$promise
                 .then(function(response){
-                    $scope.movements = response.resources;
+                    $scope.movements = response;
                     $scope.movementStatus = 'success';
                 }).catch(function(error){ $scope.movementStatus = 'error'; });
         }
