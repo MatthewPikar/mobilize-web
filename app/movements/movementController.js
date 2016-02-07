@@ -3,7 +3,8 @@
 var movementController = angular.module('movementController', [])
 
 movementController.controller('movementController', ['$scope', '$stateParams', '$state', '$uibModal', '$sce', 'Movement',
-    function($scope, $stateParams, $state, $uibModal, $sce, Movement) {
+    'Event',
+    function($scope, $stateParams, $state, $uibModal, $sce, Movement, Event) {
         // Initialization
         if ($stateParams.movementId) {
             $scope.movement = new Movement()
@@ -12,6 +13,7 @@ movementController.controller('movementController', ['$scope', '$stateParams', '
                     angular.extend($scope.movement, response)
                     $scope.videoResource = $sce.trustAsResourceUrl($scope.movement.video)
                     $scope.description = $scope.movement.description
+                    $scope.queryEvents()
                 }).catch(function(error){ $scope.error = error })
         }
         else {
@@ -22,6 +24,10 @@ movementController.controller('movementController', ['$scope', '$stateParams', '
                     $scope.movementStatus = 'success'
                 }).catch(function(error){ $scope.movementStatus = 'error' })
         }
+
+        $scope.now = new Date(Date.now())
+
+        $scope.MONTHS = ['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC','None']
 
         // State flow
         $scope.state = {
@@ -103,7 +109,6 @@ movementController.controller('movementController', ['$scope', '$stateParams', '
                     $scope.error = error
                 })
         }
-
         $scope.deleteMovement = function(){
             $scope.movement.$remove()
                 .then(function(response){
@@ -113,9 +118,19 @@ movementController.controller('movementController', ['$scope', '$stateParams', '
 
             return $scope.movementStatus
         }
+        $scope.queryEvents = function() {
+            $scope.events = []
+            Event.query().$promise
+                .then(function (response) {
+                    for (var e=0, len=response.length; e<len; e++) {
+                        $scope.events[e] = response[e]
+                        $scope.events[e].date = response[e].date ? new Date(response[e].date) : ''
+                    }
+                }).catch(function(error) { $scope.error = error })
+        }
 
         // Navigation
-        $scope.go = function(state){
-            $state.go(state)
+        $scope.go = function(state, params){
+            $state.go(state, params)
         }
     }])
