@@ -27,10 +27,10 @@
             <span ng-show="state.active()" class="selectable" ng-click="state.set('name')">
                 <i class="icon fa fa-edit"></i> &nbsp;Modify title
             </span>
-            <h2>
+            <h1>
                 <div ng-show="!state.get('name')">{{movement.name}}</div>
                 <div ng-show="state.get('name')"><input type="text" ng-model="movement.name"></div>
-            </h2>
+            </h1>
         </div>
 </div>
 
