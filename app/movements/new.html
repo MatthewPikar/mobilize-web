@@ -33,7 +33,7 @@
     <div uib-collapse="topicSummaryCollapsed" ng-animate="'animate'">
         <p class="lead">
             Movement to
-            <span class="context-menu" ng-click="topicCollapsed=false; topicSummaryCollapsed=true">
+            <span class="selectable" ng-click="topicCollapsed=false; topicSummaryCollapsed=true">
                 <strong>{{movement.topic}}</strong> <i class="icon fa fa-edit" ></i>
             </span>
         </p>
@@ -71,7 +71,7 @@
     <div uib-collapse="typeSummaryCollapsed" ng-animate="'animate'">
         <p class="lead">
             <span class="invisible">Movement</span> in
-            <span class="context-menu" ng-click="typeCollapsed = false; typeSummaryCollapsed=true">
+            <span class="selectable" ng-click="typeCollapsed = false; typeSummaryCollapsed=true">
                 <strong>{{movement.type}}</strong> <i class="icon fa fa-edit"></i>
             </span>
         </p>
@@ -96,7 +96,7 @@
     <div uib-collapse="nameSummaryCollapsed" ng-animate="'animate'">
         <p class="lead">
             <span class="invisible">Movement</span> called
-            <span class="context-menu" ng-click="nameCollapsed = false; nameSummaryCollapsed=true">
+            <span class="selectable" ng-click="nameCollapsed = false; nameSummaryCollapsed=true">
                 "<strong>{{movement.name}}</strong>". <i class="icon fa fa-edit"></i>
             </span>
         </p>
