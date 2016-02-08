@@ -3,8 +3,7 @@
 var movementController = angular.module('movementController', [])
 
 movementController.controller('movementController', ['$scope', '$stateParams', '$state', '$uibModal', '$sce', 'Movement',
-    'Event',
-    function($scope, $stateParams, $state, $uibModal, $sce, Movement, Event) {
+    function($scope, $stateParams, $state, $uibModal, $sce, Movement) {
         // Initialization
         if ($stateParams.movementId) {
             $scope.movement = new Movement()
@@ -13,7 +12,6 @@ movementController.controller('movementController', ['$scope', '$stateParams', '
                     angular.extend($scope.movement, response)
                     $scope.videoResource = $sce.trustAsResourceUrl($scope.movement.video)
                     $scope.description = $scope.movement.description
-                    $scope.queryEvents()
                 }).catch(function(error){ $scope.error = error })
         }
         else {
@@ -117,16 +115,6 @@ movementController.controller('movementController', ['$scope', '$stateParams', '
                 }).catch(function(error){ $scope.movementStatus = 'error' })
 
             return $scope.movementStatus
-        }
-        $scope.queryEvents = function() {
-            $scope.events = []
-            Event.query().$promise
-                .then(function (response) {
-                    for (var e=0, len=response.length; e<len; e++) {
-                        $scope.events[e] = response[e]
-                        $scope.events[e].date = response[e].date ? new Date(response[e].date) : ''
-                    }
-                }).catch(function(error) { $scope.error = error })
         }
 
         // Navigation
