@@ -1,0 +1,94 @@
+<h2>
+    <span ng-show="eventState.get('new')">New Event</span>
+    <span ng-show="!eventState.get('new')">Event Detail</span>
+     &nbsp; &nbsp; <small ng-show="!eventState.get('edit')" class="selectable" ng-click="eventState.toggle('edit')">
+       <i class="icon fa fa-edit"></i> &nbsp;Modify event
+    </small>
+</h2>
+
+<div class="form-horizontal">
+    <div class="row breathe-small" ng-show="eventState.get('edit')">
+        <label for="event.name" class="control-label col-xs-3 tight">The event,</label>
+        <div class="col-xs-9" ng-class="{'has-error': !event.name}">
+            <input type="text" id="event.name" class="form-control" ng-model="event.name"
+                   placeholder="Ex.: School Board zoning vote">
+        </div>
+    </div>
+    <div class="row" ng-show="!eventState.get('edit')">
+        <label for="event.name" class="control-label col-xs-3 tight">The event,</label>
+        <div class="col-xs-9" ng-class="{'has-error': !event.name}">
+            <p class="form-control-static">{{event.name}}</p>
+        </div>
+    </div>
+
+    <div class="row breathe-small" ng-show="eventState.get('edit')">
+        <label class="control-label col-xs-3 tight">takes place on</label>
+        <div class="col-xs-9">
+            <div class="col-sm-3 col-xs-4 tight"><p class="form-control-static">{{date.day}},</p></div>
+            <div class="col-sm-3 col-xs-4 tight" ng-class="{'has-error': date.monthError}">
+                <input id="month" type="text" class="form-control" ng-model="date.month"
+                       uib-typeahead="month for month in date.MONTHS | filter:$viewValue | limitTo:5"
+                       typeahead-select-on-exact="true" typehead-editable="false">
+            </div>
+            <div class="col-sm-2 col-xs-2 tight" ng-class="{'has-error': date.dateError}">
+                <input id="date" type="number" size="2" class="form-control" ng-model="date.date"
+                       uib-typeahead="date for date in date.DATES | filter:$viewValue | limitTo:5"
+                       typehead-editable="false">
+            </div>
+            <div class="col-sm-1 col-xs-2 tight"><p class="form-control-static">{{date.suffix}},</p></div>
+            <div class="col-sm-3 col-xs-12 tight" ng-class="{'has-error': date.yearError}">
+                <input id="year" type="number" size="4" class="form-control" ng-model="date.year"
+                       uib-typeahead="year for year in date.YEARS | filter:$viewValue | limitTo:5"
+                       typehead-editable="false">
+            </div>
+        </div>
+    </div>
+    <div class="row" ng-show="!eventState.get('edit')">
+        <label class="control-label col-xs-3 tight">takes place on</label>
+        <div class="col-xs-9">
+            <p class="form-control-static"><span class="form-control-static">
+                {{date.day}}, {{date.month}} {{date.date}}{{date.suffix}}, {{date.year}}
+            </span></p>
+        </div>
+    </div>
+
+    <div class="row breathe-small" ng-show="eventState.get('edit')">
+        <label for="event.location" class="control-label col-xs-3 tight">and is located in</label>
+        <div class="col-xs-9" ng-show="eventState.get('edit')">
+            <input id="event.location" type="text" class="form-control" ng-model="event.location"
+                   placeholder="Ex.: Town Hall, 314 Nolane Ave, Notownville, NA">
+        </div>
+    </div>
+    <div class="row" ng-show="!eventState.get('edit')">
+        <label for="event.location" class="control-label col-xs-3 tight">and is located in</label>
+        <div class="col-xs-9" ng-show="!eventState.get('edit')">
+            <p class="form-control-static">{{event.location}}</p>
+        </div>
+    </div>
+</div>
+
+
+<div class="row breathe">
+    <div class="col-xs-12">
+        <label for="event.description" class="control-label">Additional information:</label>
+        <textarea ng-show="eventState.get('edit')" id="event.description" class="form-control" rows="10" ng-model="event.description"></textarea>
+        <more ng-show="!eventState.get('edit')" content="{{ event.description }}" length="800">
+            <p btf-markdown="$parent.text"></p>
+            <a ng-view="$parent.toggleText" class="pull-right" ng-click="$parent.toggle($parent.content,$parent.length)">{{$parent.toggleText}}</a>
+        </more>
+
+        <div ng-show="!eventState.get('new') && event.name && eventState.get('edit')" class="input-group breathe col-xs-12">
+            <button class="btn btn-understate" type="button" ng-click="deleteEvent(); go('movement.overview',{movementId: movementId})">Delete this event</button>
+            <div class="pull-right">
+                <button class="btn btn-emphasis" ng-click="eventState.toggle('edit'); modifyEvent()">Save</button>
+                &nbsp;
+                <button class="btn btn-understate" type="button" ng-click="eventState.toggle('edit'); loadEvent(event.id)">Cancel</button>
+            </div>
+        </div>
+        <div ng-show="eventState.get('new')" class="input-group pull-right breathe">
+            <button ng-show="event.name && eventState.get('edit')" class="btn btn-emphasis" ng-click="eventState.set('view'); addEvent()">Add</button>
+            &nbsp;
+            <button class="btn btn-understate" type="button" ng-click="go('movement.overview',{movementId: movementId})">Cancel</button>
+        </div>
+    </div>
+</div>
