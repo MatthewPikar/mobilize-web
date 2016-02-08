@@ -5,6 +5,7 @@ var movementController = angular.module('movementController', [])
 movementController.controller('movementController', ['$scope', '$stateParams', '$state', '$uibModal', '$sce', 'Movement',
     function($scope, $stateParams, $state, $uibModal, $sce, Movement) {
         // Initialization
+        $scope.sourceId = $stateParams.movementId
         if ($stateParams.movementId) {
             $scope.movement = new Movement()
             Movement.get({id: $stateParams.movementId}).$promise
