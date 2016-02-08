@@ -5,44 +5,31 @@ var eventsController = angular.module('eventsController', [])
 eventsController.controller('eventsController', ['$scope', '$stateParams', '$state', 'Event',
     function($scope, $stateParams, $state, Event) {
         // State flow
-        var state = {
-            _zones: { description:false, date:false},
-            _active: false,
-            off: function() {
-                for (var zone in $scope.state._zones)
-                    if ($scope.state._zones.hasOwnProperty(zone)) $scope.state._zones[zone] = false
-            },
-            setActive: function(state){
-                if (state === true) $scope.state._active = true
-                else if (state === false) {
-                    $scope.state.off()
-                    $scope.state._active = false
-                    $scope.modifyMovement()
-                }
-            },
-            active: function(){
-                return $scope.state._active
-            },
-            set: function(zone) {
-                var currentState = $scope.state._zones[zone]
-                $scope.state.off()
-                $scope.state._zones[zone] = !currentState
-                if (zone === 'video' && $scope.state._zones[zone] === true) $scope.openVideoModal()
-                else if (zone === 'image'  && $scope.state._zones[zone] === true) $scope.openImageModal()
-            },
-            get:  function(state){ return $scope.state._zones[state] }
+        function State (zones){
+            this._zones = {}
+            for(var z= 0, len=zones.length; z<len; z++){ this._zones[zones[z]] = false }
         }
-        $scope.state = state
+        ( function () {
+            this.off = function () {
+                for (var zone in this._zones)
+                    if (this._zones.hasOwnProperty(zone)) this._zones[zone] = false
+            }
+            this.toggle = function (zone) {
+                this._zones[zone] = !this._zones[zone]
+            }
+            this.set = function (zone) {
+                var currentState = this._zones[zone]
+                this.off()
+                this._zones[zone] = !currentState
+            }
+            this.get = function (state){ return this._zones[state] }
+        }).call(State.prototype)
+        $scope.eventState = new State(['edit','new','view'])
 
-        function Datetime(value, offset) {
-            this._datetime = new Date()
-            this.set(value, offset)
-            //this._datetime = new Date((value ? value : Date.now()) + (offset ? offset : 0))
-        }
-        (function(){
+        function Datetime(value) { this.set(value) }
+        ( function () {
             this.DAYS = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday']
             this.MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December']
-
             this.DATES = []
             for (var d=1; d<=31; d++){ this.DATES.push(d) }
 
@@ -50,21 +37,22 @@ eventsController.controller('eventsController', ['$scope', '$stateParams', '$sta
             var now = new Date(Date.now())
             for (var y=now.getFullYear(); y<=(now.getFullYear()+10); y++){ this.YEARS.push(y) }
 
+            var _datetime
             var month, date, year, monthError=false, dateError=false, yearError=false
 
-            this.set =  function(value, offset){
-                this._datetime.setTime((value ? value : Date.now()) + (offset ? offset : 0))
-                year = this._datetime.getFullYear()
-                month = this.MONTHS[this._datetime.getMonth()]
-                date = this._datetime.getDate()
+            this.set =  function(value){
+                _datetime = new Date(value)
+                year = _datetime.getFullYear()
+                month = this.MONTHS[_datetime.getMonth()]
+                date = _datetime.getDate()
             }
             this.get =  function () {
                 if(!month || !date || !year || monthError || dateError || yearError) return ''
-                else return this._datetime.toISOString()
+                else return _datetime.toISOString()
             }
 
             Object.defineProperties(this, {
-                day:{get: function () {return this.DAYS[this._datetime.getDay()]}},
+                day:{get: function () {return this.DAYS[_datetime.getDay()]}},
                 month: {
                     get: function () {return month},
                     set: function (newMonth) {
@@ -73,7 +61,7 @@ eventsController.controller('eventsController', ['$scope', '$stateParams', '$sta
 
                         for (var i= 0; i<12; i++){
                             if (this.MONTHS[i].toLowerCase() === newMonth.toLowerCase()) {
-                                this._datetime.setMonth(i)
+                                _datetime.setMonth(i)
                                 monthError=false
                                 break
                             }
@@ -89,7 +77,7 @@ eventsController.controller('eventsController', ['$scope', '$stateParams', '$sta
                         else dateError=true
 
                         if ((newDate > 0) && (newDate <= 31)) {
-                            this._datetime.setDate(newDate)
+                            _datetime.setDate(newDate)
                             dateError = false
                         }
                         date = newDate
@@ -97,7 +85,7 @@ eventsController.controller('eventsController', ['$scope', '$stateParams', '$sta
                 },
                 dateError:{get:function(){return dateError}},
                 suffix:{get: function () {
-                    var date = this._datetime.getDate()
+                    var date = _datetime.getDate()
                     switch (date){
                         case 1: return 'st'
                         case 2: return 'nd'
@@ -112,7 +100,7 @@ eventsController.controller('eventsController', ['$scope', '$stateParams', '$sta
                         else yearError=true
 
                         if ((newYear > 1900) && (newYear < 2100)) {
-                            this._datetime.setYear(newYear)
+                            _datetime.setYear(newYear)
                             yearError = false
                         }
                         year = newYear
@@ -120,36 +108,39 @@ eventsController.controller('eventsController', ['$scope', '$stateParams', '$sta
                 },
                 yearError:{get:function(){return yearError}},
                 hours: {
-                    get: function () {return this._datetime.getHours()},
-                    set: function (hours) { this._datetime.setHours(hours)}
+                    get: function () {return _datetime.getHours()},
+                    set: function (hours) { _datetime.setHours(hours)}
                 },
                 minutes: {
-                    get: function () {return this._datetime.getMinutes()},
-                    set: function (minutes) { this._datetime.setMinutes(minutes)}
+                    get: function () {return _datetime.getMinutes()},
+                    set: function (minutes) { _datetime.setMinutes(minutes)}
                 }
             })
         }).call(Datetime.prototype)
 
         // Initialization
         if ($stateParams.eventId) {
-            Event.get({id: $stateParams.eventId}).$promise
-                .then(function (response) {
-                    angular.extend($scope.event, response)
-                    //$scope.datetime.set($scope.event.date)
-                    //$scope.event.date = $scope.datetime.get()
-                    $scope.date = new Datetime($scope.event.date)
-                    state.setActive(false)
-                }).catch(function(error){ $scope.error = error })
+            loadEvent($stateParams.eventId)
+            $scope.eventState.set('view')
         }
         else {
             $scope.event = new Event()
-            //$scope.datetime.set(2 * 7 * 24 * 60 * 60 * 1000) //set date two weeks from now
-            //$scope.event.date = $scope.datetime.get()
-            $scope.date = new Datetime(null,2 * 7 * 24 * 60 * 60 * 1000)
-            state.setActive(true)
+            $scope.date = new Datetime(Date.now() + 2 * 7 * 24 * 60 * 60 * 1000)
+            $scope.eventState.set('new')
+            $scope.eventState.toggle('edit')
         }
 
         // Resource Control
+        $scope.loadEvent = loadEvent
+        function loadEvent (eventId) {
+            $scope.event = new Event()
+            Event.get({id: eventId}).$promise
+                .then(function (response) {
+                    angular.extend($scope.event, response)
+                    $scope.date = new Datetime($scope.event.date)
+                }).catch(function(error){ $scope.error = error })
+        }
+
         $scope.addEvent = function () {
             $scope.event.date = $scope.date.get()
             $scope.event.sourceId = $stateParams.movementId
@@ -165,11 +156,13 @@ eventsController.controller('eventsController', ['$scope', '$stateParams', '$sta
         }
 
         $scope.modifyEvent = function () {
+            $scope.event.date = $scope.date.get()
             $scope.event.$modify()
                 .then(function(response){
                     angular.extend($scope.event, response)
                 })
                 .catch(function(error){
+                    console.log(error)
                     $scope.error = error
                 })
         }
