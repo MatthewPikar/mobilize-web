@@ -69,7 +69,7 @@ mobilizeApp.config(['$stateProvider','$urlRouterProvider',
           })
           .state('movement.newEvent', {
               url:"/e/new",
-              templateUrl: "events/new.html",
+              templateUrl: "events/event.html",
               controller: "eventsController"
           })
           .state('movement.event', {
