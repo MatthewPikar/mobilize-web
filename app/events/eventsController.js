@@ -4,6 +4,7 @@ var eventsController = angular.module('eventsController', [])
 
 eventsController.controller('eventsController', ['$scope', '$stateParams', '$state', 'Event',
     function($scope, $stateParams, $state, Event) {
+        $scope.movementId = $stateParams.movementId
         // State flow
         function State (zones){
             this._zones = {}
@@ -120,7 +121,9 @@ eventsController.controller('eventsController', ['$scope', '$stateParams', '$sta
 
         // Initialization
         if ($stateParams.eventId) {
-            loadEvent($stateParams.eventId)
+            $scope.event = loadEvent($stateParams.eventId, function(res) {
+                $scope.date = new Datetime(res.date)
+            })
             $scope.eventState.set('view')
         }
         else {
@@ -132,15 +135,36 @@ eventsController.controller('eventsController', ['$scope', '$stateParams', '$sta
 
         // Resource Control
         $scope.loadEvent = loadEvent
-        function loadEvent (eventId) {
-            $scope.event = new Event()
+        function loadEvent (eventId, res) {
+            var event = new Event()
             Event.get({id: eventId}).$promise
                 .then(function (response) {
-                    angular.extend($scope.event, response)
-                    $scope.date = new Datetime($scope.event.date)
+                    angular.extend(event, response)
+                    res(event)
                 }).catch(function(error){ $scope.error = error })
+            return event
         }
+        $scope.queryEvents = function(query) {
+            var events = [], q = query ? {query: query} : {}
+            console.log('QUERY: ' + JSON.stringify(q))
+            Event.query(q).$promise
+                .then(function (response) {
+                    console.log(JSON.stringify(response))
+                    if (Array.isArray(response)) {
+                        for (var e = 0, len = response.length; e < len; e++) {
+                            events[e] = response[e]
+                            events[e].date = response[e].date ? new Date(response[e].date) : ''
+                        }
+                        $scope.events = events
+                    }
+                    else  $scope.events = []
+                }).catch(function(error) {
+                    console.log(error)
+                    $scope.error = error
+                })
 
+            return $scope.events
+        }
         $scope.addEvent = function () {
             $scope.event.date = $scope.date.get()
             $scope.event.sourceId = $stateParams.movementId
@@ -154,7 +178,6 @@ eventsController.controller('eventsController', ['$scope', '$stateParams', '$sta
                     $scope.error = error
                 })
         }
-
         $scope.modifyEvent = function () {
             $scope.event.date = $scope.date.get()
             $scope.event.$modify()
@@ -166,13 +189,13 @@ eventsController.controller('eventsController', ['$scope', '$stateParams', '$sta
                     $scope.error = error
                 })
         }
-
         $scope.deleteEvent = function () {
             $scope.event.$remove()
                 .then(function(response){
                     return true
                 })
                 .catch(function(error){
+                    console.log(error)
                     $scope.error = error
                 })
         }
