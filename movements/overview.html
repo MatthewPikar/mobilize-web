@@ -9,7 +9,7 @@
     <label class="btn pull-right" ng-view="$parent.toggleText" ng-click="$parent.toggle($parent.content,$parent.length)">
         {{$parent.toggleText}}
     </label>
-    </more>
+</more>
 <div ng-show="$parent.state.get('description')">
     <textarea class="form-control" rows="10" ng-model="movement.description"></textarea>
 </div>
@@ -40,9 +40,20 @@
     </li>
 </ul>
 
-<h2>Posts</h2>
-<ul class="breathe">
-    <li ng-repeat="newsItem in movement.news">
-        <span>{{ newsItem.date }}: {{ newsItem.description }}</span>
+<h2>Posts &nbsp; &nbsp; &nbsp;
+    <small class="selectable field-control" ng-click="go('movement.newPost')">
+        <i class="icon fa fa-quote-right"></i> &nbsp;Add Post
+    </small>
+</h2>
+<ul class="list-unstyled" ng-controller="postsController" ng-init="queryPosts({sourceId:$parent.sourceId})">
+    <li ng-repeat="post in posts">
+        <h3><a ui-sref="movement.post({postId: post.id})">{{post.title}}</a></h3>
+        <div class="pull-right"><small>{{post.date.toDateString()}}</small></div>
+        <more content="{{post.content}}" length="400">
+            <p btf-markdown="$parent.text"></p>
+            <label class="btn pull-right" ng-view="$parent.toggleText" ng-click="$parent.toggle($parent.content,$parent.length)">
+                {{$parent.toggleText}}
+            </label>
+        </more>
     </li>
 </ul>
