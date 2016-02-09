@@ -7,6 +7,10 @@ body {
     font-family: lato, sans-serif;
     height: 95%;
 }
+.content {
+    padding-left: 30px;
+    padding-right: 30px;
+}
 #wrap {
     min-height: 100%;
 }
@@ -18,11 +22,13 @@ body {
     font-size: 20px;
 }
 .h2, h2, .h4, .h5, .h6, h4, h5, h6 {
-    margin-top: 30px;
+    margin-top: 40px;
     margin-bottom: 7px;
 }
 p {
     font-family: Lora, serif;
+    font-size: large;
+    font-kerning: normal;
 }
 
 .muted {
@@ -39,6 +45,10 @@ p {
 .breathe-small {
     margin-top: 5px;
     margin-bottom: 5px;
+}
+.breathe-large {
+    margin-top: 50px;
+    margin-bottom: 50px;
 }
 .tight{
     margin: 0;
@@ -217,6 +227,7 @@ p {
     .stretch-column {
         display: table-cell;
         float: none;
+        vertical-align: top;
     }
 }
 
@@ -330,7 +341,8 @@ p {
 .btn-emphasis,
 .btn-emphasis:hover,
 .btn-emphasis:visited,
-.btn-emphasis:active {
+.btn-emphasis:active,
+.btn-emphasis.active{
     color: white;
     background-color: #FF0000;
     border-width:0;

@@ -66,7 +66,7 @@
         </div>
         <div class="col-sm-8 col-md-9 content stretch-column">
 <!-------------------- Movement Menu -------------------->
-            <div class="horizontal-menu container-fluid btn-group" ng-init="movementMenuSelection='overview'">
+            <div class="horizontal-menu col-xs-12 btn-group" ng-init="movementMenuSelection='overview'">
                 <label class="btn" ng-model="movementMenuSelection"
                        uib-btn-radio="'overview'"
                        ng-click="go('movement.overview')">
@@ -76,18 +76,18 @@
                        ng-click="go('movement.members')">
                     Members</label>
 
-            </div>
-            <label class="btn pull-right menu-toggle" ng-model="movementModify"
-                   uib-btn-checkbox ng-if="!state.active()"
-                   ng-click="state.setActive(true)">
-                <i class="fa fa-gear"></i> Modify movement</label>
-            <label class="btn btn-emphasis pull-right" ng-model="movementModify"
-                   uib-btn-checkbox ng-if="state.active()"
-                   ng-click="state.setActive(false)">
-                <i class="fa fa-gear"></i> Save changes</label>
 
+                <label class="btn pull-right menu-toggle" ng-model="movementModify"
+                       ng-if="!state.active()"
+                       ng-click="state.setActive(true)">
+                    <i class="fa fa-gear"></i> Modify movement</label>
+                <label class="btn btn-emphasis active pull-right" ng-model="movementModify"
+                       ng-if="state.active()"
+                       ng-click="state.setActive(false)">
+                    <i class="fa fa-gear"></i> Save changes</label>
+            </div>
 <!-------------------- Content Template -------------------->
-            <div ui-view class="container-fluid"></div>
+            <div ui-view class="container-fluid breathe"></div>
         </div>
     </div>
 </div>
