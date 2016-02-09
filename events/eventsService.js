@@ -17,9 +17,7 @@ eventsService.factory('Event', ['$resource',
                 query:{
                     method:'GET',
                     params: { query: '@query' },
-                    interceptor: { response: function(response){
-                        console.log(response)
-                        return response.data.resources } }
+                    interceptor: { response: function(response){ return response.data.resources } }
                 },
                 get: {
                     method: 'GET',
