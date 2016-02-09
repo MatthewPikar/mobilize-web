@@ -1,4 +1,4 @@
-'use strict';
+'use strict'
 
 var API_PATH = "http://localhost:8080/api/0.1/"
 
@@ -20,15 +20,17 @@ var mobilizeApp = angular
         'actionsService',
         'eventsService',
         'eventsController',
+        'postsService',
+        'postsController',
         'more'
-]);
+])
 
 // to make bluebird play nicely with angular
 //trackDigests(mobilizeApp);
 
 mobilizeApp.config(['$stateProvider','$urlRouterProvider',
   function($stateProvider, $urlRouterProvider) {
-      $urlRouterProvider.otherwise("/root");
+      $urlRouterProvider.otherwise("/root")
 
       $stateProvider
           .state('root', {
@@ -67,6 +69,16 @@ mobilizeApp.config(['$stateProvider','$urlRouterProvider',
               templateUrl: "movements/actions.html",
               controller: "actionController"
           })
+          .state('movement.newPost', {
+              url:"/p/new",
+              templateUrl: "posts/post.html",
+              controller: "postsController"
+          })
+          .state('movement.post', {
+              url:"/p/{postId}",
+              templateUrl: "posts/post.html",
+              controller: "postsController"
+          })
           .state('movement.newEvent', {
               url:"/e/new",
               templateUrl: "events/event.html",
@@ -76,8 +88,8 @@ mobilizeApp.config(['$stateProvider','$urlRouterProvider',
               url:"/e/{eventId}",
               templateUrl: "events/event.html",
               controller: "eventsController"
-          });
-}]);
+          })
+}])
 /*
 mobilizeApp.config(
     ['$animateProvider',
