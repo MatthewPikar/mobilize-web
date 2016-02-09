@@ -1,0 +1,55 @@
+<h2>
+    <div ng-class="{'has-error': !post.title}" ng-show="postState.get('edit')">
+        <input type="text" id="post.title" class="form-control" ng-model="post.title"
+               placeholder="Give your post a title">
+    </div>
+    <div ng-show="!postState.get('edit')">
+        <span class="breathe">{{post.title}}</span>
+         &nbsp; &nbsp; <small class="selectable" ng-click="postState.toggle('edit')">
+           <i class="icon fa fa-edit"></i> &nbsp;Modify post
+        </small>
+        <br>
+    </div>
+</h2>
+<small>{{date.toDateString()}}</small><br><br>
+<div class="row">
+    <div class="col-xs-12">
+        <div ng-class="{'has-error': !post.content}">
+            <textarea   ng-show="postState.get('edit')" id="post.content" ng-model="post.content"
+                        class="form-control" rows="10"></textarea>
+        </div>
+        <more ng-show="!postState.get('edit')" content="{{ post.content }}" length="800" class="breathe">
+            <p btf-markdown="$parent.text"></p>
+            <a ng-view="$parent.toggleText" class="pull-right" ng-click="$parent.toggle($parent.content,$parent.length)">
+                {{$parent.toggleText}}
+            </a>
+        </more>
+
+        <div ng-show="!postState.get('new') && postState.get('edit')" class="input-group breathe-large col-xs-12">
+            <button class="btn btn-understate" type="button" ng-click="deletePost();
+                    go('movement.overview',{movementId: movementId})">
+                Delete this post
+            </button>
+            <div class="pull-right">
+                <button class="btn btn-emphasis" ng-click="postState.toggle('edit'); modifyPost()"
+                        ng-show="post.title && post.content">
+                    Save
+                </button>
+                &nbsp;
+                <button class="btn btn-understate" type="button" ng-click="postState.toggle('edit'); loadPost(post.id)">
+                    Cancel
+                </button>
+            </div>
+        </div>
+        <div ng-show="postState.get('new')" class="input-group pull-right breathe">
+            <button ng-show="post.title && post.content && postState.get('edit')" class="btn btn-emphasis"
+                    ng-click="postState.set('view'); addPost()">
+                Add
+            </button>
+            &nbsp;
+            <button class="btn btn-understate" type="button" ng-click="go('movement.overview',{movementId: movementId})">
+                Cancel
+            </button>
+        </div>
+    </div>
+</div>
