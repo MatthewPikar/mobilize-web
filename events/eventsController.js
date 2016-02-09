@@ -146,10 +146,8 @@ eventsController.controller('eventsController', ['$scope', '$stateParams', '$sta
         }
         $scope.queryEvents = function(query) {
             var events = [], q = query ? {query: query} : {}
-            console.log('QUERY: ' + JSON.stringify(q))
             Event.query(q).$promise
                 .then(function (response) {
-                    console.log(JSON.stringify(response))
                     if (Array.isArray(response)) {
                         for (var e = 0, len = response.length; e < len; e++) {
                             events[e] = response[e]
