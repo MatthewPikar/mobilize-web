@@ -2,9 +2,9 @@
 
 var postsService = angular.module('postsService', ['ngResource']);
 
-postsService.factory('Event', ['$resource',
+postsService.factory('Post', ['$resource',
     function($resource){
-        return $resource(API_PATH + 'events/:id', { id:'@id' },
+        return $resource(API_PATH + 'posts/:id', { id:'@id' },
             {
                 add: {
                     method:'POST',
