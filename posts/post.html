@@ -1,10 +1,10 @@
 <h2>
-    <div ng-class="{'has-error': !post.title}" ng-show="postState.get('edit')">
-        <input type="text" id="post.title" class="form-control" ng-model="post.title"
+    <div ng-class="{'has-error': !post.name}" ng-show="postState.get('edit')">
+        <input type="text" id="post.name" class="form-control" ng-model="post.name"
                placeholder="Give your post a title">
     </div>
     <div ng-show="!postState.get('edit')">
-        <span class="breathe">{{post.title}}</span>
+        <span class="breathe">{{post.name}}</span>
          &nbsp; &nbsp; <small class="selectable" ng-click="postState.toggle('edit')">
            <i class="icon fa fa-edit"></i> &nbsp;Modify post
         </small>
@@ -25,14 +25,14 @@
             </a>
         </more>
 
-        <div ng-show="!postState.get('new') && postState.get('edit')" class="input-group breathe-large col-xs-12">
+        <div ng-show="!postState.get('new') && postState.get('edit')" class="input-group breathe col-xs-12">
             <button class="btn btn-understate" type="button" ng-click="deletePost();
                     go('movement.overview',{movementId: movementId})">
                 Delete this post
             </button>
             <div class="pull-right">
                 <button class="btn btn-emphasis" ng-click="postState.toggle('edit'); modifyPost()"
-                        ng-show="post.title && post.content">
+                        ng-show="post.name && post.content">
                     Save
                 </button>
                 &nbsp;
@@ -42,7 +42,7 @@
             </div>
         </div>
         <div ng-show="postState.get('new')" class="input-group pull-right breathe">
-            <button ng-show="post.title && post.content && postState.get('edit')" class="btn btn-emphasis"
+            <button ng-show="post.name && post.content && postState.get('edit')" class="btn btn-emphasis"
                     ng-click="postState.set('view'); addPost()">
                 Add
             </button>
