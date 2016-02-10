@@ -47,7 +47,7 @@
 </h2>
 <ul class="list-unstyled" ng-controller="postsController" ng-init="queryPosts({sourceId:$parent.sourceId})">
     <li ng-repeat="post in posts">
-        <h3><a ui-sref="movement.post({postId: post.id})">{{post.title}}</a></h3>
+        <h3><a ui-sref="movement.post({postId: post.id})">{{post.name}}</a></h3>
         <div class="pull-right"><small>{{post.date.toDateString()}}</small></div>
         <more content="{{post.content}}" length="400">
             <p btf-markdown="$parent.text"></p>
