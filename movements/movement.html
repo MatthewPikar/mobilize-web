@@ -1,48 +1,52 @@
 <!-------------------- Header -------------------->
-<!--div class="jumbotron tight" ng-style="{'background-image':
-                        'url(&quot;assets/img/movementSplash/' +
-                        $scope.movement.id +
-                        '.jpg)&quot; cover'}"-->
-    <div class="jumbotron tight short" style="background-image:url(assets/img/movements/splash/{{movement.image}})">
-        <div class="container col-sm-6">
-            <div class="" ng-show="state.active()" ng-click="state.set('image')">
-                <span class="selectable"><i class="icon fa fa-image"></i> &nbsp; Modify background</span>
+<div class="jumbotron tight short background" style="background-image:url(assets/img/movements/splash/{{movement.image}})">
+</div>
+<div class="jumbotron tight short">
+    <div class="container col-sm-6">
+        <div class="" ng-show="state.get('edit')" ng-click="state.set('edit.image');openImageModal()">
+            <span class="selectable"><i class="icon fa fa-image"></i> &nbsp; Modify background</span>
+        </div>
+    </div>
+    <div class=" col-sm-6 pull-right pull-center">
+        <div class="container">
+            <div class="selectable pull-right" ng-show="state.get('edit')" ng-click="state.set('edit.video');openVideoModal()">
+                <i class="icon fa fa-video-camera"></i> &nbsp; Modify video
             </div>
         </div>
-        <div class=" col-sm-6 pull-right pull-center">
-            <div class="container">
-                <div class="selectable pull-right" ng-show="state.active()" ng-click="state.set('video')">
-                    <i class="icon fa fa-video-camera"></i> &nbsp; Modify video
-                </div>
-            </div>
-            <div class="video-box pull-right" ng-if="videoResource&&!state.get('video')">
-                <iframe ng-attr-src="{{videoResource}}" width="250" height="188" frameborder="0" allowfullscreen></iframe>
-            </div>
-            <div class="video-box pull-right empty" ng-if="!videoResource&&state.active()">
-                <div class="pull-center">No video added.</div>
-            </div>
+        <div class="video-box pull-right" ng-if="videoResource">
+            <iframe ng-attr-src="{{videoResource}}" width="250" height="188" frameborder="0" allowfullscreen></iframe>
         </div>
+        <div class="video-box pull-right empty" ng-if="!videoResource&&state.get('edit')">
+            <div class="pull-center">No video added.</div>
+        </div>
+    </div>
 
-        <div class="container pull-down col-sm-12">
-            <span ng-show="state.active()" class="selectable" ng-click="state.set('name')">
-                <i class="icon fa fa-edit"></i> &nbsp;Modify title
-            </span>
-            <h1>
-                <div ng-show="!state.get('name')">{{movement.name}}</div>
-                <div ng-show="state.get('name')"><input type="text" ng-model="movement.name"></div>
-            </h1>
-        </div>
+    <div class="container pull-down col-sm-12">
+        <span ng-show="state.get('edit')" class="selectable" ng-click="state.set('edit.name')">
+            <i class="icon fa fa-edit"></i> &nbsp;Modify title
+        </span>
+        <h1>
+            <div ng-show="!state.get('edit.name')">{{movement.name}}</div>
+            <div ng-show="state.get('edit.name')"><input type="text" ng-model="movement.name"></div>
+        </h1>
+    </div>
 </div>
 
 <div class="container-fluid tight">
     <div class="row stretch-container">
-        <div class="col-sm-4 col-md-3 sidebar stretch-column">
 <!-------------------- Actions Menu -------------------->
-            <span id="join" class="muted">
+        <div class="col-sm-4 col-md-3 sidebar stretch-column" ng-controller="actionsController">
+            <!--span id="join" class="muted">
                 <button class="btn-emphasis">Join</button> &nbsp;
                  <span class="small"> others who have taken action!</span>
-            </span>
-            <h5 class="breathe">One click is all it takes:</h5>
+            </span-->
+            <div class="horizontal-menu pull-right btn-group">
+                <label class="btn" ng-click="go('movement.newAction')">
+                    +<i class="icon fa fa-flash"></i> &nbsp;Add Action
+                </label>
+            </div>
+            <br>
+            <h2>One click is all it takes:</h2>
             <ul class="list-unstyled">
                 <li>
                     <div class="topic"><i class="fa fa-envelope"></i>&nbsp; Mail your representative
@@ -61,11 +65,10 @@
                     <span><a ui-sref="movement.actions({actionId: act.id})" ui-sref-opts="{reload: true}">{{act.type}}</a></span>
                 </li>
             </ul>
-            <button class="btn-emphasis center-block breathe"><i class="fa fa-hand-rock-o"></i> Take action!</button>
-
+            <button class="btn-emphasis center-block breathe"><i class="fa fa-flash"></i> &nbsp; Take action!</button>
         </div>
-        <div class="col-sm-8 col-md-9 content stretch-column">
 <!-------------------- Movement Menu -------------------->
+        <div class="col-sm-8 col-md-9 content stretch-column">
             <div class="horizontal-menu col-xs-12 btn-group" ng-init="movementMenuSelection='overview'">
                 <label class="btn" ng-model="movementMenuSelection"
                        uib-btn-radio="'overview'"
@@ -78,12 +81,12 @@
 
 
                 <label class="btn pull-right menu-toggle" ng-model="movementModify"
-                       ng-if="!state.active()"
-                       ng-click="state.setActive(true)">
+                       ng-if="state.get('view')"
+                       ng-click="state.set('edit')">
                     <i class="fa fa-gear"></i> Modify movement</label>
                 <label class="btn btn-emphasis active pull-right" ng-model="movementModify"
-                       ng-if="state.active()"
-                       ng-click="state.setActive(false)">
+                       ng-if="state.get('edit')"
+                       ng-click="state.set('view'); modifyMovement()">
                     <i class="fa fa-gear"></i> Save changes</label>
             </div>
 <!-------------------- Content Template -------------------->

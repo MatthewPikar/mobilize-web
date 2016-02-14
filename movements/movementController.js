@@ -2,60 +2,16 @@
 
 var movementController = angular.module('movementController', [])
 
-movementController.controller('movementController', ['$scope', '$stateParams', '$state', '$uibModal', '$sce', 'Movement',
-    function($scope, $stateParams, $state, $uibModal, $sce, Movement) {
+movementController.controller('movementController', ['$scope','$state','LocalState','$uibModal','$sce','movement',
+    function($scope, $state, LocalState, $uibModal, $sce, movement) {
         // Initialization
-        $scope.sourceId = $stateParams.movementId
-        if ($stateParams.movementId) {
-            $scope.movement = new Movement()
-            Movement.get({id: $stateParams.movementId}).$promise
-                .then(function (response) {
-                    angular.extend($scope.movement, response)
-                    $scope.videoResource = $sce.trustAsResourceUrl($scope.movement.video)
-                    $scope.description = $scope.movement.description
-                }).catch(function(error){ $scope.error = error })
-        }
-        else {
-            $scope.movements = Movement.query({query: $stateParams.query ? $stateParams.query : ''})
-            $scope.movements.$promise
-                .then(function(response){
-                    $scope.movements = response
-                    $scope.movementStatus = 'success'
-                }).catch(function(error){ $scope.movementStatus = 'error' })
-        }
-
-        $scope.now = new Date(Date.now())
-
-        $scope.MONTHS = ['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC','None']
+        $scope.movement = movement
+        $scope.sourceId = $scope.movement.id
+        $scope.videoResource = $sce.trustAsResourceUrl($scope.movement.video)
 
         // State flow
-        $scope.state = {
-            _zones: { name:false, description:false, video:false, image:false},
-            _active: false,
-            off: function() {
-                for (var zone in $scope.state._zones)
-                    if ($scope.state._zones.hasOwnProperty(zone)) $scope.state._zones[zone] = false
-            },
-            setActive: function(state){
-                if (state === true) $scope.state._active = true
-                else if (state === false) {
-                    $scope.state.off()
-                    $scope.state._active = false
-                    $scope.modifyMovement()
-                }
-            },
-            active: function(){
-                return $scope.state._active
-            },
-            set: function(zone) {
-                var currentState = $scope.state._zones[zone]
-                $scope.state.off()
-                $scope.state._zones[zone] = !currentState
-                if (zone === 'video' && $scope.state._zones[zone] === true) $scope.openVideoModal()
-                else if (zone === 'image'  && $scope.state._zones[zone] === true) $scope.openImageModal()
-            },
-            get:  function(state){ return $scope.state._zones[state] }
-        }
+        $scope.state = new LocalState(['view','edit','edit.name','edit.description','edit.video','edit.image'])
+        $scope.state.set('view')
 
         // Modals
         $scope.openVideoModal = function(){
@@ -72,10 +28,10 @@ movementController.controller('movementController', ['$scope', '$stateParams', '
                 .then(function(url){
                     $scope.movement.video = url
                     $scope.videoResource = $sce.trustAsResourceUrl($scope.movement.video)
-                    $scope.state.set('video')
+                    $scope.state.set('edit.video')
                 })
                 .catch(function(){
-                    $scope.state.set('video')
+                    $scope.state.set('edit.video')
                 })
         }
         $scope.openImageModal = function(){
@@ -91,10 +47,10 @@ movementController.controller('movementController', ['$scope', '$stateParams', '
             modalInstance.result
                 .then(function(imageName){
                     $scope.movement.image = imageName
-                    $scope.state.set('image')
+                    $scope.state.set('edit.image')
                 })
                 .catch(function(){
-                    $scope.state.set('image')
+                    $scope.state.set('edit.image')
                 })
         }
 
@@ -119,7 +75,5 @@ movementController.controller('movementController', ['$scope', '$stateParams', '
         }
 
         // Navigation
-        $scope.go = function(state, params){
-            $state.go(state, params)
-        }
+        $scope.go = function(state, params){ $state.go(state, params) }
     }])
