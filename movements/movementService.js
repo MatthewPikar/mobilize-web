@@ -2,8 +2,8 @@
 
 var movementService = angular.module('movementService', ['ngResource']);
 
-movementService.factory('Movement', ['$resource',
-    function($resource){
+movementService.factory('Movement', ['$resource','API_PATH',
+    function($resource,API_PATH){
         return $resource(API_PATH + 'movements/:id', {id:'@id'}, {
             add: {
                 method:'POST',
