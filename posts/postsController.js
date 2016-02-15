@@ -7,16 +7,19 @@ postsController.controller('postsController', ['$scope','$state','LocalState','p
         // Initialization
         $scope.post = post
         $scope.postState = new LocalState(['edit','new','view'])
-        $scope.postState.set('view')
+        if (post.name)
+            $scope.postState.set('view')
+        else {
+            $scope.postState.set('new')
+            $scope.postState.toggle('edit')
+        }
 
 
         // Resource Control
         $scope.addPost = function () {
-            $scope.post.sourceId = $stateParams.movementId
             $scope.post.$add()
-                .then(function(response){
-                    angular.extend($scope.post, response)
-                    $scope.go('movement.overview',{movementId:$stateParams.movementId})
+                .then(function(){
+                    $scope.go('movement.overview',{movementId:$scope.movement.id}, {reload:true})
                 })
                 .catch(function(error){
                     console.log(error)
@@ -27,6 +30,7 @@ postsController.controller('postsController', ['$scope','$state','LocalState','p
             $scope.post.$modify()
                 .then(function(response){
                     angular.extend($scope.post, response)
+                    $scope.go('movement.post',{postId:$scope.post.id}, {reload:true})
                 })
                 .catch(function(error){
                     console.log(error)
@@ -35,8 +39,8 @@ postsController.controller('postsController', ['$scope','$state','LocalState','p
         }
         $scope.deletePost = function () {
             $scope.post.$remove()
-                .then(function(response){
-                    return true
+                .then(function(){
+                    $scope.go('movement.overview',{movementId:$scope.movement.id}, {reload:true})
                 })
                 .catch(function(error){
                     console.log(error)
@@ -46,7 +50,7 @@ postsController.controller('postsController', ['$scope','$state','LocalState','p
 
 
         // Navigation
-        $scope.go = function(state){
-            $state.go(state)
+        $scope.go = function(state,params,options){
+            $state.go(state, params, options)
         }
     }])
