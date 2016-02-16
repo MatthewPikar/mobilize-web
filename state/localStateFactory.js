@@ -2,24 +2,39 @@
 
 angular.module('localStateFactory',[]).factory('LocalState', [
     function stateFactory(){
-        function State (zones){
-            this._zones = {}
-            for(var z= 0, len=zones.length; z<len; z++){ this._zones[zones[z]] = false }
+        function State (states){
+            this._states = {}
+            for(var z= 0, len=states.length; z<len; z++){ this._states[states[z]] = false }
         }
         (function () {
-            this.off = function () {
-                for (var zone in this._zones)
-                    if (this._zones.hasOwnProperty(zone)) this._zones[zone] = false
+            this.reset = function () {
+                for (var zone in this._states)
+                    if (this._states.hasOwnProperty(zone)) this._states[zone] = false
             }
             this.toggle = function (zone) {
-                this._zones[zone] = !this._zones[zone]
+                this._states[zone] = !this._states[zone]
             }
-            this.set = function (zone) {
-                var currentState = this._zones[zone]
-                this.off()
-                this._zones[zone] = !currentState
+            this.set = function (newState) {
+                var splitNewState = newState.split('.')
+
+                for (var state in this._states) { if (this._states.hasOwnProperty(state)) {
+                    var splitState = state.split('.')
+
+                    // disable unless target or target's parent
+                    if (splitNewState.length === 1)
+                        if ( (splitState.length === 1) && (splitNewState[0] === splitState[0]) )
+                            this._states[state] = !this._states[state]
+                        else this._states[state] = false
+                    else {
+                        if ( (splitState.length === 2) && (splitNewState[1] === splitState[1]) )
+                            this._states[state] = !this._states[state]
+                        else if ( (splitState.length === 1) && (splitNewState[0] === splitState[0]) )
+                            this._states[state] = this._states[state]
+                        else this._states[state] = false
+                    }
+                }}
             }
-            this.get = function (state){ return this._zones[state] }
+            this.get = function (state){ return this._states[state] }
         }).call(State.prototype)
 
         return State
