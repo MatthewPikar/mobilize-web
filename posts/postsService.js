@@ -29,7 +29,7 @@ postsService.factory('Post', ['$resource','API_PATH',
                     method: 'GET',
                     interceptor: { response: function(response){
                         var resource = response.data.resource
-                        resource.suspenseDate = resource.date ? new Date(resource.date) : false
+                        resource.date = resource.date ? new Date(resource.date) : false
                         return resource
                     } }
                 }
