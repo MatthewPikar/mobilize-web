@@ -1,9 +1,9 @@
-'use strict';
+(function () { "use strict"
 
 var eventsService = angular.module('eventsService', ['ngResource']);
 
-eventsService.factory('Event', ['$resource',
-    function($resource){
+eventsService.factory('Event', ['$resource','API_PATH',
+    function($resource, API_PATH){
         return $resource(API_PATH + 'events/:id', { id:'@id' },
             {
                 add: {
@@ -17,11 +17,13 @@ eventsService.factory('Event', ['$resource',
                 query:{
                     method:'GET',
                     params: { query: '@query' },
-                    interceptor: { response: function(response){ return response.data.resources } }
+                    interceptor: { response: function(response){ return response.data.resources }}
                 },
                 get: {
                     method: 'GET',
-                    interceptor: { response: function(response){ return response.data.resource } }
+                    interceptor: { response: function(response){ return response.data.resource }}
                 }
-        });
-    }]);
+        })
+    }])
+
+}) ()

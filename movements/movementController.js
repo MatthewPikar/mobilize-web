@@ -2,12 +2,20 @@
 
 var movementController = angular.module('movementController', [])
 
-movementController.controller('movementController', ['$scope','$state','LocalState','$uibModal','$sce','movement',
-    function($scope, $state, LocalState, $uibModal, $sce, movement) {
+movementController.controller('movementController', ['$scope','$state','LocalState','$uibModal','$sce','movement','posts','events',
+    function($scope, $state, LocalState, $uibModal, $sce, movement,posts,events) {
         // Initialization
+        $scope.MONTHS = ['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC','None']
+        $scope.now = new Date(Date.now())
         $scope.movement = movement
         $scope.sourceId = $scope.movement.id
         $scope.videoResource = $sce.trustAsResourceUrl($scope.movement.video)
+        $scope.posts = posts
+        $scope.events = events
+
+        for (var e= 0,len=$scope.events.length; e<len; e++) {
+            $scope.events[e].date = $scope.events[e].date ? new Date($scope.events[e].date) : false
+        }
 
         // State flow
         $scope.state = new LocalState(['view','edit','edit.name','edit.description','edit.video','edit.image'])
