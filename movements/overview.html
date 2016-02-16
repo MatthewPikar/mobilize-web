@@ -6,17 +6,19 @@
 <h2 class="invisible" ng-show="$parent.state.get('view')"></h2>
 <more ng-show="!$parent.state.get('edit.description')" content="{{ movement.description }}" length="400">
     <p btf-markdown="$parent.text"></p>
-    <label class="btn pull-right" ng-view="$parent.toggleText" ng-click="$parent.toggle($parent.content,$parent.length)">
-        {{$parent.toggleText}}
-    </label>
+    <span class="selectable" ng-view="$parent.toggleText" ng-click="$parent.toggle($parent.content,$parent.length)">
+        {{$parent.toggleText}}&nbsp;
+        <i class="icon fa fa-angle-down breathe-small" ng-show="$parent.toggleText === '...more'"></i>
+        <i class="icon fa fa-angle-up" ng-show="$parent.toggleText === '...less'"></i>
+    </span>
 </more>
 <div ng-show="$parent.state.get('edit.description')">
     <textarea class="form-control" rows="10" ng-model="movement.description"></textarea>
 </div>
 
 
-<h2>Events &nbsp; &nbsp; &nbsp;
-    <small class="selectable field-control" ng-click="go('movement.newEvent')">
+<h2>Events
+    <small class="selectable field-control pull-right" ng-click="go('movement.newEvent')">
         <i class="icon fa fa-calendar-plus-o"></i> &nbsp;Add Event
     </small>
 </h2>
@@ -40,8 +42,8 @@
     </li>
 </ul>
 
-<h2>Posts &nbsp; &nbsp; &nbsp;
-    <small class="selectable field-control" ng-click="go('movement.newPost')">
+<h2>Posts
+    <small class="selectable field-control pull-right" ng-click="go('movement.newPost')">
         <i class="icon fa fa-quote-right"></i> &nbsp;Add Post
     </small>
 </h2>
@@ -54,9 +56,11 @@
 
         <more content="{{post.content}}" length="400">
             <p btf-markdown="$parent.text"></p>
-            <label class="btn pull-right" ng-view="$parent.toggleText" ng-click="$parent.toggle($parent.content,$parent.length)">
-                {{$parent.toggleText}}
-            </label>
+            <span class="selectable" ng-view="$parent.toggleText" ng-click="$parent.toggle($parent.content,$parent.length)">
+                {{$parent.toggleText}}&nbsp;
+                <i class="icon fa fa-angle-down breathe-small" ng-show="$parent.toggleText === '...more'"></i>
+                <i class="icon fa fa-angle-up" ng-show="$parent.toggleText === '...less'"></i>
+            </span>
         </more>
         <br>
     </li>
