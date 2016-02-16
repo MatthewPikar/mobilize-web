@@ -2,25 +2,10 @@
 
 var searchController = angular.module('searchController', []);
 
-searchController.controller('searchController', ['$scope', '$stateParams', 'Movement', '$state',
-    function($scope, $stateParams, Movement, $state){
-        $scope.movementStatus = 'empty';
+searchController.controller('searchController', ['$scope', '$stateParams', 'movements', '$state',
+    function($scope, $stateParams, movements, $state){
         $scope.query = $stateParams.query;
-
-        if($stateParams.query) {
-            Movement.query({query: $scope.query}).$promise
-                .then(function(response){
-                    $scope.movements = response;
-                    $scope.movementStatus = 'success';
-                }).catch(function(error){ $scope.movementStatus = 'error'; });
-        }
-        else {
-            Movement.query().$promise
-                .then(function(response){
-                    $scope.movements = response;
-                    $scope.movementStatus = 'success';
-                }).catch(function(error){ $scope.movementStatus = 'error'; });
-        }
+        $scope.movements = movements
 
         $scope.search = function(query){ $state.go('search', {"query":query}); };
     }]);
