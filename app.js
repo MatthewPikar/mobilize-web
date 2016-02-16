@@ -1,8 +1,6 @@
 'use strict'
 
-var API_PATH = "http://localhost:8080/api/0.1/"
-
-
+// ----------------------------- Modules -----------------------------
 var mobilizeApp = angular
     .module('mobilizeApp', [
         'ngAnimate',
@@ -22,37 +20,71 @@ var mobilizeApp = angular
         'eventsController',
         'postsService',
         'postsController',
-        'more'
+        'more',
+        'filters',
+        'localStateFactory',
+        'datetimeFactory'
 ])
+
+
+// ----------------------------- Globals -----------------------------
+mobilizeApp.constant('API_PATH', "http://localhost:8080/api/0.1/")
 
 // to make bluebird play nicely with angular
 //trackDigests(mobilizeApp);
 
-mobilizeApp.config(['$stateProvider','$urlRouterProvider',
-  function($stateProvider, $urlRouterProvider) {
-      $urlRouterProvider.otherwise("/root")
+// ----------------------------- Routing -----------------------------
+mobilizeApp.config(['$stateProvider',
+  function($stateProvider) {
+      //$stateProvider.otherwise("/root")
 
       $stateProvider
           .state('root', {
               url: "/",
               templateUrl: "root.html",
-              controller:"searchController"
+              controller:"searchController",
+              resolve: {
+                  movements: ['Movement',function (Movement) {
+                      return Movement.query().$promise
+                  }]
+              }
           })
           .state('search', {
               url: "/search/:query",
               templateUrl: "search/search.html",
-              controller:"searchController"
+              controller:"searchController",
+              resolve: {
+                  movements: ['Movement','$stateParams',function (Movement,$stateParams) {
+                      return Movement.query({query: $stateParams.query}).$promise
+                  }]
+              }
           })
           .state('newMovement', {
               url: "/m/new",
               templateUrl: "movements/new.html",
-              controller: "newMovementController"
+              controller: "newMovementController",
+              resolve: {
+                  movement: ['Movement',function(Movement) {
+                      return new Movement()
+                  }]
+              }
           })
           .state('movement', {
               url: "/m/{movementId}",
               abstract: true,
               templateUrl: "movements/movement.html",
-              controller: "movementController"
+              controller: "movementController",
+              resolve: {
+                  movement: ['Movement','$stateParams',function(Movement,$stateParams) {
+                      return Movement.get({id: $stateParams.movementId}).$promise
+                  }],
+                  posts: ['Post','$stateParams',function (Post,$stateParams) {
+                      return Post.query({query: {sourceId:$stateParams.movementId}}).$promise
+                  }],
+                  events: ['Event','$stateParams',function (Event,$stateParams) {
+                      return Event.query({query: {sourceId:$stateParams.movementId}}).$promise
+                  }]
+              }
           })
           .state('movement.overview', {
               url: "",
@@ -64,45 +96,64 @@ mobilizeApp.config(['$stateProvider','$urlRouterProvider',
               templateUrl: "movements/members.html",
               controller: "movementController"
           })
-          .state('movement.actions', {
+          .state('movement.newAction', {
+              url: "/a/new",
+              templateUrl: "actions/new.html",
+              controller: "actionsController"
+          })
+          .state('movement.action', {
               url: "/a/{actionId}",
-              templateUrl: "movements/actions.html",
-              controller: "actionController"
+              templateUrl: "movements/action.html",
+              controller: "actionsController"
           })
           .state('movement.newPost', {
               url:"/p/new",
               templateUrl: "posts/post.html",
-              controller: "postsController"
+              controller: "postsController",
+              resolve: {
+                  post: ['Post','$stateParams',function(Post,$stateParams) {
+                      var post = new Post()
+                      post.sourceId = $stateParams.movementId
+                      return post
+                  }]
+              }
           })
           .state('movement.post', {
               url:"/p/{postId}",
               templateUrl: "posts/post.html",
-              controller: "postsController"
+              controller: "postsController",
+              resolve: {
+                  post: ['Post','posts','$filter','$stateParams', function (Post,posts,$filter,$stateParams) {
+                      var response = new Post()
+                      return angular.extend(response,$filter('filter')(posts, {id:$stateParams.postId},true)[0])
+                  }]
+              }
           })
           .state('movement.newEvent', {
               url:"/e/new",
               templateUrl: "events/event.html",
-              controller: "eventsController"
+              controller: "eventsController",
+              resolve: {
+                  event: ['Event','$stateParams',function(Event,$stateParams) {
+                      return angular.extend({'sourceId':$stateParams.movementId}, new Event())
+                  }]
+              }
           })
           .state('movement.event', {
               url:"/e/{eventId}",
               templateUrl: "events/event.html",
-              controller: "eventsController"
+              controller: "eventsController",
+              resolve: {
+                  event: ['Event','events','$filter','$stateParams', function (Event,events,$filter,$stateParams) {
+                      var response = new Event()
+                      return angular.extend(response,$filter('filter')(events, {id:$stateParams.eventId},true)[0])
+                  }]
+              }
           })
-}])
-/*
-mobilizeApp.config(
-    ['$animateProvider',
-        function ($animateProvider) {
-            $animateProvider.classNameFilter(/carousel/);
-        }]);
+  }])
 
 /*
-mobilizeApp.config(['$httpProvider', function($httpProvider){
-    $httpProvider.interceptors.push('resourceInterceptor')
-}])
-
-
+// to make bluebird play nicely with angular
 function trackDigests(app) {
     app.run(["$rootScope",function ($rootScope) {
         Promise.setScheduler(function (cb) {
