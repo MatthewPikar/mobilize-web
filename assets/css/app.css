@@ -10,6 +10,7 @@ body {
 .content {
     padding-left: 30px;
     padding-right: 30px;
+    background-color: white;
 }
 #wrap {
     min-height: 100%;
@@ -19,7 +20,10 @@ body {
     font-size: 30px;
 }
 .h2, h2 {
-    font-size: 20px;
+    font-size: 22px;
+}
+.h3, h3 {
+    font-size: 18px;
 }
 .h2, h2, .h4, .h5, .h6, h4, h5, h6 {
     margin-top: 40px;
@@ -97,6 +101,15 @@ p {
     vertical-align: middle;
     font-size: large;
     margin-bottom: 4px;
+    z-index: 0;
+    position: relative;
+}
+.check:after {
+    content: "\f00c";
+    color: #00d600;
+    text-shadow: 1px 1px 0 white, -1px 1px 0 white, 1px -1px 0 white, -1px -1px 0 white;
+    font-size: 80%;
+    margin-left: -30%;
 }
 
 /* --- Interactive Items --- */
@@ -111,6 +124,8 @@ p {
     margin-bottom: 2px;
 }
 .selectable-block {
+    border-left: solid 4px transparent;
+    border-right: solid 4px transparent;
     margin-bottom: 2px;
 }
 .selectable-block:hover,
@@ -128,11 +143,9 @@ p {
     height: 300px;
     padding: 10px 30px 0 0;
     position: relative;
+    background-color: transparent;
     color: white;
     text-shadow: 0 0 2px black;
-    background-color: #bbbbbb;
-    background: no-repeat center center;
-    background-size: cover;
 }
 .jumbotron h1 {
     font-size: 30px;
@@ -144,6 +157,14 @@ p {
     border: solid 2px white;
     box-shadow: 0 0 3px 0 black;
     width: 50%;
+}
+.background {
+    position: fixed;
+    top: 50px;
+    width: 100%;
+    z-index: 0;
+    background: no-repeat center center;
+    background-size: cover;
 }
 
 /* ----------------- Top Menu ----------------- */
@@ -200,6 +221,9 @@ p {
     padding-right: 0;
     padding-left: 35px;
 }
+.sidebar h2 {
+    font-size: 14px;
+}
 .sidebar .topic {
     font-weight: bold;
     font-size: medium;
@@ -241,7 +265,7 @@ p {
     padding-left: 0;
     margin-right: 15px;
     margin-left: 15px;
-    border-bottom: solid 2px white;
+    border-bottom: solid 2px transparent;
     box-shadow: none;
 }
 .horizontal-menu .btn:hover,
@@ -367,7 +391,7 @@ p {
 }
 
 /* ----------------- Animations ----------------- */
-animate-enter,
+.animate-enter,
 .animate-leave
 {
     -webkit-transition: 800ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
