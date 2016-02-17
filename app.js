@@ -83,6 +83,9 @@ mobilizeApp.config(['$stateProvider',
                   }],
                   events: ['Event','$stateParams',function (Event,$stateParams) {
                       return Event.query({query: {sourceId:$stateParams.movementId}}).$promise
+                  }],
+                  actions: ['Action','$stateParams',function (Action,$stateParams) {
+                      return Action.query({query: {sourceId:$stateParams.movementId}}).$promise
                   }]
               }
           })
@@ -99,12 +102,23 @@ mobilizeApp.config(['$stateProvider',
           .state('movement.newAction', {
               url: "/a/new",
               templateUrl: "actions/new.html",
-              controller: "actionsController"
+              controller: "actionsController",
+              resolve: {
+                  action: ['Action','$stateParams',function(Action,$stateParams) {
+                      return angular.extend({'sourceId':$stateParams.movementId}, new Action())
+                  }]
+              }
           })
           .state('movement.action', {
               url: "/a/{actionId}",
               templateUrl: "movements/action.html",
-              controller: "actionsController"
+              controller: "actionsController",
+              resolve: {
+                  action: ['Action','actions','$filter','$stateParams', function (Action,actions,$filter,$stateParams) {
+                      var response = new Action()
+                      return angular.extend(response,$filter('filter')(actions, {id:$stateParams.actionId},true)[0])
+                  }]
+              }
           })
           .state('movement.newPost', {
               url:"/p/new",
