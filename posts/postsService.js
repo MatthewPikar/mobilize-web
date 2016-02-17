@@ -20,7 +20,7 @@ postsService.factory('Post', ['$resource','API_PATH',
                     interceptor: { response: function(response){
                         var resources = response.data.resources
                         for (var r=0, len=resources.length; r<len; r++) {
-                            resources[r].date = resources[r].date ? new Date(resources[r].date) : false
+                            resources[r].created = resources[r].created ? new Date(resources[r].created) : false
                         }
                         return resources
                     } }
@@ -29,7 +29,7 @@ postsService.factory('Post', ['$resource','API_PATH',
                     method: 'GET',
                     interceptor: { response: function(response){
                         var resource = response.data.resource
-                        resource.date = resource.date ? new Date(resource.date) : false
+                        resource.created = resource.created ? new Date(resource.created) : false
                         return resource
                     } }
                 }
