@@ -1,4 +1,4 @@
-'use strict'
+(function () { "use strict"
 
 // ----------------------------- Modules -----------------------------
 var mobilizeApp = angular
@@ -96,13 +96,15 @@ mobilizeApp.config(['$stateProvider','$urlMatcherFactoryProvider','$urlRouterPro
           })
           .state('movement.overview', {
               url: "",
-              templateUrl: "movements/overview.html",
-              controller: "movementController"
+              templateUrl: "movements/overview.html"
           })
           .state('movement.members', {
               url: "/u/",
-              templateUrl: "movements/members.html",
-              controller: "movementController"
+              templateUrl: "movements/members.html"
+          })
+          .state('movement.admin', {
+              url: "/admin/",
+              templateUrl: "movements/admin.html"
           })
           .state('movement.newAction', {
               url: "/a/new/",
@@ -176,6 +178,7 @@ mobilizeApp.config(['$stateProvider','$urlMatcherFactoryProvider','$urlRouterPro
 
   }])
 
+}) ()
 
 /*
 // to make bluebird play nicely with angular
