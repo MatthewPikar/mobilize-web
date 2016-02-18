@@ -26,10 +26,10 @@
     "update-index-async": "node -e \"require('shelljs/global'); sed('-i', /\\/\\/@@NG_LOADER_START@@[\\s\\S]*\\/\\/@@NG_LOADER_END@@/, '//@@NG_LOADER_START@@\\n' + sed(/sourceMappingURL=angular-loader.min.js.map/,'sourceMappingURL=bower_components/angular-loader/angular-loader.min.js.map','app/bower_components/angular-loader/angular-loader.min.js') + '\\n//@@NG_LOADER_END@@', 'app/index-async.html');\""
   },
   "dependencies": {
-    "bootstrap": "^3.3.6",
     "angular-ui-bootstrap": "^1.1.1",
     "angular-ui-router": "^0.2.17",
-    "angular-markdown-directive": "^0.3.1",
+    "bootstrap": "^3.3.6",
+    "ng-showdown": "^1.0.0",
     "showdown": "^0.3.4"
   }
 }
