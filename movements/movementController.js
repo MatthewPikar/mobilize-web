@@ -13,8 +13,10 @@ movementController.controller('movementController', ['$scope','$state','LocalSta
         $scope.posts = posts
         $scope.events = events
 
-        for (var e= 0,len=$scope.events.length; e<len; e++) {
-            $scope.events[e].date = $scope.events[e].date ? new Date($scope.events[e].date) : false
+        if (events) {
+            for (var e = 0, len = $scope.events.length; e < len; e++) {
+                $scope.events[e].date = $scope.events[e].date ? new Date($scope.events[e].date) : false
+            }
         }
 
         // State flow
