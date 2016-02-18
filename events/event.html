@@ -73,7 +73,7 @@
         <label for="event.description" class="control-label">Additional information:</label>
         <textarea ng-show="eventState.get('edit')" id="event.description" class="form-control" rows="10" ng-model="event.description"></textarea>
         <more ng-show="!eventState.get('edit')" content="{{ event.description }}" length="800">
-            <p btf-markdown="$parent.text"></p>
+            <p markdown-to-html="$parent.text"></p>
             <a ng-view="$parent.toggleText" class="pull-right" ng-click="$parent.toggle($parent.content,$parent.length)">{{$parent.toggleText}}</a>
         </more>
 

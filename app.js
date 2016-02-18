@@ -6,7 +6,7 @@ var mobilizeApp = angular
         'ngAnimate',
         'ui.router',
         'ui.bootstrap',
-        'btford.markdown',
+        'ng-showdown',
         'menuController',
         'searchController',
         'movementService',
@@ -34,9 +34,9 @@ mobilizeApp.constant('API_PATH', "http://localhost:8080/api/0.1/")
 //trackDigests(mobilizeApp);
 
 // ----------------------------- Routing -----------------------------
-mobilizeApp.config(['$stateProvider',
-  function($stateProvider) {
-      //$stateProvider.otherwise("/root")
+mobilizeApp.config(['$stateProvider','$urlMatcherFactoryProvider','$urlRouterProvider',
+  function($stateProvider,$urlMatcherFactoryProvider, $urlRouterProvider) {
+      $urlMatcherFactoryProvider.strictMode(false)  //  makes trailing slash optional
 
       $stateProvider
           .state('root', {
@@ -60,7 +60,7 @@ mobilizeApp.config(['$stateProvider',
               }
           })
           .state('newMovement', {
-              url: "/m/new",
+              url: "/m/new/",
               templateUrl: "movements/new.html",
               controller: "newMovementController",
               resolve: {
@@ -70,13 +70,18 @@ mobilizeApp.config(['$stateProvider',
               }
           })
           .state('movement', {
-              url: "/m/{movementId}",
+              url: "/m/{movementId}/",
               abstract: true,
               templateUrl: "movements/movement.html",
               controller: "movementController",
               resolve: {
                   movement: ['Movement','$stateParams',function(Movement,$stateParams) {
                       return Movement.get({id: $stateParams.movementId}).$promise
+                          .then(function(result){
+                              var movement = new Movement()
+                              angular.extend(movement, result)
+                              return movement
+                          })
                   }],
                   posts: ['Post','$stateParams',function (Post,$stateParams) {
                       return Post.query({query: {sourceId:$stateParams.movementId}}).$promise
@@ -95,12 +100,12 @@ mobilizeApp.config(['$stateProvider',
               controller: "movementController"
           })
           .state('movement.members', {
-              url: "/u",
+              url: "/u/",
               templateUrl: "movements/members.html",
               controller: "movementController"
           })
           .state('movement.newAction', {
-              url: "/a/new",
+              url: "/a/new/",
               templateUrl: "actions/new.html",
               controller: "actionsController",
               resolve: {
@@ -110,7 +115,7 @@ mobilizeApp.config(['$stateProvider',
               }
           })
           .state('movement.action', {
-              url: "/a/{actionId}",
+              url: "/a/{actionId}/",
               templateUrl: "movements/action.html",
               controller: "actionsController",
               resolve: {
@@ -121,19 +126,17 @@ mobilizeApp.config(['$stateProvider',
               }
           })
           .state('movement.newPost', {
-              url:"/p/new",
+              url:"/p/new/",
               templateUrl: "posts/post.html",
               controller: "postsController",
               resolve: {
                   post: ['Post','$stateParams',function(Post,$stateParams) {
-                      var post = new Post()
-                      post.sourceId = $stateParams.movementId
-                      return post
+                      return angular.extend({'sourceId':$stateParams.movementId}, new Post())
                   }]
               }
           })
           .state('movement.post', {
-              url:"/p/{postId}",
+              url:"/p/{postId}/",
               templateUrl: "posts/post.html",
               controller: "postsController",
               resolve: {
@@ -144,7 +147,7 @@ mobilizeApp.config(['$stateProvider',
               }
           })
           .state('movement.newEvent', {
-              url:"/e/new",
+              url:"/e/new/",
               templateUrl: "events/event.html",
               controller: "eventsController",
               resolve: {
@@ -154,7 +157,7 @@ mobilizeApp.config(['$stateProvider',
               }
           })
           .state('movement.event', {
-              url:"/e/{eventId}",
+              url:"/e/{eventId}/",
               templateUrl: "events/event.html",
               controller: "eventsController",
               resolve: {
@@ -164,7 +167,15 @@ mobilizeApp.config(['$stateProvider',
                   }]
               }
           })
+          .state('notFound', {
+              url:"/errors/not-found/",
+              templateUrl: "/errors/notFound.html"
+          })
+
+      $urlRouterProvider.otherwise('/errors/not-found/')
+
   }])
+
 
 /*
 // to make bluebird play nicely with angular

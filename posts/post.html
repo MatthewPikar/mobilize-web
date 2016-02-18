@@ -19,7 +19,7 @@
                         class="form-control" rows="10"></textarea>
         </div>
         <more ng-show="!postState.get('edit')" content="{{ post.content }}" length="800" class="breathe">
-            <p btf-markdown="$parent.text"></p>
+            <p markdown-to-html="$parent.text"></p>
             <a ng-view="$parent.toggleText" class="pull-right" ng-click="$parent.toggle($parent.content,$parent.length)">
                 {{$parent.toggleText}}
             </a>
