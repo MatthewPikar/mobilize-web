@@ -1,9 +1,9 @@
-'use strict';
+(function () { "use strict"
 
 var postsService = angular.module('postsService', ['ngResource']);
 
 postsService.factory('Post', ['$resource','API_PATH',
-    function($resource, API_PATH){
+    function ($resource, API_PATH){
         return $resource(API_PATH + 'posts/:id', { id:'@id' },
             {
                 add: {
@@ -19,8 +19,10 @@ postsService.factory('Post', ['$resource','API_PATH',
                     params: { query: '@query' },
                     interceptor: { response: function(response){
                         var resources = response.data.resources
-                        for (var r=0, len=resources.length; r<len; r++) {
-                            resources[r].created = resources[r].created ? new Date(resources[r].created) : false
+                        if (resources) {
+                            for (var r = 0, len = resources.length; r < len; r++) {
+                                resources[r].created = resources[r].created ? new Date(resources[r].created) : false
+                            }
                         }
                         return resources
                     } }
@@ -33,5 +35,6 @@ postsService.factory('Post', ['$resource','API_PATH',
                         return resource
                     } }
                 }
-        });
-    }]);
+        })
+    }])
+}) ()
