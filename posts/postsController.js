@@ -17,6 +17,7 @@ postsController.controller('postsController', ['$scope','$state','LocalState','p
 
         // Resource Control
         $scope.addPost = function () {
+            $scope.post.sourceId = $scope.movement.id
             $scope.post.$add()
                 .then(function(){
                     $scope.go('movement.overview',{movementId:$scope.movement.id}, {reload:true})
@@ -50,7 +51,5 @@ postsController.controller('postsController', ['$scope','$state','LocalState','p
 
 
         // Navigation
-        $scope.go = function(state,params,options){
-            $state.go(state, params, options)
-        }
+        $scope.go = function(state,params,options){ $state.go(state, params, options) }
     }])
