@@ -1,4 +1,4 @@
-'use strict'
+(function () { "use strict"
 
 function moreController($scope){
     $scope.toggleText = '...less'
@@ -37,3 +37,5 @@ moreDirective.directive('more',
             controller: ["$scope",moreController]
         }
 })
+
+}) ()

@@ -1,4 +1,4 @@
-'use strict';
+(function () { "use strict"
 
 var movementService = angular.module('movementService', ['ngResource']);
 
@@ -23,3 +23,5 @@ movementService.factory('Movement', ['$resource','API_PATH',
             }
         });
     }]);
+
+}) ()

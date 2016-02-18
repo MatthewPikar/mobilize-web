@@ -1,4 +1,4 @@
-'use strict'
+(function () { "use strict"
 
 var modalVideoController = angular.module('modalVideoController',[])
 
@@ -44,3 +44,5 @@ modalVideoController.controller('modalVideoController', ['$scope', '$uibModalIns
             $uibModalInstance.dismiss('cancel')
         }
     }])
+
+}) ()

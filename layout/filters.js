@@ -1,4 +1,4 @@
-'use strict'
+(function () { "use strict"
 
 function capitalize (input) {
     var output = []
@@ -15,3 +15,5 @@ function capitalize (input) {
 var filters = angular.module('filters',[])
 
 filters.filter('capitalize', function () { return capitalize })
+
+}) ()

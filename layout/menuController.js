@@ -1,4 +1,4 @@
-'use strict'
+(function () { "use strict"
 
 var menuController= angular.module('menuController', [])
 
@@ -9,3 +9,5 @@ menuController.controller('menuController', ['$scope', '$state',
 
 
 }]);
+
+}) ()
