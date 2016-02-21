@@ -8,22 +8,22 @@
 
 <div class="form-horizontal">
     <div class="row breathe-small" ng-show="eventState.get('edit')">
-        <label for="event.name" class="control-label col-xs-3 tight">The event,</label>
-        <div class="col-xs-9" ng-class="{'has-error': !event.name}">
+        <label for="event.name" class="control-label col-sm-3 col-xs-12 tight">The event,</label>
+        <div class="col-sm-9 col-xs-12" ng-class="{'has-error': !event.name}">
             <input type="text" id="event.name" class="form-control" ng-model="event.name"
                    placeholder="Ex.: School Board zoning vote">
         </div>
     </div>
     <div class="row" ng-show="!eventState.get('edit')">
-        <label for="event.name" class="control-label col-xs-3 tight">The event,</label>
-        <div class="col-xs-9" ng-class="{'has-error': !event.name}">
+        <label for="event.name" class="control-label col-sm-3 col-xs-12 tight">The event,</label>
+        <div class="col-sm-9 col-xs-12" ng-class="{'has-error': !event.name}">
             <p class="form-control-static">{{event.name}}</p>
         </div>
     </div>
 
     <div class="row breathe-small" ng-show="eventState.get('edit')">
-        <label class="control-label col-xs-3 tight">takes place on</label>
-        <div class="col-xs-9">
+        <label class="control-label col-sm-3 col-xs-12 tight">takes place on</label>
+        <div class="col-sm-9 col-xs-12">
             <div class="col-sm-3 col-xs-4 tight"><p class="form-control-static">{{date.day}},</p></div>
             <div class="col-sm-3 col-xs-4 tight" ng-class="{'has-error': date.monthError}">
                 <input id="month" type="text" class="form-control" ng-model="date.month"
@@ -44,8 +44,8 @@
         </div>
     </div>
     <div class="row" ng-show="!eventState.get('edit')">
-        <label class="control-label col-xs-3 tight">takes place on</label>
-        <div class="col-xs-9">
+        <label class="control-label col-sm-3 col-xs-12 tight">takes place on</label>
+        <div class="col-sm-9 col-xs-12">
             <p class="form-control-static"><span class="form-control-static">
                 {{date.day}}, {{date.month}} {{date.date}}{{date.suffix}}, {{date.year}}
             </span></p>
@@ -53,15 +53,15 @@
     </div>
 
     <div class="row breathe-small" ng-show="eventState.get('edit')">
-        <label for="event.location" class="control-label col-xs-3 tight">and is located in</label>
-        <div class="col-xs-9" ng-show="eventState.get('edit')">
+        <label for="event.location" class="control-label col-sm-3 col-xs-12 tight">and is located in</label>
+        <div class="col-sm-9 col-xs-12" ng-show="eventState.get('edit')">
             <input id="event.location" type="text" class="form-control" ng-model="event.location"
                    placeholder="Ex.: Town Hall, 314 Nolane Ave, Notownville, NA">
         </div>
     </div>
     <div class="row" ng-show="!eventState.get('edit')">
-        <label for="event.location" class="control-label col-xs-3 tight">and is located in</label>
-        <div class="col-xs-9" ng-show="!eventState.get('edit')">
+        <label for="event.location" class="control-label col-sm-3 col-xs-12 tight">and is located in</label>
+        <div class="col-sm-9 col-xs-12" ng-show="!eventState.get('edit')">
             <p class="form-control-static">{{event.location}}</p>
         </div>
     </div>
@@ -78,17 +78,17 @@
         </more>
 
         <div ng-show="!eventState.get('new') && event.name && eventState.get('edit')" class="input-group breathe col-xs-12">
-            <button class="btn btn-understate" type="button" ng-click="deleteEvent(); go('movement.overview',{movementId: movementId})">Delete this event</button>
+            <button class="btn btn-understate" type="button" ng-click="deleteEvent(); go('movement.overview',{movementId: movement.id})">Delete this event</button>
             <div class="pull-right">
                 <button class="btn btn-emphasis" ng-click="eventState.toggle('edit'); modifyEvent()">Save</button>
                 &nbsp;
-                <button class="btn btn-understate" type="button" ng-click="eventState.toggle('edit'); loadEvent(event.id)">Cancel</button>
+                <button class="btn btn-understate" type="button" ng-click="go('movement.overview',{movementId: movement.id})">Cancel</button>
             </div>
         </div>
         <div ng-show="eventState.get('new')" class="input-group pull-right breathe">
             <button ng-show="event.name && eventState.get('edit')" class="btn btn-emphasis" ng-click="eventState.set('view'); addEvent()">Add</button>
             &nbsp;
-            <button class="btn btn-understate" type="button" ng-click="go('movement.overview',{movementId: movementId})">Cancel</button>
+            <button class="btn btn-understate" type="button" ng-click="go('movement.overview',{movementId: movement.id})">Cancel</button>
         </div>
     </div>
 </div>
