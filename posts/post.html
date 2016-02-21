@@ -1,4 +1,6 @@
 <h2>
+    <div ng-show="postState.get('new')">New Event</div><br>
+
     <div ng-class="{'has-error': !post.name}" ng-show="postState.get('edit')">
         <input type="text" id="post.name" class="form-control" ng-model="post.name"
                placeholder="Give your post a title">
@@ -27,7 +29,7 @@
 
         <div ng-show="!postState.get('new') && postState.get('edit')" class="input-group breathe col-xs-12">
             <button class="btn btn-understate" type="button" ng-click="deletePost();
-                    go('movement.overview',{movementId: movementId})">
+                    go('movement.overview',{movementId: movement.id})">
                 Delete this post
             </button>
             <div class="pull-right">
@@ -36,7 +38,7 @@
                     Save
                 </button>
                 &nbsp;
-                <button class="btn btn-understate" type="button" ng-click="postState.toggle('edit'); loadPost(post.id)">
+                <button class="btn btn-understate" type="button" ng-click="go('movement.overview',{movementId: movement.id})">
                     Cancel
                 </button>
             </div>
@@ -47,7 +49,7 @@
                 Add
             </button>
             &nbsp;
-            <button class="btn btn-understate" type="button" ng-click="go('movement.overview',{movementId: movementId})">
+            <button class="btn btn-understate" type="button" ng-click="go('movement.overview',{movementId: movement.id})">
                 Cancel
             </button>
         </div>
