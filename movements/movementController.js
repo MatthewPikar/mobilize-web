@@ -6,7 +6,6 @@ movementController.controller('movementController', ['$scope','$state','LocalSta
 function($scope, $state, LocalState, $uibModal, $sce, movement,posts,events) {
 
     // Initialization
-    $scope.MONTHS = ['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC','None']
     $scope.now = new Date(Date.now())
     $scope.movement = movement
     $scope.sourceId = $scope.movement.id

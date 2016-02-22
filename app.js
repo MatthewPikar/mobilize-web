@@ -6,6 +6,7 @@ var mobilizeApp = angular
         'ngAnimate',
         'ui.router',
         'ui.bootstrap',
+        'ui.scrollpoint',
         'ng-showdown',
         'menuController',
         'searchController',
@@ -179,6 +180,18 @@ mobilizeApp.config(['$stateProvider','$urlMatcherFactoryProvider','$urlRouterPro
   }])
 
 }) ()
+
+// ----------------------------- Globals -----------------------------
+Date.prototype.getMonthName = function(lang) {
+    lang = lang && (lang in Date.locale) ? lang : 'en';
+    return Date.locale[lang].month_names[this.getMonth()]
+}
+Date.locale = {
+    en: {
+        month_names: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+    }
+}
+
 
 /*
 // to make bluebird play nicely with angular

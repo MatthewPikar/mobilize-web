@@ -13,7 +13,7 @@
         <br>
     </div>
 </h2>
-<small>{{post.created.toDateString()}}</small><br><br>
+<div class="byline">{{post.created.getMonthName() + ' ' + post.created.getDate() + ', ' + post.created.getFullYear()}}</div>
 <div class="row">
     <div class="col-xs-12">
         <div ng-class="{'has-error': !post.content}">
