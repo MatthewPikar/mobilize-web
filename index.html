@@ -24,7 +24,7 @@
 
 
 <!-------------------- Top Navigation -------------------->
-<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+<headroom class="navbar navbar-default navbar-fixed-top" role="navigation" tolerance="5" offset="50">
     <div class="container-fluid" ng-controller="menuController">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" ng-init="navCollapsed = true" ng-click="navbarCollapsed=!navbarCollapsed">
@@ -34,7 +34,7 @@
             </button>
             <a class="navbar-brand" ui-sref="root">MOBILIZE</a>
         </div>
-        <div class="navbar-collapse" uib-collapse="navbarCollapsed">
+        <div class="navbar-collapse" uib-collapse="!navbarCollapsed">
             <ul class="nav navbar-nav navbar-right">
                 <li><a ui-sref="newMovement">Start a Movement</a></li>
                 <li><a ui-sref="signIn">Sign In &nbsp;|&nbsp; Sign Up</a></li>
@@ -47,7 +47,7 @@
             </form>
         </div>
     </div>
-</nav>
+</headroom>
 
 
 <!-------------------- Content -------------------->
@@ -89,7 +89,9 @@
 <!-- jsdelivr doesn't have a ui-bootstrap build above 0.13 nor ng-showdown-->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/1.1.2/ui-bootstrap-tpls.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/ng-showdown/1.1.0/ng-showdown.min.js"></script>
-
+<script src="https://cdn.jsdelivr.net/headroomjs/0.7.0/headroom.min.js" crossorigin="anonymous" integrity="sha256-cVmx5X3Gz6ir06aaOuDG3lAKrWVm2CC5wliO5lMzPNw="></script>
+<script src="https://cdn.jsdelivr.net/headroomjs/0.7.0/angular.headroom.min.js" crossorigin="anonymous" integrity="sha256-DK+qAhiknf1QG+/NyKkBxZuk9qQX01e414TEcp9QqHk="></script>
+<script src="/node_modules/angular-ui-scrollpoint/dist/scrollpoint.min.js"></script>
 
 <!-------------------- Application Sources -------------------->
 <script src="app.js"></script>

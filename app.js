@@ -24,7 +24,8 @@ var mobilizeApp = angular
         'more',
         'filters',
         'localStateFactory',
-        'datetimeFactory'
+        'datetimeFactory',
+        'headroom'
 ])
 
 
