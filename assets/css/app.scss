@@ -1,0 +1,505 @@
+$color-muted: #777;
+$color-more-muted: #e7e7e7;
+$color-attention: #ff0000;
+$color-background: white;
+$color-soft-field: #f3f3f3;
+
+$font-text: Lora, serif;
+$font-title: lato, sans-serif;
+
+
+
+/* ----------------- Main Structure ----------------- */
+.muted {
+    color: $color-muted;
+}
+.cover {
+    background-color: $color-background;
+}
+
+html{
+    height: 100%;
+}
+body {
+    padding-top: 0px;
+    font-family: $font-title;
+    font-kerning: normal;
+}
+#content-block {
+    background-color: $color-background;
+    position: relative;
+    z-index: 0;
+}
+#wrap {
+    min-height: 100%;
+}
+
+.h1, h1, .h2, h2, .h3, h3, .h4, h4, .h5, h5, .h6, h6 {
+    font-family: $font-title;
+    margin-top: 40px;
+    margin-bottom: 7px;
+    font-kerning: normal;
+}
+.h1, h1 {
+    font-size: xx-large;
+}
+.h2, h2 {
+    font-size: xx-large;
+}
+.h3, h3 {
+    font-size: x-large;
+}
+h2 + ul h3, h2 + ul h3 {
+    margin-top: 10px;
+}
+.byline {
+    font-family: $font-title;
+    margin-bottom: 10px;
+    color: $color-muted;
+}
+p, .content {
+    font-family: $font-text;
+    font-size: large;
+    font-kerning: normal;
+}
+
+
+
+
+/* --- Positioning and Spacing --- */
+.breathe {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+.breathe-small {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+.breathe-large {
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+.gutter {
+    padding-left: 30px;
+    padding-right: 30px;
+}
+.tight{
+    margin: 0;
+    padding: 0;
+}
+.middle {
+    display: inline-block;
+    vertical-align: middle;
+    float: none;
+}
+.pull-down {
+    position: absolute;
+    bottom: 0 !important;
+}
+.row-centered {
+    text-align:center;
+}
+.col-centered {
+    display:inline-block;
+    float:none;
+    /* reset the text-align */
+    text-align:left;
+}
+
+/* --- Form Items --- */
+.inner-addon {
+    position: relative;
+}
+.inner-addon .glyphicon {
+    position: absolute;
+    padding: 10px;
+    pointer-events: none;
+    color: $color-muted;
+}
+.left-addon .glyphicon  { left:  0;}
+.right-addon .glyphicon { right: 0;}
+.left-addon input  { padding-left:  30px; }
+.right-addon input { padding-right: 30px; }
+.has-error > input{
+    background-color: #ffeeee;
+}
+
+
+/* --- Icons --- */
+.icon {
+    vertical-align: middle;
+    font-size: large;
+    margin-bottom: 4px;
+    z-index: 0;
+    position: relative;
+}
+.check:after {
+    content: "\f00c";
+    color: #00d600;
+    text-shadow: 1px 1px 0 $color-background, -1px 1px 0 $color-background, 1px -1px 0 $color-background, -1px -1px 0 $color-background;
+    font-size: 80%;
+    margin-left: -30%;
+}
+
+/* --- Interactive Items --- */
+.selectable {
+    border-bottom: solid 2px transparent;
+    margin-bottom: 2px;
+    color: $color-muted;
+
+    &:hover, .active {
+        border-bottom: solid 2px $color-attention;
+        margin-bottom: 2px;
+        cursor: pointer;
+    }
+}
+.selectable-block {
+    border-left: solid 4px transparent;
+    border-right: solid 4px transparent;
+    margin-bottom: 2px;
+
+    &:hover, .active {
+        border-left: solid 4px $color-attention;
+        border-right: solid 4px $color-attention;
+        margin-bottom: 2px;
+        cursor: pointer;
+    }
+}
+
+
+
+/* ----------------- Banner ----------------- */
+.jumbotron {
+    height: 350px;
+    padding: 60px 30px 0 0;
+    position: relative;
+    background-color: transparent;
+    color: $color-background;
+    text-shadow: 0 0 2px black;
+    background: no-repeat center center;
+    background-size: cover;
+
+    h1 {
+        font-size: 30px;
+        margin-top: 0;
+    }
+
+    input[type="text"] {
+        background-color: $color-more-muted;
+        background: rgba(191, 191, 191, 0.5);
+        border: solid 2px $color-background;
+        box-shadow: 0 0 3px 0 black;
+        width: 50%;
+    }
+}
+.background {
+    position: fixed;
+    top: 50px;
+    width: 100%;
+    z-index: 2;
+    background: no-repeat center center;
+    background-size: cover;
+}
+.banner {
+    width: 100%;
+    position: relative;
+    z-index: 10;
+}
+.banner.fixed {
+    position: fixed;
+    top: -200px;
+}
+
+/* ----------------- Top Menu ----------------- */
+.navbar-default {
+    background-color: $color-background;
+    border-color: $color-more-muted;
+    padding-left: 20px;
+    padding-right: 20px;
+
+    .navbar-brand {
+        color: $color-attention;
+        font-size: xx-large;
+        font-weight: bolder;
+    }
+
+    .navbar-brand:hover, .navbar-brand:focus {
+        color: $color-attention;
+        background-color: transparent;
+    }
+
+    .navbar-nav > li > a {
+        border-bottom: solid 4px $color-background;
+    }
+
+    .navbar-nav > li > a:hover {
+        color: $color-attention;
+        border-bottom: solid 3px $color-attention;
+    }
+
+    .navbar-collapse, .navbar-form {
+        background-color: $color-background;
+
+        .search-control {
+            border-width: 0;
+            border-radius: 0;
+            box-shadow: none;
+            border-bottom-width: 2px;
+            border-bottom-color: $color-more-muted;
+            background-color: $color-soft-field;
+        }
+    }
+}
+.navbar-fixed-top {
+    border: 0;
+}
+
+.headroom {
+    transition: transform 200ms linear;
+}
+.headroom--pinned {
+    transform: translateY(0%);
+}
+.headroom--unpinned {
+    transform: translateY(-100%);
+}
+
+@media (min-width: 768px) {
+    .navbar-collapse.collapse {
+        display: block  !important;
+        height: auto    !important;
+    }}
+
+/* ----------------- Sidebar Menu ----------------- */
+.sidebar {
+    background-color: $color-soft-field;
+    padding-top: 0;
+    padding-right: 0;
+    text-align: center;
+    z-index: 11;
+
+    h2 {
+        font-size: 14px;
+    }
+    ul {
+        margin-top: 70px;
+    }
+
+    .topic {
+        font-weight: bold;
+        font-size: medium;
+        color: $color-attention;
+        text-align: left;
+        margin-bottom: 10px;
+        padding-right: 15px;
+        border-right: solid 4px transparent;
+        cursor: pointer;
+
+        &:hover {
+            border-right: solid 4px $color-attention;
+            padding-left: 4px;
+        }
+    }
+
+    .sub-topic {
+        font-weight: normal;
+        font-size: x-small;
+        color: $color-muted;
+        padding-left: 22px;
+    }
+}
+.sidebar-menu {
+    margin-right: -30px;
+}
+@media (min-width: 768px) {
+    .stretch-container {
+        display: table;
+    }
+
+    .stretch-column {
+        display: table-cell;
+        float: none;
+        vertical-align: top;
+    }
+}
+
+/* ----------------- Horizontal Menu ----------------- */
+.horizontal-menu {
+    width: 100%;
+    background: inherit;
+    position: relative;
+    z-index: 10;
+}
+.horizontal-menu.fixed {
+    position: fixed;
+    top: 100px;
+    box-shadow: 0 2px 10px grey;
+}
+.horizontal-menu .btn {
+    color: $color-muted;
+    text-decoration: none;
+    border-radius: 0;
+    padding-bottom: 3px;
+    padding-right: 0;
+    padding-left: 0;
+    margin-right: 15px;
+    margin-left: 15px;
+    border-bottom: solid 2px transparent;
+    box-shadow: none;
+}
+.horizontal-menu .btn:hover,
+.horizontal-menu  .active
+{
+    border-bottom: solid 2px $color-attention;
+    text-decoration: none;
+}
+.menu-toggle {
+    color: $color-muted;
+    padding: 5px 0px 5px 0px;
+}
+.menu-toggle:hover {
+    color: $color-attention;
+    border-bottom: solid 2px $color-attention;
+    border-radius: 0;
+    text-decoration: none;
+}
+
+/* ----------------- Footer Menu ----------------- */
+.footer {
+    border-top: thin solid $color-more-muted;
+    padding-top: 10px;
+}
+
+/* ----------------- Video Component ----------------- */
+.video-box {
+    width: 250px;
+    height: 188px;
+    text-align: center;
+}
+.empty {
+    border: solid 2px $color-background;
+    box-shadow: 0 0 3px 0 black;
+}
+.pull-center {
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+/* ----------------- Image Picker Component ----------------- */
+.image-picker {
+    max-height: 300px;
+    overflow: scroll;
+    width: auto;
+}
+.image-picker .tile {
+    margin: 5px;
+    padding: 2px;
+    border: solid 1px transparent;
+}
+.image-picker .tile:hover,
+.image-picker .tile.active{
+    border: solid 1px $color-attention;
+    box-shadow: 0 0 3px 0 $color-attention;
+}
+
+/* ----------------- Calendar Component ----------------- */
+.calendar {
+    margin: 2px;
+    width: 30px;
+    font-family: $font-title;
+
+    > .month {
+        font-size: xx-small;
+        text-align: center;
+        color: $color-background;
+        background-color: $color-more-muted;
+        border: solid 1px $color-muted;
+    }
+
+    > .month.soon {
+        background-color: $color-attention;
+        border-color: $color-attention;
+    }
+
+    > .month.past {
+        background-color: $color-soft-field;
+        border-color: $color-more-muted;
+        color: $color-muted;
+    }
+
+    > .date {
+        font-size: small;
+        font-weight: bolder;
+        color: $color-muted;
+        background-color: $color-background;
+        text-align: center;
+        border-left: solid 1px $color-more-muted;
+        border-right: solid 1px $color-more-muted;
+        border-bottom: solid 1px $color-more-muted;
+    }
+}
+
+/* ----------------- Buttons ----------------- */
+.btn-default {
+    margin-top: 2px;
+    margin-bottom: 2px;
+}
+.btn-emphasis,
+.btn-emphasis:hover,
+.btn-emphasis:visited,
+.btn-emphasis:active,
+.btn-emphasis.active {
+    color: $color-background;
+    background-color: $color-attention;
+    border-width: 0;
+    border-radius: 0;
+    padding: 5px 20px 5px 20px;
+
+    :hover {
+        text-decoration: underline;
+    }
+}
+.btn-understate,
+.btn-understate:hover,
+.btn-understate:active {
+    color: $color-background;
+    font-size: small;
+    background-color: $color-more-muted;
+    border-width:0;
+    border-radius: 0;
+    padding: 2px 10px 2px 10px;
+}
+.btn-understate:hover {
+    text-decoration: underline;
+}
+
+/* ----------------- Animations ----------------- */
+.animate-enter,
+.animate-leave
+{
+    -webkit-transition: 800ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+    -moz-transition: 800ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+    -ms-transition: 800ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+    -o-transition: 800ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+    transition: 800ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+    position: relative;
+    display: block;
+    overflow: hidden;
+    text-overflow: clip;
+    $color-background-space:nowrap;
+}
+
+.animate-leave.animate-leave-active,
+.animate-enter {
+    opacity: 0;
+    width: 0px;
+    height: 0px;
+}
+
+.animate-enter.animate-enter-active,
+.animate-leave {
+    opacity: 1;
+    width: 150px;
+    height: 30px;
+}
