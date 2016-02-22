@@ -1,7 +1,5 @@
 <!-------------------- Header -------------------->
-<div class="jumbotron tight short background" style="background-image:url(assets/img/movements/splash/{{movement.image}})">
-</div>
-<div class="jumbotron tight short">
+<div class="jumbotron tight short banner" style="background-image:url(assets/img/movements/splash/{{movement.image}})">
     <div class="container col-sm-6">
         <div class="" ng-show="state.get('edit')" ng-click="state.set('edit.image');openImageModal()">
             <span class="selectable"><i class="icon fa fa-image"></i> &nbsp; Modify background</span>
@@ -32,65 +30,68 @@
     </div>
 </div>
 
-<div class="container-fluid tight">
-    <div class="row stretch-container">
+
+<div class="stretch-container cover">
 <!-------------------- Actions Menu -------------------->
-        <div class="col-sm-4 col-md-3 sidebar stretch-column" ng-controller="actionsController">
-            <!--span id="join" class="muted">
-                <button class="btn-emphasis">Join</button> &nbsp;
-                 <span class="small"> others who have taken action!</span>
-            </span-->
-            <div class="horizontal-menu pull-right btn-group">
-                <label class="btn" ng-click="go('movement.newAction')">
-                    +<i class="icon fa fa-flash"></i> &nbsp;Add Action
-                </label>
-            </div>
-            <br>
-            <h2>One click is all it takes:</h2>
-            <ul class="list-unstyled">
-                <li>
-                    <div class="topic"><i class="fa fa-envelope"></i>&nbsp; Mail your representative
-                    <div class="sub-topic">Your click will sign the letter.  We'll do the rest.</div></div>
+    <div class="col-sm-4 col-md-3 stretch-column sidebar tight"
+         >
+        <div class="gutter">
+            <ul class="list-unstyled sidebar-menu">
+                <li class="topic">
+                    <i class="fa fa-envelope"></i>&nbsp; Mail your representative
+                    <div class="sub-topic">Your click will sign the letter.  We'll do the rest.</div>
                 </li>
-                <li>
-                    <div class="topic"><i class="fa fa-phone"></i>&nbsp; Call your representative
-                    <div class="sub-topic">We''l give you the number, talking points, and coach you.</div></div>
+                <li class="topic">
+                    <i class="fa fa-phone"></i>&nbsp; Call your representative
+                    <div class="sub-topic">We''l give you the number, talking points, and coach you.</div>
                 </li>
-                <li>
-                    <div class="topic"><i class="fa fa-bullhorn"></i>&nbsp; Share with your friends
+                <li class="topic">
+                    <i class="fa fa-bullhorn"></i>&nbsp; Share with your friends
                     <div class="sub-topic">Your click wil post to
-                        <i class="fa fa-facebook-official"></i> and <i class="fa fa-twitter"></i></div></div>
+                        <i class="fa fa-facebook-official"></i> and <i class="fa fa-twitter"></i></div>
                 </li>
                 <li ng-repeat="act in actions">
                     <span><a ui-sref="movement.actions({actionId: act.id})" ui-sref-opts="{reload: true}">{{act.type}}</a></span>
                 </li>
             </ul>
-            <button class="btn-emphasis center-block breathe"><i class="fa fa-flash"></i> &nbsp; Take action!</button>
         </div>
+
+        <label class="selectable field-control" ng-click="go('movement.newAction')">
+            +<i class="fa fa-flash"></i> &nbsp;Add Action
+        </label>
+        <button class="btn-emphasis center-block breathe"><i class="fa fa-flash"></i> &nbsp; Act!</button>
+    </div>
+
+
+
+    <div class="col-sm-8 col-md-9 stretch-column  cover">
 <!-------------------- Movement Menu -------------------->
-        <div class="col-sm-8 col-md-9 content stretch-column">
-            <div class="horizontal-menu col-xs-12 btn-group" ng-init="movementMenuSelection='overview'">
-                <label class="btn" ng-model="movementMenuSelection"
-                       uib-btn-radio="'overview'"
-                       ng-click="go('movement.overview')">
-                    About</label>
-                <label class="btn" ng-model="movementMenuSelection"
-                       uib-btn-radio="'members'"
-                       ng-click="go('movement.members')">
-                    Members</label>
+        <div class="horizontal-menu row gutter" ng-init="movementMenuSelection='overview'">
+             <!--ui-scrollpoint="-100" ui-scrollpoint-class="fixed"-->
+            <label class="btn" ng-model="movementMenuSelection"
+                   uib-btn-radio="'overview'"
+                   ng-click="go('movement.overview')">
+                About</label>
+            <label class="btn" ng-model="movementMenuSelection"
+                   uib-btn-radio="'members'"
+                   ng-click="go('movement.members')">
+                Members</label>
+            <label class="btn" ng-model="movementMenuSelection"
+                   uib-btn-radio="'admin'" ng-click="go('movement.admin')">
+                Admin</label>
 
-
-                <label class="btn pull-right menu-toggle" ng-model="movementModify"
-                       ng-if="state.get('view')"
-                       ng-click="state.set('edit')">
+            <div class="pull-right">
+                <label class="btn" ng-model="movementModify"
+                       ng-if="state.get('view')" ng-click="state.set('edit')">
                     <i class="fa fa-gear"></i> Modify movement</label>
-                <label class="btn btn-emphasis active pull-right" ng-model="movementModify"
-                       ng-if="state.get('edit')"
-                       ng-click="state.set('view'); modifyMovement()">
+                <label class="btn-emphasis" ng-model="movementModify"
+                       ng-if="state.get('edit')" ng-click="state.set('view'); modifyMovement()">
                     <i class="fa fa-gear"></i> Save changes</label>
             </div>
-<!-------------------- Content Template -------------------->
-            <div ui-view class="container-fluid breathe"></div>
         </div>
+
+
+<!-------------------- Content Template -------------------->
+        <div ui-view id="content-block" class="breathe gutter"></div>
     </div>
 </div>
