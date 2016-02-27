@@ -1,7 +1,7 @@
 <h2>
     <div ng-show="postState.get('new')">New Post<br><br></div>
     <div ng-class="{'has-error': !post.name}" ng-show="postState.get('edit')">
-        <input type="text" id="post.name" class="form-control" ng-model="post.name"
+        <input type="text" id="post.name" class="form-control input-lg" ng-model="post.name"
                placeholder="Give your post a title">
     </div>
     <div ng-show="!postState.get('edit')">
@@ -17,7 +17,7 @@
     <div class="col-xs-12">
         <div ng-class="{'has-error': !post.content}">
             <textarea   ng-show="postState.get('edit')" id="post.content" ng-model="post.content"
-                        class="form-control" rows="10"></textarea>
+                        class="form-control input-lg" rows="10"></textarea>
         </div>
         <more ng-show="!postState.get('edit')" content="{{ post.content }}" length="800" class="breathe">
             <p markdown-to-html="$parent.text"></p>
