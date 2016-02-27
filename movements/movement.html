@@ -38,31 +38,36 @@
 <main class="stretch-container cover">
 <!-------------------- Actions Menu -------------------->
     <div class="col-sm-4 col-md-3 stretch-column tight sidebar hidden-print">
-        <div class="gutter">
-            <ul class="list-unstyled sidebar-menu">
-                <li class="topic">
-                    <i class="fa fa-envelope"></i>&nbsp; Mail your representative
-                    <div class="sub-topic">Your click will sign the letter.  We'll do the rest.</div>
-                </li>
-                <li class="topic">
-                    <i class="fa fa-phone"></i>&nbsp; Call your representative
-                    <div class="sub-topic">We''l give you the number, talking points, and coach you.</div>
-                </li>
-                <li class="topic">
-                    <i class="fa fa-bullhorn"></i>&nbsp; Share with your friends
-                    <div class="sub-topic">Your click wil post to
-                        <i class="fa fa-facebook-official"></i> and <i class="fa fa-twitter"></i></div>
-                </li>
-                <li ng-repeat="act in actions">
-                    <span><a ui-sref="movement.actions({actionId: act.id})" ui-sref-opts="{reload: true}">{{act.type}}</a></span>
-                </li>
-            </ul>
+        <div class="hidden-xs">
+            <div class="gutter">
+                <ul class="list-unstyled sidebar-menu">
+                    <li class="topic">
+                        <i class="fa fa-envelope"></i>&nbsp; Mail your representative
+                        <div class="sub-topic">Your click will sign the letter.  We'll do the rest.</div>
+                    </li>
+                    <li class="topic">
+                        <i class="fa fa-phone"></i>&nbsp; Call your representative
+                        <div class="sub-topic">We''l give you the number, talking points, and coach you.</div>
+                    </li>
+                    <li class="topic">
+                        <i class="fa fa-bullhorn"></i>&nbsp; Share with your friends
+                        <div class="sub-topic">Your click wil post to
+                            <i class="fa fa-facebook-official"></i> and <i class="fa fa-twitter"></i></div>
+                    </li>
+                    <li ng-repeat="act in actions">
+                        <span><a ui-sref="movement.actions({actionId: act.id})" ui-sref-opts="{reload: true}">{{act.type}}</a></span>
+                    </li>
+                </ul>
+            </div>
+
+            <a class="selectable field-control" ui-sref="movement.newAction">
+                +<i class="fa fa-flash"></i> &nbsp;Add Action
+            </a>
         </div>
 
-        <a class="selectable field-control" ui-sref="movement.newAction">
-            +<i class="fa fa-flash"></i> &nbsp;Add Action
-        </a>
-        <button class="btn-emphasis center-block breathe"><i class="fa fa-flash"></i> &nbsp; Act!</button>
+        <div>
+            <button class="btn-emphasis center-block breathe-small"><i class="fa fa-flash"></i> &nbsp; Act!</button>
+        </div>
     </div>
 
 
@@ -70,7 +75,7 @@
     <div class="col-sm-8 col-md-9 stretch-column cover">
 <!-------------------- Movement Menu -------------------->
         <div class="horizontal-menu hidden-print" ng-init="movementMenuSelection='overview'">
-            <div class="pull-right">
+            <div class="pull-right hidden-xs">
                 <a class="selectable" ui-sref="movement.admin">Admin</a>
                 <span class="selectable" ng-model="movementModify"
                        ng-if="state.get('view')" ng-click="state.set('edit')">
