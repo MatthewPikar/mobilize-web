@@ -62,7 +62,7 @@ mobilizeApp.config(['$stateProvider','$urlMatcherFactoryProvider','$urlRouterPro
               }
           })
           .state('newMovement', {
-              url: "/m/new/",
+              url: "/m/new",
               templateUrl: "movements/new.html",
               controller: "newMovementController",
               resolve: {
@@ -72,7 +72,7 @@ mobilizeApp.config(['$stateProvider','$urlMatcherFactoryProvider','$urlRouterPro
               }
           })
           .state('movement', {
-              url: "/m/{movementId}/",
+              url: "/m/{movementId}",
               abstract: true,
               templateUrl: "movements/movement.html",
               controller: "movementController",
@@ -105,11 +105,11 @@ mobilizeApp.config(['$stateProvider','$urlMatcherFactoryProvider','$urlRouterPro
               templateUrl: "movements/members.html"
           })
           .state('movement.admin', {
-              url: "/admin/",
+              url: "/admin",
               templateUrl: "movements/admin.html"
           })
           .state('movement.newAction', {
-              url: "/a/new/",
+              url: "/a/new",
               templateUrl: "actions/new.html",
               controller: "actionsController",
               resolve: {
@@ -119,7 +119,7 @@ mobilizeApp.config(['$stateProvider','$urlMatcherFactoryProvider','$urlRouterPro
               }
           })
           .state('movement.action', {
-              url: "/a/{actionId}/",
+              url: "/a/{actionId}",
               templateUrl: "movements/action.html",
               controller: "actionsController",
               resolve: {
@@ -130,17 +130,17 @@ mobilizeApp.config(['$stateProvider','$urlMatcherFactoryProvider','$urlRouterPro
               }
           })
           .state('movement.newPost', {
-              url:"/p/new/",
+              url:"/p/new",
               templateUrl: "posts/post.html",
               controller: "postsController",
               resolve: {
                   post: ['Post','$stateParams',function(Post,$stateParams) {
-                      return angular.extend({'sourceId':$stateParams.movementId}, new Post())
+                      return angular.extend(new Post(), {'sourceId':$stateParams.movementId})
                   }]
               }
           })
           .state('movement.post', {
-              url:"/p/{postId}/",
+              url:"/p/{postId}",
               templateUrl: "posts/post.html",
               controller: "postsController",
               resolve: {
@@ -151,17 +151,17 @@ mobilizeApp.config(['$stateProvider','$urlMatcherFactoryProvider','$urlRouterPro
               }
           })
           .state('movement.newEvent', {
-              url:"/e/new/",
+              url:"/e/new",
               templateUrl: "events/event.html",
               controller: "eventsController",
               resolve: {
                   event: ['Event','$stateParams',function(Event,$stateParams) {
-                      return angular.extend({'sourceId':$stateParams.movementId}, new Event())
+                      return angular.extend(new Event(), {'sourceId':$stateParams.movementId})
                   }]
               }
           })
           .state('movement.event', {
-              url:"/e/{eventId}/",
+              url:"/e/{eventId}",
               templateUrl: "events/event.html",
               controller: "eventsController",
               resolve: {

@@ -1,9 +1,9 @@
+<span ng-show="!eventState.get('edit')" class="selectable pull-right breathe-small" ng-click="eventState.toggle('edit')" ng-show="!eventState.get('new')">
+    <i class="icon fa fa-edit"></i> &nbsp;Modify event
+</span>
 <h2>
     <span ng-show="eventState.get('new')">New Event</span>
     <span ng-show="!eventState.get('new')">Event Detail</span>
-     &nbsp; &nbsp; <small ng-show="!eventState.get('edit')" class="selectable" ng-click="eventState.toggle('edit')">
-       <i class="icon fa fa-edit"></i> &nbsp;Modify event
-    </small>
 </h2>
 
 <div class="form-horizontal">
@@ -24,7 +24,7 @@
     <div class="row breathe-small" ng-show="eventState.get('edit')">
         <label class="control-label col-sm-3 col-xs-12 tight">takes place on</label>
         <div class="col-sm-9 col-xs-12">
-            <div class="col-sm-3 col-xs-4 tight"><p class="form-control-static">{{date.day}},</p></div>
+            <div class="col-sm-3 col-xs-4 tight"><span class="form-control-static middle">{{date.day}},</span></div>
             <div class="col-sm-3 col-xs-4 tight" ng-class="{'has-error': date.monthError}">
                 <input id="month" type="text" class="form-control" ng-model="date.month"
                        uib-typeahead="month for month in date.MONTHS | filter:$viewValue | limitTo:5"
@@ -35,7 +35,7 @@
                        uib-typeahead="date for date in date.DATES | filter:$viewValue | limitTo:5"
                        typehead-editable="false">
             </div>
-            <div class="col-sm-1 col-xs-2 tight"><p class="form-control-static">{{date.suffix}},</p></div>
+            <div class="col-sm-1 col-xs-2 tight"><span class="form-control-static middle">{{date.suffix}},</span></div>
             <div class="col-sm-3 col-xs-12 tight" ng-class="{'has-error': date.yearError}">
                 <input id="year" type="number" size="4" class="form-control" ng-model="date.year"
                        uib-typeahead="year for year in date.YEARS | filter:$viewValue | limitTo:5"

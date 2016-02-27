@@ -1,0 +1,82 @@
+<h2>Details</h2>
+<div class="form-horizontal">
+    <div class="row breathe-small" ng-show="$parent.state.get('edit')">
+        <label for="movement.tags" class="control-label col-xs-3 tight">Tags</label>
+        <div class="col-xs-9">
+            <input type="text" id="movement.tags" class="form-control" ng-model="movement.tags">
+        </div>
+    </div>
+    <div class="row" ng-show="!$parent.state.get('edit')">
+        <label for="movement.tags" class="control-label col-xs-3 tight">Tags</label>
+        <div class="col-xs-9">
+            <p class="form-control-static">{{movement.tags}}</p>
+        </div>
+    </div>
+
+    <div class="row">
+        <label for="movement.created" class="control-label col-xs-3 tight">Created on</label>
+        <div class="col-xs-9">
+            <p id="movement.created" class="form-control-static">{{movement.created.toDateString()}}</p>
+        </div>
+        <label for="movement.modified" class="control-label col-xs-3 tight">Last modified</label>
+        <div class="col-xs-9">
+            <p id="movement.modified" class="form-control-static">{{movement.modified.toISOString()}}</p>
+        </div>
+    </div>
+</div>
+
+<h2>Account Integration</h2>
+<p><small>Add your social media information to tell your memebers where to follow you,
+    make these accounts available when creating actions,
+    enable tools such as social media statistics, comments, and feeds.</small></p>
+<div class="form-horizontal">
+    <div class="row breathe-small" ng-show="$parent.state.get('edit')">
+        <label for="movement.twitterHandle" class="control-label col-xs-3 tight">Twitter handle</label>
+        <div class="col-xs-9">
+            <input type="text" id="movement.twitterHandle" class="form-control" ng-model="movement.twitterHandle">
+        </div>
+        <label for="movement.twitterHashtag" class="control-label col-xs-3 tight">Twitter hashtag</label>
+        <div class="col-xs-9">
+            <input type="text" id="movement.twitterHashtag" class="form-control" ng-model="movement.twitterHashtag">
+        </div>
+        <label for="movement.facebookPage" class="control-label col-xs-3 tight">Facebook page</label>
+        <div class="col-xs-9">
+            <input type="text" id="movement.facebookPage" class="form-control" ng-model="movement.facebookPage">
+        </div>
+        <label for="movement.redditSub" class="control-label col-xs-3 tight">Reddit sub</label>
+        <div class="col-xs-9">
+            <input type="text" id="movement.redditSub" class="form-control" ng-model="movement.redditSub">
+        </div>
+        <label for="movement.redditUsername" class="control-label col-xs-3 tight">Reddit username</label>
+        <div class="col-xs-9">
+            <input type="text" id="movement.redditUsername" class="form-control" ng-model="movement.redditUsername">
+        </div>
+    </div>
+
+    <div class="row">
+        <label for="movement.twitterHandle2" class="control-label col-xs-3 tight">Twitter handle</label>
+        <div class="col-xs-9">
+            <p id="movement.twitterHandle2" class="form-control-static">{{movement.twitterHandle}}</p>
+        </div>
+        <label for="movement.facebookPage2" class="control-label col-xs-3 tight">Facebook page</label>
+        <div class="col-xs-9">
+            <p id="movement.facebookPage2" class="form-control-static">{{movement.facebookPage}}</p>
+        </div>
+        <label for="movement.redditSub2" class="control-label col-xs-3 tight">Reddit sub</label>
+        <div class="col-xs-9">
+            <p id="movement.redditSub2" class="form-control-static">{{movement.redditSub}}</p>
+        </div>
+        <label for="movement.redditUsername2" class="control-label col-xs-3 tight">Reddit username</label>
+        <div class="col-xs-9">
+            <p id="movement.redditUsername2" class="form-control-static">{{movement.redditUsername}}</p>
+        </div>
+    </div>
+</div>
+
+<div class="row breathe" ng-show="$parent.state.get('edit')">
+    <div class="col-xs-12">
+        <div class="input-group breathe col-xs-12">
+            <button class="btn btn-emphasis pull-right" type="button" ng-click="deleteMovement()">Delete this movement</button>
+        </div>
+    </div>
+</div>

@@ -1,8 +1,9 @@
-$color-muted: #777;
+$color-muted: #8a8a8a;
 $color-more-muted: #e7e7e7;
 $color-attention: #ff0000;
 $color-background: white;
 $color-soft-field: #f3f3f3;
+$color-shadow: #7b7b7b;
 
 $font-text: Lora, serif;
 $font-title: lato, sans-serif;
@@ -10,6 +11,10 @@ $font-title: lato, sans-serif;
 
 
 /* ----------------- Main Structure ----------------- */
+@mixin shadow {
+    box-shadow: 0 2px 15px $color-shadow;
+}
+
 .muted {
     color: $color-muted;
 }
@@ -21,14 +26,24 @@ html{
     height: 100%;
 }
 body {
-    padding-top: 0px;
     font-family: $font-title;
     font-kerning: normal;
 }
+main {
+    display: table;
+    margin-top: 350px;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+    width: 100%;
+}
+@media print {
+    main {
+        margin-top: 0;
+    }
+}
+
 #content-block {
     background-color: $color-background;
-    position: relative;
-    z-index: 0;
 }
 #wrap {
     min-height: 100%;
@@ -143,14 +158,19 @@ p, .content {
 
 /* --- Interactive Items --- */
 .selectable {
+    display: inline-block;
+    text-decoration: none;
     border-bottom: solid 2px transparent;
-    margin-bottom: 2px;
+    margin: 2px 10px 2px 10px;
+    padding: 3px 5px 3px 5px;
+    font-family: $font-title;
     color: $color-muted;
 
-    &:hover, .active {
+    &:hover, &:focus, &:active, .active {
+        color: $color-muted;
         border-bottom: solid 2px $color-attention;
-        margin-bottom: 2px;
         cursor: pointer;
+        text-decoration: none;
     }
 }
 .selectable-block {
@@ -165,50 +185,66 @@ p, .content {
         cursor: pointer;
     }
 }
+.btn-panel {
+    margin: 5px;
+    padding: 5px;
+    border: solid 1px $color-muted;
 
-
-
-/* ----------------- Banner ----------------- */
-.jumbotron {
-    height: 350px;
-    padding: 60px 30px 0 0;
-    position: relative;
-    background-color: transparent;
+    &:hover, &:active, &:focus {
+        border: solid 1px $color-attention;
+        box-shadow: 0 0 5px $color-shadow;
+    }
+}
+.btn-default {
+    margin-top: 2px;
+    margin-bottom: 2px;
+}
+.btn-emphasis {
     color: $color-background;
-    text-shadow: 0 0 2px black;
-    background: no-repeat center center;
-    background-size: cover;
+    background-color: $color-attention;
+    border-width: 0;
+    border-radius: 0;
+    padding: 5px 20px 5px 20px;
 
-    h1 {
-        font-size: 30px;
-        margin-top: 0;
-    }
-
-    input[type="text"] {
-        background-color: $color-more-muted;
-        background: rgba(191, 191, 191, 0.5);
-        border: solid 2px $color-background;
-        box-shadow: 0 0 3px 0 black;
-        width: 50%;
+    &:hover, &:focus, &:active {
+        color: $color-background;
+        text-decoration: underline;
+        box-shadow: none !important;
     }
 }
-.background {
-    position: fixed;
-    top: 50px;
-    width: 100%;
-    z-index: 2;
-    background: no-repeat center center;
-    background-size: cover;
+.btn-understate {
+    color: $color-background;
+    font-size: small;
+    background-color: $color-muted;
+    border-width: 0;
+    border-radius: 0;
+    padding: 2px 10px 2px 10px;
+
+    &:hover, &:focus {
+        color: $color-background;
+        text-decoration: underline;
+    }
 }
-.banner {
-    width: 100%;
+.btn-plain {
+    border: none;
+    color: $color-muted;
+
+    &:hover, &:focus, &:active {
+        color: $color-attention;
+        cursor: pointer;
+    }
+}
+.label {
+    margin: 2px;
+}
+.label-default {
+}
+.overlay {
     position: relative;
-    z-index: 10;
+    z-index: 1;
 }
-.banner.fixed {
-    position: fixed;
-    top: -200px;
-}
+
+
 
 /* ----------------- Top Menu ----------------- */
 .navbar-default {
@@ -221,20 +257,20 @@ p, .content {
         color: $color-attention;
         font-size: xx-large;
         font-weight: bolder;
-    }
 
-    .navbar-brand:hover, .navbar-brand:focus {
-        color: $color-attention;
-        background-color: transparent;
+        &:hover, &:focus, &:active {
+            color: $color-attention;
+            background-color: transparent;
+        }
     }
 
     .navbar-nav > li > a {
         border-bottom: solid 4px $color-background;
-    }
 
-    .navbar-nav > li > a:hover {
-        color: $color-attention;
-        border-bottom: solid 3px $color-attention;
+        &:hover, &:focus, &:active {
+            color: $color-attention;
+            border-bottom: solid 3px $color-attention;
+        }
     }
 
     .navbar-collapse, .navbar-form {
@@ -259,6 +295,7 @@ p, .content {
 }
 .headroom--pinned {
     transform: translateY(0%);
+    @include shadow;
 }
 .headroom--unpinned {
     transform: translateY(-100%);
@@ -270,19 +307,63 @@ p, .content {
         height: auto    !important;
     }}
 
+
+
+/* ----------------- Banner ----------------- */
+.jumbotron {
+    height: 350px;
+    padding: 60px 30px 0 0;
+    background-color: transparent;
+    color: $color-background;
+    text-shadow: 0 0 2px $color-shadow;
+    background: no-repeat center center;
+    background-size: cover;
+    @include shadow;
+    top: 0;
+    margin-bottom: 10px;
+    width: 100%;
+    z-index: 10;
+    position: absolute;
+
+
+    h1 {
+        font-size: 30px;
+        margin-top: 0;
+    }
+
+    input[type="text"] {
+        background-color: $color-more-muted;
+        background: rgba(191, 191, 191, 0.5);
+        border: solid 2px $color-background;
+        box-shadow: 0 0 3px 0 $color-shadow;
+        width: 50%;
+    }
+
+    a {
+        color: $color-background;
+
+        &:hover, &:focus, &:active {
+            text-decoration: none;
+            color: $color-background;
+        }
+    }
+}
+
+
+
 /* ----------------- Sidebar Menu ----------------- */
 .sidebar {
-    background-color: $color-soft-field;
+    background-color: $color-background;
     padding-top: 0;
     padding-right: 0;
+    padding-bottom: 10px;
     text-align: center;
-    z-index: 11;
 
     h2 {
         font-size: 14px;
     }
     ul {
-        margin-top: 70px;
+        margin-top: 75px;
     }
 
     .topic {
@@ -295,7 +376,7 @@ p, .content {
         border-right: solid 4px transparent;
         cursor: pointer;
 
-        &:hover {
+        &:hover, &:focus, &:active {
             border-right: solid 4px $color-attention;
             padding-left: 4px;
         }
@@ -311,7 +392,21 @@ p, .content {
 .sidebar-menu {
     margin-right: -30px;
 }
-@media (min-width: 768px) {
+@media (max-width: 767px) {
+    .sidebar {
+        @include shadow;
+        margin-bottom: 10px;
+        padding-top: 10px;
+
+        ul {
+            margin-top: 10px;
+        }
+        .topic {
+            font-size: large;
+        }
+    }
+}
+/*@media (min-width: 768px) {
     .stretch-container {
         display: table;
     }
@@ -321,47 +416,11 @@ p, .content {
         float: none;
         vertical-align: top;
     }
-}
+}*/
 
 /* ----------------- Horizontal Menu ----------------- */
 .horizontal-menu {
-    width: 100%;
     background: inherit;
-    position: relative;
-    z-index: 10;
-}
-.horizontal-menu.fixed {
-    position: fixed;
-    top: 100px;
-    box-shadow: 0 2px 10px grey;
-}
-.horizontal-menu .btn {
-    color: $color-muted;
-    text-decoration: none;
-    border-radius: 0;
-    padding-bottom: 3px;
-    padding-right: 0;
-    padding-left: 0;
-    margin-right: 15px;
-    margin-left: 15px;
-    border-bottom: solid 2px transparent;
-    box-shadow: none;
-}
-.horizontal-menu .btn:hover,
-.horizontal-menu  .active
-{
-    border-bottom: solid 2px $color-attention;
-    text-decoration: none;
-}
-.menu-toggle {
-    color: $color-muted;
-    padding: 5px 0px 5px 0px;
-}
-.menu-toggle:hover {
-    color: $color-attention;
-    border-bottom: solid 2px $color-attention;
-    border-radius: 0;
-    text-decoration: none;
 }
 
 /* ----------------- Footer Menu ----------------- */
@@ -378,7 +437,7 @@ p, .content {
 }
 .empty {
     border: solid 2px $color-background;
-    box-shadow: 0 0 3px 0 black;
+    box-shadow: 0 0 3px 0 $color-shadow;
 }
 .pull-center {
     position: relative;
@@ -391,16 +450,17 @@ p, .content {
     max-height: 300px;
     overflow: scroll;
     width: auto;
-}
-.image-picker .tile {
-    margin: 5px;
-    padding: 2px;
-    border: solid 1px transparent;
-}
-.image-picker .tile:hover,
-.image-picker .tile.active{
-    border: solid 1px $color-attention;
-    box-shadow: 0 0 3px 0 $color-attention;
+
+    .tile {
+        margin: 5px;
+        padding: 2px;
+        border: solid 1px transparent;
+
+        &:hover, .tile.active {
+            border: solid 1px $color-attention;
+            box-shadow: 0 0 3px 0 $color-attention;
+        }
+    }
 }
 
 /* ----------------- Calendar Component ----------------- */
@@ -413,7 +473,7 @@ p, .content {
         font-size: xx-small;
         text-align: center;
         color: $color-background;
-        background-color: $color-more-muted;
+        background-color: $color-muted;
         border: solid 1px $color-muted;
     }
 
@@ -438,40 +498,6 @@ p, .content {
         border-right: solid 1px $color-more-muted;
         border-bottom: solid 1px $color-more-muted;
     }
-}
-
-/* ----------------- Buttons ----------------- */
-.btn-default {
-    margin-top: 2px;
-    margin-bottom: 2px;
-}
-.btn-emphasis,
-.btn-emphasis:hover,
-.btn-emphasis:visited,
-.btn-emphasis:active,
-.btn-emphasis.active {
-    color: $color-background;
-    background-color: $color-attention;
-    border-width: 0;
-    border-radius: 0;
-    padding: 5px 20px 5px 20px;
-
-    :hover {
-        text-decoration: underline;
-    }
-}
-.btn-understate,
-.btn-understate:hover,
-.btn-understate:active {
-    color: $color-background;
-    font-size: small;
-    background-color: $color-more-muted;
-    border-width:0;
-    border-radius: 0;
-    padding: 2px 10px 2px 10px;
-}
-.btn-understate:hover {
-    text-decoration: underline;
 }
 
 /* ----------------- Animations ----------------- */

@@ -1,0 +1,70 @@
+<h2>New Action</h2>
+
+<div class="container-fluid row">
+    <h3 id="type">What type of action is it?</h3>
+    <div class="btn-group-lg">
+        <div class="btn btn-panel col-md-2 col-sm-3 col-xs-5" ng-repeat="actionType in actionTypes"
+             ng-click="action.type = actionType; actionState.toggle('content.target', true)">
+            <i class="fa fa-2x {{actionType.icon}}" ng-class="{check: (action.type === actionType)}"></i>
+            <div class="breathe-small text-capitalize">{{actionType.label}}</div>
+        </div>
+    </div>
+    <div class="help-block col-xs-12" ng-show="action.type">
+        <p><strong class="text-capitalize">{{action.type.label}} : &nbsp;</strong>{{action.type.description}}</p>
+    </div>
+</div>
+
+
+<div class="breathe" ng-animate="'animate'" uib-collapse="!actionState.get('content.target')" smooth-scroll scroll-if="actionState.get('content.target')">
+    <h3 id="target" >
+        Who is the action going out to?</h3>
+    <div class="row btn-group-lg">
+        <div class="btn btn-panel col-lg-2 col-md-3 col-sm-5 col-xs-8" ng-repeat="target in targets"
+             ng-click="action.target = target; actionState.toggle('content.targetDetail', true)">
+            <i class="fa fa-2x {{target.icon}}" ng-class="{check: (action.target === target)}"></i>
+            <div class="breathe-small text-capitalize">{{target.label}}</div>
+        </div>
+    </div>
+    <div class="help-block col-xs-12" ng-show="action.target">
+        <p><strong class="text-capitalize">{{action.target.label}} : &nbsp;</strong>{{action.target.description}}</p>
+    </div>
+</div>
+
+
+<!--div class="container-fluid">
+<div class="form-horizontal breathe" ng-animate="'animate'" ng-show="actionState.get('content')" ng-init="action.targets = []">
+    <div class="row">
+        <label class="control-label col-sm-2 col-xs-1 tight">To:</label>
+
+        <div class="col-sm-10 col-xs-11">
+            <div class="well tight"><ul class="list-inline tight" ng-init="criteria = {active:true}">
+                <li ng-repeat="target in targets | filter:criteria">
+                    <span class="label label-default breathe">
+                        {{target.label | capitalize}} &nbsp;
+                        <i class="fa fa-times" ng-click="target.active = false"></i>
+                    </span>
+                </li>
+                <li><span class="btn-plain" ng-click="actionState.set('content.target')">
+                    <i class="icon fa fa-plus-circle breathe-small"></i>
+                </span></li>
+            </ul></div>
+        </div>
+
+        <div class="col-sm-10 col-xs-11 pull-right overlay" ng-animate="'animate'" ng-show="actionState.get('content.target')">
+            <ul class="list-group" ng-init="targetOptionsCriteria = {active:false}">
+                <button class="list-group-item" ng-repeat="target in targets | filter:targetOptionsCriteria"
+                        ng-click="target.active = !target.active; actionState.set('content.target')">
+                    <div class="col-xs-3 col-sm-2 col-md-1">
+                        <i class="fa fa-2x {{target.icon}}" ng-class="{check: target.active}"></i>
+                    </div>
+                    <div class="col-xs-9 col-sm-10 col-md-11">
+                        <h4 class="tight text-capitalize">{{target.label}}</h4>
+                        {{target.description}}
+                    </div>
+                </button>
+            </ul>
+        </div>
+    </div>
+</div>
+
+</div-->

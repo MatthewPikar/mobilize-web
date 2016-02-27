@@ -24,7 +24,7 @@
 
 
 <!-------------------- Top Navigation -------------------->
-<headroom class="navbar navbar-default navbar-fixed-top" role="navigation" tolerance="5" offset="50">
+<headroom class="navbar navbar-default navbar-fixed-top hidden-print" role="navigation" tolerance="5" offset="50">
     <div class="container-fluid" ng-controller="menuController">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" ng-init="navCollapsed = true" ng-click="navbarCollapsed=!navbarCollapsed">
@@ -41,7 +41,7 @@
             </ul>
             <form class="navbar-form navbar-right" ng-submit="search(query)">
                 <div class="inner-addon right-addon">
-                    <i class="glyphicon glyphicon-search"></i>
+                    <i class="glyphicon glyphicon-search" ng-click="go('search', {query: query})"></i>
                     <input type="text" class="form-control search-control" ng-model="query" placeholder="Find your cause...">
                 </div>
             </form>
@@ -58,10 +58,9 @@
 <footer class="footer">
     <div class="container muted">
         <ul class="list-inline">
-            <li>Help</li>
-            <li>Privacy</li>
-            <li>Terms</li>
-            <li>About</li>
+            <li class="hidden-print">Privacy</li>
+            <li class="hidden-print">Terms</li>
+            <li class="hidden-print">Contact</li>
             <li class="pull-right">Copyright &copy; Mobilize 2015</li>
         </ul>
     </div>
@@ -89,8 +88,8 @@
 <!-- jsdelivr doesn't have a ui-bootstrap build above 0.13 nor ng-showdown-->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/1.1.2/ui-bootstrap-tpls.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/ng-showdown/1.1.0/ng-showdown.min.js"></script>
-<script src="https://cdn.jsdelivr.net/headroomjs/0.7.0/headroom.min.js" crossorigin="anonymous" integrity="sha256-cVmx5X3Gz6ir06aaOuDG3lAKrWVm2CC5wliO5lMzPNw="></script>
-<script src="https://cdn.jsdelivr.net/headroomjs/0.7.0/angular.headroom.min.js" crossorigin="anonymous" integrity="sha256-DK+qAhiknf1QG+/NyKkBxZuk9qQX01e414TEcp9QqHk="></script>
+<script src="https://cdn.jsdelivr.net/headroomjs/0.7.0/headroom.min.js"                 crossorigin="anonymous" integrity="sha256-cVmx5X3Gz6ir06aaOuDG3lAKrWVm2CC5wliO5lMzPNw="></script>
+<script src="https://cdn.jsdelivr.net/headroomjs/0.7.0/angular.headroom.min.js"         crossorigin="anonymous" integrity="sha256-DK+qAhiknf1QG+/NyKkBxZuk9qQX01e414TEcp9QqHk="></script>
 <!--script src="/node_modules/angular-ui-scrollpoint/dist/scrollpoint.min.js"></script-->
 
 <!-------------------- Application Sources -------------------->

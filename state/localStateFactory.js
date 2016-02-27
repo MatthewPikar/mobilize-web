@@ -11,8 +11,8 @@ angular.module('localStateFactory',[]).factory('LocalState', [
                 for (var zone in this._states)
                     if (this._states.hasOwnProperty(zone)) this._states[zone] = false
             }
-            this.toggle = function (zone) {
-                this._states[zone] = !this._states[zone]
+            this.toggle = function (zone, state) {
+                this._states[zone] = (typeof(state) === 'undefined') ? !this._states[zone] : state
             }
             this.set = function (newState) {
                 var splitNewState = newState.split('.')

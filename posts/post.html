@@ -1,19 +1,18 @@
 <h2>
-    <div ng-show="postState.get('new')">New Event</div><br>
-
+    <div ng-show="postState.get('new')">New Post<br><br></div>
     <div ng-class="{'has-error': !post.name}" ng-show="postState.get('edit')">
         <input type="text" id="post.name" class="form-control" ng-model="post.name"
                placeholder="Give your post a title">
     </div>
     <div ng-show="!postState.get('edit')">
         <span class="breathe">{{post.name}}</span>
-         &nbsp; &nbsp; <small class="selectable" ng-click="postState.toggle('edit')">
-           <i class="icon fa fa-edit"></i> &nbsp;Modify post
-        </small>
         <br>
     </div>
 </h2>
-<div class="byline">{{post.created.getMonthName() + ' ' + post.created.getDate() + ', ' + post.created.getFullYear()}}</div>
+<span class="selectable pull-right" ng-click="postState.toggle('edit')" ng-show="!postState.get('edit')">
+    <i class="icon fa fa-edit"></i> &nbsp;Modify post
+</span>
+<div class="byline" ng-show="!postState.get('new')">{{post.created.getMonthName() + ' ' + post.created.getDate() + ', ' + post.created.getFullYear()}}</div>
 <div class="row">
     <div class="col-xs-12">
         <div ng-class="{'has-error': !post.content}">

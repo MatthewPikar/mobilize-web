@@ -1,5 +1,6 @@
 <!-------------------- Header -------------------->
-<div class="jumbotron tight short banner" style="background-image:url(assets/img/movements/splash/{{movement.image}})">
+<div class="jumbotron tight short banner hidden-print" ng-style="{'background-image': movement.image ? 'url(assets/img/movements/splash/{{movement.image}})' : ''}">
+     <!--style="background-image:url(assets/img/movements/splash/{{movement.image}})"-->
     <div class="container col-sm-6">
         <div class="" ng-show="state.get('edit')" ng-click="state.set('edit.image');openImageModal()">
             <span class="selectable"><i class="icon fa fa-image"></i> &nbsp; Modify background</span>
@@ -24,17 +25,19 @@
             <i class="icon fa fa-edit"></i> &nbsp;Modify title
         </span>
         <h1>
-            <div ng-show="!state.get('edit.name')">{{movement.name}}</div>
+            <div ng-show="!state.get('edit.name')"><a ui-sref="movement.overview">{{movement.name}}</a></div>
             <div ng-show="state.get('edit.name')"><input type="text" ng-model="movement.name"></div>
         </h1>
     </div>
 </div>
 
+<div class="page-header visible-print-block">
+    <div><a ui-sref="movement.overview">{{movement.name}}</a></div>
+</div>
 
-<div class="stretch-container cover">
+<main class="stretch-container cover">
 <!-------------------- Actions Menu -------------------->
-    <div class="col-sm-4 col-md-3 stretch-column sidebar tight"
-         >
+    <div class="col-sm-4 col-md-3 stretch-column tight sidebar hidden-print">
         <div class="gutter">
             <ul class="list-unstyled sidebar-menu">
                 <li class="topic">
@@ -56,42 +59,32 @@
             </ul>
         </div>
 
-        <label class="selectable field-control" ng-click="go('movement.newAction')">
+        <a class="selectable field-control" ui-sref="movement.newAction">
             +<i class="fa fa-flash"></i> &nbsp;Add Action
-        </label>
+        </a>
         <button class="btn-emphasis center-block breathe"><i class="fa fa-flash"></i> &nbsp; Act!</button>
     </div>
 
 
 
-    <div class="col-sm-8 col-md-9 stretch-column  cover">
+    <div class="col-sm-8 col-md-9 stretch-column cover">
 <!-------------------- Movement Menu -------------------->
-        <div class="horizontal-menu row gutter" ng-init="movementMenuSelection='overview'">
-             <!--ui-scrollpoint="-100" ui-scrollpoint-class="fixed"-->
-            <label class="btn" ng-model="movementMenuSelection"
-                   uib-btn-radio="'overview'"
-                   ng-click="go('movement.overview')">
-                About</label>
-            <label class="btn" ng-model="movementMenuSelection"
-                   uib-btn-radio="'members'"
-                   ng-click="go('movement.members')">
-                Members</label>
-            <label class="btn" ng-model="movementMenuSelection"
-                   uib-btn-radio="'admin'" ng-click="go('movement.admin')">
-                Admin</label>
-
+        <div class="horizontal-menu hidden-print" ng-init="movementMenuSelection='overview'">
             <div class="pull-right">
-                <label class="btn" ng-model="movementModify"
+                <a class="selectable" ui-sref="movement.admin">Admin</a>
+                <span class="selectable" ng-model="movementModify"
                        ng-if="state.get('view')" ng-click="state.set('edit')">
-                    <i class="fa fa-gear"></i> Modify movement</label>
-                <label class="btn-emphasis" ng-model="movementModify"
+                    <i class="fa fa-gear"></i> Modify movement</span>
+                <span class="btn-emphasis" ng-model="movementModify"
                        ng-if="state.get('edit')" ng-click="state.set('view'); modifyMovement()">
-                    <i class="fa fa-gear"></i> Save changes</label>
+                    <i class="fa fa-gear"></i> Save changes</span>
             </div>
+            &nbsp; &nbsp; &nbsp;
+            <a class="selectable" ui-sref="movement.overview">About</a>
+            <a class="selectable" ui-sref="movement.members">Members</a>
         </div>
-
 
 <!-------------------- Content Template -------------------->
         <div ui-view id="content-block" class="breathe gutter"></div>
     </div>
-</div>
+</main>
