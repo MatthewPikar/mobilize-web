@@ -234,6 +234,20 @@ p, .content {
         cursor: pointer;
     }
 }
+@media (max-width: 767px) {
+    .btn-emphasis {
+        font-size: large;
+        padding: 10px 30px 10px 30px;
+    }
+    .btn-understate {
+        font-size: medium;
+        padding: 5px 20px 5px 20px;
+    }
+    .selectable {
+        font-size: large;
+    }
+}
+
 .label {
     margin: 2px;
 }
