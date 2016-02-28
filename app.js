@@ -6,8 +6,8 @@ var mobilizeApp = angular
         'ngAnimate',
         'ui.router',
         'ui.bootstrap',
+        'smoothScroll',
         'headroom',
-      //  'ui.scrollpoint',
         'ng-showdown',
         'menuController',
         'searchController',
@@ -23,6 +23,7 @@ var mobilizeApp = angular
         'postsService',
         'postsController',
         'more',
+        'focus',
         'filters',
         'localStateFactory',
         'datetimeFactory'
