@@ -1,4 +1,4 @@
-<h2>
+<h2 smooth-scroll duration="800" easing="easeInOutQuint" offset="120">
     <div ng-show="postState.get('new')">New Post<br><br></div>
     <div ng-class="{'has-error': !post.name}" ng-show="postState.get('edit')">
         <input type="text" id="post.name" class="form-control input-lg" ng-model="post.name"

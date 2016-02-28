@@ -1,7 +1,7 @@
 <span ng-show="!eventState.get('edit')" class="selectable pull-right breathe-small" ng-click="eventState.toggle('edit')" ng-show="!eventState.get('new')">
     <i class="icon fa fa-edit"></i> &nbsp;Modify event
 </span>
-<h2>
+<h2 smooth-scroll duration="800" easing="easeInOutQuint" offset="120">
     <span ng-show="eventState.get('new')">New Event</span>
     <span ng-show="!eventState.get('new')">Event Detail</span>
 </h2>
