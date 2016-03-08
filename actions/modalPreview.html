@@ -1,0 +1,12 @@
+<div class="modal-body printed-page letter">
+    <p class="date"><em>[ Date ]</em></p>
+    <p class="salutation">Dear <em>[ Recipient title and name ]</em>,</p>
+    <p class="subject" ng-show="action.content.short">Re: {{action.content.short}}</p>
+    <div class="content">
+        <p markdown-to-html="action.content.long"></p>
+    </div>
+    <p class="signature">
+        Sincerely,<br><br>
+        <em>[ Member name ]</em>
+    </p>
+</div>
