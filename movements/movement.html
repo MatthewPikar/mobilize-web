@@ -1,72 +1,57 @@
 <!-------------------- Header -------------------->
-<div class="jumbotron tight short banner hidden-print" ng-style="{'background-image': movement.image ? 'url(assets/img/movements/splash/{{movement.image}})' : ''}">
-     <!--style="background-image:url(assets/img/movements/splash/{{movement.image}})"-->
-    <div class="container col-sm-6">
-        <div class="" ng-show="state.get('edit')" ng-click="state.set('edit.image');openImageModal()">
-            <span class="selectable"><i class="icon fa fa-image"></i> &nbsp; Modify background</span>
+<div class="jumbotron hidden-print" ng-style="{'background-image': movement.image ? 'url(assets/img/movements/splash/{{movement.image}})' : ''}">
+    <span>
+        <span class="selectable" ng-show="state.get('edit')" ng-click="state.set('edit.image');openImageModal()">
+            <i class="fa fa-image"></i> &nbsp; Modify background
+        </span>
+    </span>
+    <div class="video">
+        <span class="selectable" ng-show="state.get('edit')" ng-click="state.set('edit.video');openVideoModal()">
+            <i class="fa fa-video-camera"></i> &nbsp; Modify video
+        </span>
+        <br>
+        <div class="embed-responsive embed-responsive-4by3" ng-if="videoResource">
+            <iframe ng-attr-src="{{videoResource}}" class="embed-responsive-item" allowfullscreen></iframe>
         </div>
-    </div>
-    <div class=" col-sm-6 pull-right pull-center">
-        <div class="container">
-            <div class="selectable pull-right" ng-show="state.get('edit')" ng-click="state.set('edit.video');openVideoModal()">
-                <i class="icon fa fa-video-camera"></i> &nbsp; Modify video
-            </div>
-        </div>
-        <div class="video-box pull-right" ng-if="videoResource">
-            <iframe ng-attr-src="{{videoResource}}" width="250" height="188" frameborder="0" allowfullscreen></iframe>
-        </div>
-        <div class="video-box pull-right empty" ng-if="!videoResource&&state.get('edit')">
-            <div class="pull-center">No video added.</div>
-        </div>
+        <span class="video-box empty" ng-if="!videoResource&&state.get('edit')">
+            <div class="pull-v-center">No video added.</div>
+        </span>
     </div>
 
-    <div class="container pull-down col-sm-12">
+    <div class="pull-down">
         <span ng-show="state.get('edit')" class="selectable" ng-click="state.set('edit.name')">
-            <i class="icon fa fa-edit"></i> &nbsp;Modify title
+            <i class="fa fa-edit"></i> &nbsp;Modify title
         </span>
         <h1>
-            <div ng-show="!state.get('edit.name')"><a ui-sref="movement.overview">{{movement.name}}</a></div>
-            <div ng-show="state.get('edit.name')"><input type="text" ng-model="movement.name"></div>
+            <a ui-sref="movement.overview" ng-if="!state.get('edit.name')">{{movement.name}}</a>
+            <input type="text" ng-model="movement.name" ng-if="state.get('edit.name')" focus/>
         </h1>
     </div>
 </div>
 
 <div class="page-header visible-print-block">
-    <div><a ui-sref="movement.overview">{{movement.name}}</a></div>
+    <div><a ui-sref="movement.overview">{{movement.name}}</a> {{masterState.current.name}}</div>
 </div>
 
 <main class="stretch-container cover">
 <!-------------------- Actions Menu -------------------->
     <div class="col-sm-4 col-md-3 stretch-column tight sidebar hidden-print">
         <div class="hidden-xs">
-            <div class="gutter">
-                <ul class="list-unstyled sidebar-menu">
-                    <li class="topic">
-                        <i class="fa fa-envelope"></i>&nbsp; Mail your representative
-                        <div class="sub-topic">Your click will sign the letter.  We'll do the rest.</div>
-                    </li>
-                    <li class="topic">
-                        <i class="fa fa-phone"></i>&nbsp; Call your representative
-                        <div class="sub-topic">We''l give you the number, talking points, and coach you.</div>
-                    </li>
-                    <li class="topic">
-                        <i class="fa fa-bullhorn"></i>&nbsp; Share with your friends
-                        <div class="sub-topic">Your click wil post to
-                            <i class="fa fa-facebook-official"></i> and <i class="fa fa-twitter"></i></div>
-                    </li>
-                    <li ng-repeat="act in actions">
-                        <span><a ui-sref="movement.actions({actionId: act.id})" ui-sref-opts="{reload: true}">{{act.type}}</a></span>
-                    </li>
-                </ul>
-            </div>
-
             <a class="selectable field-control" ui-sref="movement.newAction">
                 +<i class="fa fa-flash"></i> &nbsp;Add Action
             </a>
-        </div>
 
-        <div>
-            <button class="btn-emphasis center-block breathe-small"><i class="fa fa-flash"></i> &nbsp; Act!</button>
+            <ul class="list-unstyled">
+                <li class="topic" ng-repeat="action in actions" ng-click="go('movement.action', {actionId: action.id})">
+                    <a ui-sref="movement.action({actionId: action.id})">
+                        <i class="fa {{actionTypes[action.type].icon}}"></i>&nbsp; {{action.name}}
+                        <div class="sub-topic">{{actionTypes[action.type].helpText}}</div>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="controls breathe">
+            <button class="btn-emphasis" ui-sref-active="active"><i class="fa fa-flash"></i> &nbsp; Act!</button>
         </div>
     </div>
 
@@ -74,9 +59,9 @@
 
     <div class="col-sm-8 col-md-9 stretch-column cover">
 <!-------------------- Movement Menu -------------------->
-        <div class="horizontal-menu hidden-print" ng-init="movementMenuSelection='overview'">
+        <div class="horizontal-menu hidden-print">
             <div class="pull-right hidden-xs">
-                <a class="selectable" ui-sref="movement.admin">Admin</a>
+                <a class="selectable" ui-sref="movement.admin" ui-sref-active="active">Admin</a>
                 <span class="selectable" ng-model="movementModify"
                        ng-if="state.get('view')" ng-click="state.set('edit')">
                     <i class="fa fa-gear"></i> Modify movement</span>
@@ -85,8 +70,8 @@
                     <i class="fa fa-gear"></i> Save changes</span>
             </div>
             &nbsp; &nbsp; &nbsp;
-            <a class="selectable" ui-sref="movement.overview">About</a>
-            <a class="selectable" ui-sref="movement.members">Members</a>
+            <a class="selectable" ui-sref="movement.overview" ui-sref-active="active">About</a>
+            <a class="selectable" ui-sref="movement.members"  ui-sref-active="active">Members</a>
         </div>
 
 <!-------------------- Content Template -------------------->
