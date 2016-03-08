@@ -1,70 +1,142 @@
-<h2>New Action</h2>
+<h2 smooth-scroll duration="800" easing="easeInOutQuint" offset="120">New Action</h2>
 
 <div class="container-fluid row">
     <h3 id="type">What type of action is it?</h3>
     <div class="btn-group-lg">
-        <div class="btn btn-panel col-md-2 col-sm-3 col-xs-5" ng-repeat="actionType in actionTypes"
-             ng-click="action.type = actionType; actionState.toggle('content.target', true)">
-            <i class="fa fa-2x {{actionType.icon}}" ng-class="{check: (action.type === actionType)}"></i>
-            <div class="breathe-small text-capitalize">{{actionType.label}}</div>
+        <div class="btn btn-panel col-md-2 col-sm-3 col-xs-5" ng-repeat="(key, value) in actionTypes"
+             ng-click="action.type = key; actionState.toggle('target.class', true); console.log(key)">
+            <i class="fa fa-2x {{value.icon}}" ng-class="{check: (action.type === key)}"></i>
+            <div class="breathe-small text-capitalize">{{value.label}}</div>
         </div>
     </div>
     <div class="help-block col-xs-12" ng-show="action.type">
-        <p><strong class="text-capitalize">{{action.type.label}} : &nbsp;</strong>{{action.type.description}}</p>
+        <p><strong class="text-capitalize">{{actionTypes[action.type].label}} : &nbsp;</strong>{{actionTypes[action.type].description}}</p>
     </div>
 </div>
 
 
-<div class="breathe" ng-animate="'animate'" uib-collapse="!actionState.get('content.target')" smooth-scroll scroll-if="actionState.get('content.target')">
-    <h3 id="target" >
-        Who is the action going out to?</h3>
-    <div class="row btn-group-lg">
-        <div class="btn btn-panel col-lg-2 col-md-3 col-sm-5 col-xs-8" ng-repeat="target in targets"
-             ng-click="action.target = target; actionState.toggle('content.targetDetail', true)">
-            <i class="fa fa-2x {{target.icon}}" ng-class="{check: (action.target === target)}"></i>
-            <div class="breathe-small text-capitalize">{{target.label}}</div>
+<div class="container-fluid row highlight" ng-if="actionState.get('target.class')">
+    <h3 id="target.class" smooth-scroll duration="800" easing="easeInOutQuint">Who is the action going out to?</h3>
+    <div class="btn-group-lg">
+        <div class="btn btn-panel col-md-2 col-md-2 col-sm-3 col-xs-5" ng-repeat="(key, value) in targetClasses"
+             ng-click="action.target.class = key; actionState.toggle('name', true); setName()">
+            <i class="fa fa-2x {{value.icon}}" ng-class="{check: (action.target.class === key)}"></i>
+            <div class="breathe-small text-capitalize">{{value.label}}</div>
         </div>
     </div>
     <div class="help-block col-xs-12" ng-show="action.target">
-        <p><strong class="text-capitalize">{{action.target.label}} : &nbsp;</strong>{{action.target.description}}</p>
+        <p>
+            <strong class="text-capitalize">
+                {{targetClasses[action.target.class].label}}
+            </strong>
+            : {{targetClasses[action.target.class].description}}
+        </p>
+    </div>
+</div>
+
+<div class="container-fluid row highlight" ng-animate="'animate'" ng-if="actionState.get('target.focus')">
+    <div id="target.focus" class="col-xs-12" smooth-scroll duration="800" easing="easeInOutQuint">
+
+    </div>
+
+</div>
+
+<div class="container-fluid row highlight" ng-if="actionState.get('name')" smooth-scroll duration="800" easing="easeInOutQuint">
+    <h3 id="name">Give this action a name:</h3>
+    <div class="help-block">
+        <p>This is the name your members will see.</p>
+    </div>
+    <div>
+        <input type="text" class="form-control input-lg" ng-model="action.name"/>
     </div>
 </div>
 
 
-<!--div class="container-fluid">
-<div class="form-horizontal breathe" ng-animate="'animate'" ng-show="actionState.get('content')" ng-init="action.targets = []">
-    <div class="row">
-        <label class="control-label col-sm-2 col-xs-1 tight">To:</label>
 
-        <div class="col-sm-10 col-xs-11">
-            <div class="well tight"><ul class="list-inline tight" ng-init="criteria = {active:true}">
-                <li ng-repeat="target in targets | filter:criteria">
-                    <span class="label label-default breathe">
-                        {{target.label | capitalize}} &nbsp;
-                        <i class="fa fa-times" ng-click="target.active = false"></i>
-                    </span>
-                </li>
-                <li><span class="btn-plain" ng-click="actionState.set('content.target')">
-                    <i class="icon fa fa-plus-circle breathe-small"></i>
-                </span></li>
-            </ul></div>
+<div ng-show="(action.type === 'Share')">
+    <div class="container-fluid row highlight" ng-if="action.name">
+        <h3 id="share.short"><i class="icon fa fa-twitter"></i> &nbsp; Twitter message:</h3>
+        <div>
+            <input type="text" class="form-control input-lg" ng-model="action.content.short" maxlength="140" focus/>
         </div>
+        <div class="help-block">
+            <p class="small">* Note that members will be able to change their message before posting.</p>
+        </div>
+    </div>
 
-        <div class="col-sm-10 col-xs-11 pull-right overlay" ng-animate="'animate'" ng-show="actionState.get('content.target')">
-            <ul class="list-group" ng-init="targetOptionsCriteria = {active:false}">
-                <button class="list-group-item" ng-repeat="target in targets | filter:targetOptionsCriteria"
-                        ng-click="target.active = !target.active; actionState.set('content.target')">
-                    <div class="col-xs-3 col-sm-2 col-md-1">
-                        <i class="fa fa-2x {{target.icon}}" ng-class="{check: target.active}"></i>
-                    </div>
-                    <div class="col-xs-9 col-sm-10 col-md-11">
-                        <h4 class="tight text-capitalize">{{target.label}}</h4>
-                        {{target.description}}
-                    </div>
-                </button>
-            </ul>
+    <div class="container-fluid row highlight" ng-if="action.name">
+        <h3 id="share.long"><i class="icon fa fa-facebook-official"></i> &nbsp; Facebook post</h3>
+        <div>
+            <textarea class="form-control input-lg" rows="10" ng-model="action.content.long" maxlength="63206"></textarea>
+        </div>
+        <div class="help-block">
+            <p class="small">* Note that members will be able to change their message before posting.</p>
         </div>
     </div>
 </div>
 
-</div-->
+
+
+<div ng-show="(action.type === 'Mail') || (action.type === 'E-mail') || (action.type === 'Petition')">
+    <div class="container-fluid row highlight" ng-if="action.name">
+        <h3 id="subject" ng-show="!(action.type === 'Petition')">What's the subject?</h3>
+        <h3 id="title" ng-show="(action.type === 'Petition')">What's the title?</h3>
+        <div>
+            <input type="text" class="form-control input-lg" ng-model="action.content.short" focus/>
+        </div>
+    </div>
+
+    <div class="container-fluid row highlight" ng-if="action.name">
+        <h3 id="content">What's the message?</h3>
+        <div>
+            <textarea class="form-control input-lg" rows="10" ng-model="action.content.long"></textarea>
+        </div>
+        <div class="help-block" ng-show="!(action.type === 'Petition')">
+            <p class="small">* Note that members will be able to change their message.</p>
+        </div>
+    </div>
+</div>
+
+
+
+<div ng-show="(action.type === 'Call')">
+    <div class="container-fluid row highlight" ng-if="action.name">
+        <h3 id="script">Provide members with a call script:</h3>
+        <div>
+            <textarea class="form-control input-lg" rows="10" ng-model="action.content.long" focus></textarea>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="container-fluid row highlight" ng-if="action.name">
+    <h3 id="suspense">Does this action have a suspense date?</h3>
+    <date-picker-picker ng-model="action.suspenseDate" class="form-control input-lg"></date-picker-picker>
+    <div class="help-block">
+        <p class="small">* Optional</p>
+    </div>
+</div>
+
+<div class="container-fluid row highlight" ng-if="action.name">
+    <div>
+        <span class="breathe pull-right highlight" ng-if="action.content">
+            <button class="btn btn-understate" type="button" ng-click="openPreviewModal()" ng-show="action.type==='Mail'">
+                Preview
+            </button>
+            &nbsp;
+            <button class="btn btn-emphasis" ng-click="action.status = 'active'; addAction(); go('movement.overview',{movementId: movement.id})">
+                Create ation
+            </button>
+        </span>
+        <span class="breathe pull-left">
+            <button class="btn btn-understate" type="button" ng-click="action.status = 'draft'; addAction(); go('movement.overview',{movementId: movement.id})">
+                Finish later
+            </button>
+            &nbsp;
+            <button class="btn btn-understate" type="button" ng-click="go('movement.overview',{movementId: movement.id})">
+                Cancel
+            </button>
+        </span>
+    </div>
+</div>

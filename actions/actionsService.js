@@ -8,12 +8,7 @@ actionsService.factory('Action', ['$resource','API_PATH',
             {
                 add: {
                     method:'POST',
-                    interceptor: { response: function(response){ return response.data.resources[0] } },
-                    transformRequest: function (data){
-                        var transformedData = data
-                        transformedData.suspenseDate = data.suspenseDate.get()
-                        return transformedData
-                    }
+                    interceptor: { response: function(response){ return response.data.resources[0] } }
                 },
                 modify:{
                     method:'PUT',
