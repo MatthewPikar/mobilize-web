@@ -9,11 +9,10 @@
 
 
 <!-------------------- External Styles -------------------->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css"  type='text/css'>
     <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Lora:400' type='text/css'>
     <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Lato' type='text/css'>
-    <link href="https://cdn.jsdelivr.net/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" integrity="sha256-7s5uDGW3AHqw6xtJmNNtr+OBRJUlgkNJEo78P4b0yRw=">
-    <!--link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css" type='text/css'-->
+    <link href="https://cdn.jsdelivr.net/bootstrap/3.3.6/css/bootstrap.min.css"      rel="stylesheet" crossorigin="anonymous" integrity="sha256-7s5uDGW3AHqw6xtJmNNtr+OBRJUlgkNJEo78P4b0yRw=">
+    <link href="https://cdn.jsdelivr.net/fontawesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" crossorigin="anonymous" integrity="sha256-3dkvEK0WLHRJ7/Csr0BZjAWxERc5WH7bdeUya2aXxdU=">
 
 
 <!-------------------- Styles -------------------->
@@ -36,8 +35,8 @@
         </div>
         <div class="navbar-collapse" uib-collapse="!navbarCollapsed">
             <ul class="nav navbar-nav navbar-right">
-                <li><a ui-sref="newMovement">Start a Movement</a></li>
-                <li><a ui-sref="signIn">Sign In &nbsp;|&nbsp; Sign Up</a></li>
+                <li><a ui-sref="newMovement" ui-sref-active="active">Start a Movement</a></li>
+                <li><a ui-sref="signIn" ui-sref-active="active">Sign In &nbsp;|&nbsp; Sign Up</a></li>
             </ul>
             <form class="navbar-form navbar-right" ng-submit="search(query)">
                 <div class="inner-addon right-addon">
@@ -94,25 +93,29 @@
 <!--script src="/node_modules/angular-ui-scrollpoint/dist/scrollpoint.min.js"></script-->
 
 <!-------------------- Application Sources -------------------->
-<script src="app.js"></script>
+<script src="app.min.js"></script>
 <script src="state/localStateFactory.min.js"></script>
 <script src="layout/moreDirective.min.js"></script>
-<script src="layout/focusDirective.js"></script>
+<script src="layout/focusDirective.min.js"></script>
+<script src="layout/datePickerPickerDirective.js"></script>
 <script src="layout/datetimeFactory.min.js"></script>
 <script src="layout/menuController.min.js"></script>
 <script src="layout/filters.min.js"></script>
 <script src="search/searchController.min.js"></script>
 <script src="movements/movementService.min.js"></script>
-<script src="movements/movementController.js"></script>
+<script src="movements/movementController.min.js"></script>
 <script src="movements/modalVideoController.min.js"></script>
 <script src="movements/modalImageController.min.js"></script>
 <script src="movements/newMovementController.min.js"></script>
-<script src="actions/actionsService.js"></script>
-<script src="actions/actionsController.js"></script>
+<script src="actions/actionsService.min.js"></script>
+<script src="actions/actionsController.min.js"></script>
+<script src="actions/modalPreviewController.min.js"></script>
 <script src="events/eventsService.min.js"></script>
 <script src="events/eventsController.min.js"></script>
-<script src="posts/postsService.js"></script>
+<script src="posts/postsService.min.js"></script>
 <script src="posts/postsController.min.js"></script>
+<script src="users/usersService.js"></script>
+<script src="users/usersController.js"></script>
 
 </body>
 </html>
