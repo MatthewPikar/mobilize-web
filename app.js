@@ -16,14 +16,18 @@ var mobilizeApp = angular
         'modalVideoController',
         'modalImageController',
         'newMovementController',
+        'modalPreviewController',
         'actionsController',
         'actionsService',
         'eventsService',
         'eventsController',
         'postsService',
         'postsController',
+        'usersService',
+        'usersController',
         'more',
         'focus',
+        'datePickerPicker',
         'filters',
         'localStateFactory',
         'datetimeFactory'
@@ -62,12 +66,50 @@ mobilizeApp.config(['$stateProvider','$urlMatcherFactoryProvider','$urlRouterPro
                   }]
               }
           })
+          .state('newUser', {
+              url: "/u/new",
+              templateUrl: "users/new.html",
+              controller: "usersController",
+              resolve: {
+                  user: ['User', function (User) {
+                      return new User()
+                  }]
+              }
+          })
+          .state('user', {
+              url: "/u/{userId}",
+              abstract: true,
+              templateUrl: "users/user.html",
+              controller: "usersController",
+              resolve: {
+                  user: ['User','$stateParams', function (User,$stateParams) {
+                      return User.get({id:$stateParams.userId}).$promise
+                          .then(function(result){
+                              var user = new User()
+                              angular.extend(user, result)
+                              return user
+                          })
+                  }]
+              }
+          })
+          .state('user.activity', {
+              url: "",
+              templateUrl: "users/activity.html"
+          })
+          .state('user.profile', {
+              url: "/profile/",
+              templateUrl: "users/profile.html"
+          })
+          .state('user.settings', {
+              url: "/settings/",
+              templateUrl: "users/settings.html"
+          })
           .state('newMovement', {
               url: "/m/new",
               templateUrl: "movements/new.html",
               controller: "newMovementController",
               resolve: {
-                  movement: ['Movement',function(Movement) {
+                  movement: ['Movement', function (Movement) {
                       return new Movement()
                   }]
               }
@@ -115,13 +157,13 @@ mobilizeApp.config(['$stateProvider','$urlMatcherFactoryProvider','$urlRouterPro
               controller: "actionsController",
               resolve: {
                   action: ['Action','$stateParams',function(Action,$stateParams) {
-                      return angular.extend({'sourceId':$stateParams.movementId}, new Action())
+                      return angular.extend(new Action(), {'sourceId':$stateParams.movementId})
                   }]
               }
           })
           .state('movement.action', {
               url: "/a/{actionId}",
-              templateUrl: "movements/action.html",
+              templateUrl: "actions/action.html",
               controller: "actionsController",
               resolve: {
                   action: ['Action','actions','$filter','$stateParams', function (Action,actions,$filter,$stateParams) {

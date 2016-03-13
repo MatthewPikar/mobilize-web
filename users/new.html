@@ -1,0 +1,60 @@
+<!-------------------- Header -------------------->
+<div class="jumbotron hidden-print" ng-style="{'background-image': movement.image ? 'url(assets/img/movements/splash/{{movement.image}})' : ''}">
+    <span>
+        <span class="selectable" ng-show="state.get('edit')" ng-click="state.set('edit.image');openImageModal()">
+            <i class="fa fa-image"></i> &nbsp; Modify background
+        </span>
+    </span>
+    <div class="picture">
+        <span class="selectable" ng-show="state.get('edit')" ng-click="state.set('edit.video');openVideoModal()">
+            <i class="fa fa-video-camera"></i> &nbsp; Modify video
+        </span>
+        <br>
+        <img src="assets/users/picture/{{user.id}}.jpg"/>
+    </div>
+
+    <div class="pull-down">
+        <span ng-show="state.get('edit')" class="selectable" ng-click="state.set('edit.name')">
+            <i class="fa fa-edit"></i> &nbsp;Modify name
+        </span>
+        <h1>
+            <a ui-sref="user.activity" ng-if="!state.get('edit.name')">{{user.name}}</a>
+            <input type="text" ng-model="user.name" ng-if="state.get('edit.name')" focus/>
+        </h1>
+    </div>
+</div>
+
+
+<main class="stretch-container cover">
+    <!-------------------- Actions Menu -------------------->
+    <div class="col-sm-4 col-md-3 stretch-column tight sidebar hidden-print">
+        <div class="hidden-xs">
+            <ul class="list-unstyled">
+
+            </ul>
+        </div>
+    </div>
+
+
+
+    <div class="col-sm-8 col-md-9 stretch-column cover">
+        <!-------------------- Movement Menu -------------------->
+        <div class="horizontal-menu hidden-print">
+            <div class="pull-right hidden-xs">
+                <span class="selectable" ng-model="userModify"
+                      ng-if="state.get('view')" ng-click="state.set('edit')">
+                    <i class="fa fa-gear"></i> Modify profile</span>
+                <span class="btn-emphasis" ng-model="userModify"
+                      ng-if="state.get('edit')" ng-click="state.set('view'); modifyUser()">
+                    <i class="fa fa-gear"></i> Save changes</span>
+            </div>
+            &nbsp; &nbsp; &nbsp;
+            <a class="selectable" ui-sref="user.activity" ui-sref-active="active">Activity</a>
+            <a class="selectable" ui-sref="user.profile" ui-sref-active="active">Profile</a>
+            <a class="selectable" ui-sref="user.settings"  ui-sref-active="active">Settings</a>
+        </div>
+
+        <!-------------------- Content Template -------------------->
+        <div ui-view id="content-block" class="breathe gutter"></div>
+    </div>
+</main>

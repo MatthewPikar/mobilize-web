@@ -4,9 +4,15 @@ $color-attention: #ff0000;
 $color-background: white;
 $color-soft-field: #f3f3f3;
 $color-shadow: #7b7b7b;
+$color-highlight: #ffddb0;
 
 $font-text: Lora, serif;
 $font-title: lato, sans-serif;
+
+$screen-xs: 480px;
+$screen-sm: 768px;
+$screen-md: 992px;
+$screen-lg: 1200px;
 
 
 
@@ -111,6 +117,11 @@ p, .content {
     position: absolute;
     bottom: 0 !important;
 }
+.pull-v-center {
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+}
 .row-centered {
     text-align:center;
 }
@@ -166,7 +177,7 @@ p, .content {
     font-family: $font-title;
     color: $color-muted;
 
-    &:hover, &:focus, &:active, .active {
+    &:hover, &:focus, &:active, &.active {
         color: $color-muted;
         border-bottom: solid 2px $color-attention;
         cursor: pointer;
@@ -205,6 +216,7 @@ p, .content {
     border-width: 0;
     border-radius: 0;
     padding: 5px 20px 5px 20px;
+    margin: 2px 3px 2px 3px;
 
     &:hover, &:focus, &:active {
         color: $color-background;
@@ -219,6 +231,7 @@ p, .content {
     border-width: 0;
     border-radius: 0;
     padding: 2px 10px 2px 10px;
+    margin: 7px 3px 7px 3px;
 
     &:hover, &:focus {
         color: $color-background;
@@ -262,43 +275,46 @@ p, .content {
 
 /* ----------------- Top Menu ----------------- */
 .navbar-default {
+  background-color: $color-background;
+  border-color: $color-more-muted;
+  padding: 0 15px 0 15px;
+
+  .navbar-brand {
+    color: $color-attention;
+    font-size: xx-large;
+    font-weight: bolder;
+
+    &:hover, &:focus, &:active {
+      color: $color-attention;
+      background-color: transparent;
+    }
+  }
+
+  .navbar-nav > li > a {
+    border-bottom: solid 2px transparent;
+    padding: 5px;
+    margin: 10px;
+
+    &:hover, &:focus, &:active, &.active {
+      border-bottom: solid 2px $color-attention;
+    }
+  }
+
+  .navbar-collapse, .navbar-form {
     background-color: $color-background;
-    border-color: $color-more-muted;
-    padding-left: 20px;
-    padding-right: 20px;
 
-    .navbar-brand {
-        color: $color-attention;
-        font-size: xx-large;
-        font-weight: bolder;
+    .search-control {
+      border-width: 0;
+      border-radius: 0;
+      box-shadow: none;
+      border-bottom: solid 2px $color-more-muted;
+      background-color: $color-soft-field;
 
-        &:hover, &:focus, &:active {
-            color: $color-attention;
-            background-color: transparent;
-        }
+      &:hover, &:focus, &:active {
+        border-bottom: solid 2px $color-attention;
+      }
     }
-
-    .navbar-nav > li > a {
-        border-bottom: solid 4px $color-background;
-
-        &:hover, &:focus, &:active {
-            color: $color-attention;
-            border-bottom: solid 3px $color-attention;
-        }
-    }
-
-    .navbar-collapse, .navbar-form {
-        background-color: $color-background;
-
-        .search-control {
-            border-width: 0;
-            border-radius: 0;
-            box-shadow: none;
-            border-bottom-width: 2px;
-            border-bottom-color: $color-more-muted;
-            background-color: $color-soft-field;
-        }
-    }
+  }
 }
 .navbar-fixed-top {
     border: 0;
@@ -325,86 +341,118 @@ p, .content {
 
 /* ----------------- Banner ----------------- */
 .jumbotron {
-    height: 350px;
-    padding: 60px 30px 0 0;
-    background-color: transparent;
-    color: $color-background;
-    text-shadow: 0 0 2px $color-shadow;
-    background: no-repeat center center;
-    background-size: cover;
-    @include shadow;
-    top: 0;
+  height: 350px;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  z-index: 10;
+  margin-bottom: 10px;
+  padding: 60px 30px 15px 30px;
+  background-color: transparent;
+  background: no-repeat center center;
+  background-size: cover;
+  color: $color-background;
+  text-shadow: 0 0 2px $color-shadow;
+  @include shadow;
+
+  h1 {
+    font-size: 30px;
+    margin-top: 0;
     margin-bottom: 10px;
     width: 100%;
-    z-index: 10;
-    position: absolute;
+  }
 
+  &>div {
+    width: 93%;
+  }
 
-    h1 {
-        font-size: 30px;
-        margin-top: 0;
-    }
+  input[type="text"] {
+    background-color: $color-more-muted;
+    background: rgba(191, 191, 191, 0.5);
+    border: solid 2px $color-background;
+    box-shadow: 0 0 3px 0 $color-shadow;
+    width: 100%;
+  }
 
-    input[type="text"] {
-        background-color: $color-more-muted;
-        background: rgba(191, 191, 191, 0.5);
-        border: solid 2px $color-background;
-        box-shadow: 0 0 3px 0 $color-shadow;
-        width: 50%;
-    }
+  a, .selectable {
+    color: $color-background;
 
-    a {
+    &:hover, &:focus, &:active {
+        text-decoration: none;
         color: $color-background;
-
-        &:hover, &:focus, &:active {
-            text-decoration: none;
-            color: $color-background;
-        }
     }
+  }
 }
+@media (max-width: $screen-sm) {
+  .jumbotron {
+    .video {
+      max-width: 350px;
+      display: block;
+      margin-right: auto;
+      margin-left: auto;
 
+      .embed-responsive {
+        margin: -30px -40px 0 -40px;
+      }
+    }
+  }
+}
+@media (min-width: $screen-sm + 1) {
+  .jumbotron {
+    .video {
+      max-width: 300px;
+      float: right !important;
+    }
+  }
+}
 
 
 /* ----------------- Sidebar Menu ----------------- */
 .sidebar {
-    background-color: $color-background;
-    padding-top: 0;
-    padding-right: 0;
-    padding-bottom: 10px;
+  background-color: $color-background;
+  padding: 0 0 10px 0;
+  text-align: center;
+
+  h2 {
+    font-size: 14px;
+  }
+  ul {
+    margin-top: 50px;
+  }
+
+  .topic {
+    font-weight: bold;
+    font-size: medium;
+    color: $color-attention;
+    text-align: left;
+    margin: 0 15px 10px 15px;
+    padding: 0 10px 0 15px;
+    border-left: solid 4px transparent;
+    border-right: solid 4px transparent;
+    cursor: pointer;
+
+    &:hover, &:focus, &:active {
+      border-left: solid 4px $color-attention;
+      border-right: solid 4px $color-attention;
+      padding: 0 5px 0 20px;
+    }
+
+    a, a:hover, a:focus, a:active {
+      text-decoration: none;
+      color: $color-attention;
+    }
+  }
+
+  .controls {
     text-align: center;
+  }
 
-    h2 {
-        font-size: 14px;
-    }
-    ul {
-        margin-top: 75px;
-    }
-
-    .topic {
-        font-weight: bold;
-        font-size: medium;
-        color: $color-attention;
-        text-align: left;
-        margin-bottom: 10px;
-        padding-right: 15px;
-        border-right: solid 4px transparent;
-        cursor: pointer;
-
-        &:hover, &:focus, &:active {
-            border-right: solid 4px $color-attention;
-            padding-left: 4px;
-        }
-    }
-
-    .sub-topic {
-        font-weight: normal;
-        font-size: x-small;
-        color: $color-muted;
-        padding-left: 22px;
-    }
-}
-.sidebar-menu {
-    margin-right: -30px;
+  .sub-topic {
+    font-weight: normal;
+    font-size: x-small;
+    color: $color-muted;
+    padding-left: 22px;
+  }
 }
 @media (max-width: 767px) {
     .sidebar {
@@ -445,73 +493,68 @@ p, .content {
 
 /* ----------------- Video Component ----------------- */
 .video-box {
-    width: 250px;
-    height: 188px;
-    text-align: center;
-}
-.empty {
+  max-width: 300px;
+  text-align: center;
+
+  &.empty {
     border: solid 2px $color-background;
     box-shadow: 0 0 3px 0 $color-shadow;
-}
-.pull-center {
-    position: relative;
-    top: 50%;
-    transform: translateY(-50%);
+  }
 }
 
 /* ----------------- Image Picker Component ----------------- */
 .image-picker {
-    max-height: 300px;
-    overflow: scroll;
-    width: auto;
+  max-height: 300px;
+  overflow: scroll;
+  width: auto;
 
-    .tile {
-        margin: 5px;
-        padding: 2px;
-        border: solid 1px transparent;
+  .tile {
+    margin: 5px;
+    padding: 2px;
+    border: solid 1px transparent;
 
-        &:hover, .tile.active {
-            border: solid 1px $color-attention;
-            box-shadow: 0 0 3px 0 $color-attention;
-        }
+    &:hover, .tile.active {
+      border: solid 1px $color-attention;
+      box-shadow: 0 0 3px 0 $color-attention;
     }
+  }
 }
 
 /* ----------------- Calendar Component ----------------- */
 .calendar {
-    margin: 2px;
-    width: 30px;
-    font-family: $font-title;
+  margin: 2px;
+  width: 30px;
+  font-family: $font-title;
 
-    > .month {
-        font-size: xx-small;
-        text-align: center;
-        color: $color-background;
-        background-color: $color-muted;
-        border: solid 1px $color-muted;
-    }
+  > .month {
+    font-size: xx-small;
+    text-align: center;
+    color: $color-background;
+    background-color: $color-muted;
+    border: solid 1px $color-muted;
+  }
 
-    > .month.soon {
-        background-color: $color-attention;
-        border-color: $color-attention;
-    }
+  > .month.soon {
+    background-color: $color-attention;
+    border-color: $color-attention;
+  }
 
-    > .month.past {
-        background-color: $color-soft-field;
-        border-color: $color-more-muted;
-        color: $color-muted;
-    }
+  > .month.past {
+    background-color: $color-soft-field;
+    border-color: $color-more-muted;
+    color: $color-muted;
+  }
 
-    > .date {
-        font-size: small;
-        font-weight: bolder;
-        color: $color-muted;
-        background-color: $color-background;
-        text-align: center;
-        border-left: solid 1px $color-more-muted;
-        border-right: solid 1px $color-more-muted;
-        border-bottom: solid 1px $color-more-muted;
-    }
+  > .date {
+    font-size: small;
+    font-weight: bolder;
+    color: $color-muted;
+    background-color: $color-background;
+    text-align: center;
+    border-left: solid 1px $color-more-muted;
+    border-right: solid 1px $color-more-muted;
+    border-bottom: solid 1px $color-more-muted;
+  }
 }
 
 /* ----------------- Animations ----------------- */
@@ -527,7 +570,7 @@ p, .content {
     display: block;
     overflow: hidden;
     text-overflow: clip;
-    $color-background-space:nowrap;
+    white-space:nowrap;
 }
 
 .animate-leave.animate-leave-active,
@@ -542,4 +585,74 @@ p, .content {
     opacity: 1;
     width: 150px;
     height: 30px;
+}
+
+.highlight,             .highlight.ng-hide-remove {
+    -webkit-transition: background-color 0.5s linear;
+    transition: background-color 0.5s linear;
+    background-color: white;
+}
+.highlight.ng-enter,    .highlight.ng-hide {
+    background-color: $color-highlight;
+}
+
+
+
+/* ----------------- Print Preview ----------------- */
+$paper-width-letter:    8.5 * 72px;
+$paper-height-letter:   11 * 72px;
+$modal-lg:             900px;
+$modal-lg-paper-ratio: $modal-lg / $paper-width-letter;
+$modal-md:             600px;
+$modal-md-paper-ratio: $modal-md / $paper-width-letter;
+$modal-sm:             300px;
+$modal-sm-paper-ratio: $modal-sm / $paper-width-letter;
+
+.printed-page {
+  overflow: hidden;
+  background-color: white;
+  color: black;
+}
+
+@mixin printed-page($size) {
+  $ratio: $size / $paper-width-letter;
+
+  &.letter {
+    min-height: round($paper-height-letter * $ratio);
+    max-height: round($paper-height-letter * $ratio);
+    padding: round(1.25 * 72px * $ratio);
+  }
+  p {
+    font-size: round(10pt * $ratio);
+    margin-bottom: round(12pt * $ratio);
+
+    &.date {
+      margin-top: round(24pt * $ratio);
+      float: right;
+    }
+
+    &.salutation {
+      margin-top: round(72pt * $ratio);
+    }
+
+    &.subject {
+      margin-top: round(12pt * $ratio);
+      margin-bottom: round(12pt * $ratio);
+    }
+
+    &.signature {
+      margin-top: round(24pt * $ratio);
+      margin-bottom: round(24pt * $ratio);
+    }
+  }
+}
+
+@media (max-width: $screen-sm) {
+  .printed-page { @include printed-page($modal-sm); }
+}
+@media (min-width: $screen-sm + 1) and (max-width: $screen-md) {
+  .printed-page { @include printed-page($modal-md); }
+}
+@media (min-width: $screen-md + 1) {
+  .printed-page { @include printed-page($modal-lg); }
 }
